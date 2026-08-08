@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控？</title>
+<style>
+:root{
+  --paper:#fffdf7;
+  --ink:#222;
+  --muted:#6f6f6f;
+  --line:#2c2c2c;
+  --blue:#dff1ff;
+  --green:#e8f7df;
+  --yellow:#fff2b8;
+  --pink:#ffe4e8;
+  --purple:#eee6ff;
+  --orange:#ffe2c7;
+  --white:#fff;
+  --shadow:5px 6px 0 rgba(34,34,34,.13);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  color:var(--ink);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  line-height:1.65;
+  background:
+    linear-gradient(rgba(0,0,0,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,0,0,.025) 1px,transparent 1px),
+    var(--paper);
+  background-size:24px 24px;
+}
+.page{max-width:1180px;margin:auto;padding:30px 18px 70px}
+.hero{
+  background:#fff;
+  border:3px solid var(--line);
+  border-radius:22px 15px 24px 14px;
+  box-shadow:var(--shadow);
+  padding:26px;
+  transform:rotate(-.12deg);
+}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.16;margin:0 0 12px}
+h2{font-size:28px;margin:0 0 18px}
+p{margin:8px 0}
+.sub{color:var(--muted);font-size:17px}
+.tag{
+  display:inline-block;padding:4px 10px;border:2px solid var(--line);
+  border-radius:999px;font-weight:900;background:#fff;margin-bottom:10px
+}
+.mark{background:linear-gradient(transparent 58%,var(--yellow) 58%)}
+.section{margin-top:34px}
+.big-idea{
+  margin:28px 0;
+  padding:18px 22px;
+  border:3px dashed var(--line);
+  border-radius:18px;
+  background:var(--yellow);
+  font-size:clamp(19px,3vw,28px);
+  font-weight:900;
+  text-align:center;
+}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{
+  border:3px solid var(--line);border-radius:18px 13px 20px 14px;background:#fff;
+  padding:18px;box-shadow:var(--shadow);position:relative
+}
+.card:nth-child(2n){transform:rotate(.18deg)}
+.blue{background:var(--blue)} .green{background:var(--green)} .yellow{background:var(--yellow)}
+.pink{background:var(--pink)} .purple{background:var(--purple)} .orange{background:var(--orange)}
+.code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  background:#fbfbfb;border-left:5px solid var(--line);
+  padding:12px 14px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere;
+}
+.flow{
+  display:grid;
+  grid-template-columns:1fr 90px 1fr;
+  gap:10px;align-items:center
+}
+.arrow{text-align:center;font-size:50px;font-weight:900}
+.arrow small{display:block;font-size:13px;color:var(--muted)}
+.stack{
+  display:grid;gap:14px
+}
+.rule{
+  border:3px dashed var(--line);border-radius:16px;padding:16px;background:#fff
+}
+.rule strong{font-size:20px}
+.boundary{
+  display:grid;grid-template-columns:210px 1fr 1fr;gap:0;
+  border:3px solid var(--line);border-radius:18px;overflow:hidden;background:#fff
+}
+.boundary > div{padding:14px;border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
+.boundary > div:nth-child(3n){border-right:0}
+.boundary > div:nth-last-child(-n+3){border-bottom:0}
+.head{font-weight:900;background:var(--purple)}
+.yes{background:var(--green);font-weight:800}
+.no{background:var(--pink);font-weight:800}
+.mid{background:var(--yellow);font-weight:800}
+.schematic{
+  border:3px solid var(--line);border-radius:20px;background:#fff;padding:18px;
+  box-shadow:var(--shadow)
+}
+.node{
+  border:3px solid var(--line);border-radius:16px;padding:14px;background:#fff;
+  text-align:center;font-weight:800
+}
+.node small{display:block;color:var(--muted);font-weight:600}
+.connector{text-align:center;font-size:38px;font-weight:900;line-height:1.1}
+.four{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px
+}
+.callout{
+  padding:14px 16px;border:2px dashed var(--line);border-radius:14px;background:var(--orange)
+}
+.footer{margin-top:34px;color:var(--muted);font-size:13px}
+.footer a{color:inherit}
+.quiz{margin-top:24px;border:3px solid var(--line);border-radius:18px;padding:18px;background:#fff}
+button{
+  border:2px solid var(--line);background:var(--yellow);padding:9px 14px;border-radius:11px;
+  font-weight:900;cursor:pointer;box-shadow:3px 3px 0 rgba(34,34,34,.15)
+}
+#ans{display:none;margin-top:12px;padding:14px;border:2px dashed var(--line);border-radius:12px;background:var(--green)}
+@media(max-width:900px){
+  .grid2,.grid3,.four{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .arrow{transform:rotate(90deg);height:60px}
+  .boundary{grid-template-columns:1fr}
+  .boundary > div{border-right:0}
+  .boundary > div:not(:last-child){border-bottom:2px solid var(--line)}
+  .boundary > div:nth-last-child(-n+3){border-bottom:2px solid var(--line)}
+  .boundary > div:last-child{border-bottom:0}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <section class="hero">
+    <div class="tag">手绘草图式信息图 · Tencent Cloud Agent Sandbox</div>
+    <h1>为什么 Instance 可以覆盖 Tool 的 MountPath，<br/>却不等于绕过 Tool 的存储管控？</h1>
+    <p class="sub">核心要区分：<span class="mark">“挂到哪里”</span> 和 <span class="mark">“挂的到底是什么、最多能有什么权限”</span>。</p>
+  </section>
+
+  <div class="big-idea">
+    MountPath 是“位置”；StorageSource / ReadOnly 上限 / 路径规则，才决定“边界”。
+  </div>
+
+  <section class="section">
+    <h2>① 先承认事实：Instance 的确可以覆盖 Tool 的 MountPath</h2>
+    <div class="flow">
+      <div class="card blue">
+        <div class="tag">Tool · StorageMount</div>
+        <div class="code">Name = data
+CFS = cfs-123
+Path = /datasets
+
+MountPath = /mnt/assets
+ReadOnly = false</div>
+        <p><b>/mnt/assets</b> 是默认本地挂载位置。</p>
+      </div>
+      <div class="arrow">→<small>Instance 覆盖</small></div>
+      <div class="card green">
+        <div class="tag">Instance · MountOption</div>
+        <div class="code">Name = data
+MountPath = /workspace/input
+SubPath = user-a
+ReadOnly = true</div>
+        <p>当前实例最终可以改成 <b>/workspace/input</b>。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>② 但它到底“覆盖”了什么？</h2>
+    <div class="grid2">
+      <div class="card yellow">
+        <div class="tag">它改变的是</div>
+        <h3>这份存储在沙箱文件系统里的“入口位置”</h3>
+        <div class="code">Tool 默认：
+CFS:/datasets → /mnt/assets
+
+Instance 覆盖后：
+CFS:/datasets/user-a → /workspace/input</div>
+        <p>也就是：Agent 在容器里要去哪个目录看到它。</p>
+      </div>
+      <div class="card pink">
+        <div class="tag">它没有改变的是</div>
+        <h3>“这份存储是谁”和“权限上限是什么”</h3>
+        <div class="code">仍然是：cfs-123
+不能换成：cfs-456
+不能新增：COS bucket-B
+不能换成：image:v2</div>
+        <p>因为 MountOptions 只能引用 Tool 里已经存在的 <b>StorageMount.Name</b>。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>③ Tool 和 Instance 的职责其实不是同一层</h2>
+    <div class="schematic">
+      <div class="node blue">
+        Tool：定义“允许使用什么”
+        <small>StorageSource + 默认 MountPath + ReadOnly 基线</small>
+      </div>
+      <div class="connector">↓</div>
+      <div class="node purple">
+        Instance：定义“这次怎么用”
+        <small>引用 Name，覆盖 MountPath，追加 SubPath，收紧 ReadOnly</small>
+      </div>
+      <div class="connector">↓</div>
+      <div class="node green">
+        最终挂载配置
+        <small>源存储不变 + 实例级路径布局 + 最终权限</small>
+      </div>
+      <div class="connector">↓</div>
+      <div class="node orange">
+        真正执行 mount
+        <small>CFS:/datasets/user-a → Sandbox:/workspace/input</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>④ 真正的“管控边界”在哪里？</h2>
+    <div class="four">
+      <div class="card blue">
+        <div class="tag">边界 1</div>
+        <h3>存储来源</h3>
+        <p><b>Tool 决定。</b></p>
+        <p>Instance 只能引用已存在的 StorageMount.Name，不能新增 StorageSource。</p>
+      </div>
+      <div class="card green">
+        <div class="tag">边界 2</div>
+        <h3>权限上限</h3>
+        <p><b>Tool 决定最大权限。</b></p>
+        <p>Instance 可以把可写收紧成只读，但不能把 Tool 级只读放宽成可写。</p>
+      </div>
+      <div class="card yellow">
+        <div class="tag">边界 3</div>
+        <h3>路径合法性</h3>
+        <p><b>平台统一校验。</b></p>
+        <p>即使覆盖 MountPath，也仍然要满足绝对路径、黑名单、重复路径等规则。</p>
+      </div>
+      <div class="card purple">
+        <div class="tag">灵活层</div>
+        <h3>容器内布局</h3>
+        <p><b>Instance 可调整。</b></p>
+        <p>MountPath 主要解决“这份已经获准的存储在本实例里放哪里”。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>⑤ 一张表看清“能改什么、不能改什么”</h2>
+    <div class="boundary">
+      <div class="head">维度</div><div class="head">Instance 能否改变？</div><div class="head">含义</div>
+
+      <div>MountPath</div><div class="yes">✅ 能覆盖</div><div>改变容器内的挂载位置。</div>
+      <div>StorageSource</div><div class="no">❌ 不能换</div><div>不能在启动实例时换成另一份 CFS / COS / Image。</div>
+      <div>新增存储来源</div><div class="no">❌ 不能新增</div><div>MountOptions 只能引用 Tool 已存在的 StorageMount.Name。</div>
+      <div>ReadOnly 权限</div><div class="mid">⚠️ 只能收紧</div><div>true 可以覆盖 false；只读不能放宽为可写。</div>
+      <div>SubPath</div><div class="yes">✅ 可追加</div><div>在远端默认路径下追加实例级子目录，用于隔离。</div>
+      <div>路径合法性</div><div class="no">❌ 不能绕过</div><div>最终 MountPath 仍要通过平台路径规则。</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>⑥ 所以“Tool 的 MountPath”到底是什么性质？</h2>
+    <div class="grid3">
+      <div class="card green">
+        <div class="tag">正确</div>
+        <h3>默认布局</h3>
+        <p>没有 Instance 覆盖时，实例继承它。</p>
+      </div>
+      <div class="card yellow">
+        <div class="tag">正确</div>
+        <h3>复用模板</h3>
+        <p>多数实例无需重复填写相同的本地挂载路径。</p>
+      </div>
+      <div class="card pink">
+        <div class="tag">不要这样理解</div>
+        <h3>不可变安全策略</h3>
+        <p>因为 Instance 的 MountOptions.MountPath 本来就被设计成可覆盖。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>⑦ 最关键的一张关系图</h2>
+    <div class="card orange">
+      <div class="code">Tool 管：
+“你可以使用哪份存储？”
+“最多能不能写？”
+“默认挂到哪里？”
+
+            │
+            ▼
+
+Instance 管：
+“这次实例要从哪个 SubPath 用？”
+“这次实例想把它放到容器里的哪里？”
+“这次是否进一步收紧为只读？”
+
+            │
+            ▼
+
+平台继续管：
+“最终路径是否合法？”
+
+            │
+            ▼
+
+最终：
+既保留 Tool 的资源边界，
+又允许 Instance 做运行时布局。</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="callout">
+      <b>一句话结论：</b>
+      Instance 覆盖 Tool 的 MountPath，只说明“本地路径布局可以运行时参数化”；它不代表 Instance 获得了替换存储来源、放宽权限或绕过路径校验的能力。
+    </div>
+  </section>
+
+  <section class="quiz">
+    <h3>一分钟自测</h3>
+    <p>Tool 定义：CFS=cfs-123、Path=/data、MountPath=/mnt/data、ReadOnly=true。Instance 能否把它改成 cfs-456 并设置 ReadOnly=false？</p>
+    <button onclick="document.getElementById('ans').style.display='block'">显示答案</button>
+    <div id="ans">
+      <b>不能。</b>它最多可以覆盖本地 MountPath、追加 SubPath，但不能替换 StorageSource，也不能把 Tool 级只读放宽成可写。
+    </div>
+  </section>
+
+  <div class="footer">
+    <b>官方依据：</b>
+    <br/>1. 腾讯云 Agent Runtime「存储挂载」：Tool 级 StorageMounts 定义默认存储来源、默认 MountPath 和默认 ReadOnly；Instance 级 MountOptions 可覆盖 MountPath、收紧只读权限、追加 SubPath，并且只能引用已存在的 StorageMount.Name。
+    <br/>2. 腾讯云 Agent Runtime「挂载文件系统 CFS」：明确说明实例默认继承 Tool 挂载配置，MountPath 可“覆写工具默认的本地挂载路径”，ReadOnly 只能收紧。
+    <br/><br/>
+    <a href="https://cloud.tencent.com/document/product/1814/132215">https://cloud.tencent.com/document/product/1814/132215</a><br/>
+    <a href="https://cloud.tencent.com/document/product/1814/129845">https://cloud.tencent.com/document/product/1814/129845</a>
+  </div>
+
+</div>
+</body>
+</html>
