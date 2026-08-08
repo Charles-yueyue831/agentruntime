@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>问题性质判断 · 四问归类法（手绘笔记）</title>
+<style>
+@font-face{font-family:'Ma Shan Zheng';src:url('assets/fonts/MaShanZheng-Regular.ttf') format('truetype');font-display:swap}
+@font-face{font-family:'Caveat';src:url('assets/fonts/Caveat.ttf') format('truetype');font-display:swap}
+:root{
+  --paper:#f7f1e3;--paper2:#fdfaf2;--ink:#33302a;--ink-soft:#6b665c;
+  --blue:#2f6fb2;--green:#3d8a5a;--orange:#d07a2d;--purple:#8a5fb0;--red:#b8453a;
+  --hl:rgba(242,209,61,.38);
+  --hand:'Ma Shan Zheng',cursive;--note:'Caveat',cursive;
+  --body:'Noto Sans SC','Hiragino Sans GB','PingFang SC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background-color:var(--paper);
+  background-image:linear-gradient(rgba(51,48,42,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(51,48,42,.045) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);font-family:var(--body);font-weight:400;font-size:15px;line-height:1.7;
+  text-wrap:pretty;
+}
+body.no-grid{background-image:none}
+.wrap{max-width:1180px;margin:0 auto;padding:48px 32px 140px}
+.sk-br1{border-radius:255px 15px 225px 15px/15px 225px 15px 255px}
+.sk-br2{border-radius:15px 225px 15px 255px/255px 15px 225px 15px}
+.sk-br3{border-radius:225px 15px 255px 15px/15px 255px 15px 225px}
+.hl{background:var(--hl);padding:0 4px}
+.hand{font-family:var(--hand)}
+.tape{position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(-2deg);width:110px;height:26px;background:rgba(242,209,61,.75);border-left:2px dashed rgba(51,48,42,.3);border-right:2px dashed rgba(51,48,42,.3)}
+
+/* hero */
+.hero{position:relative;text-align:center;margin:24px auto 64px;max-width:820px;background:var(--paper2);border:2.5px solid var(--ink);padding:44px 40px 36px;box-shadow:4px 5px 0 rgba(51,48,42,.28)}
+.hero .kicker{font-family:var(--note);font-size:22px;color:var(--ink-soft);letter-spacing:.06em}
+.hero h1{font-family:var(--hand);font-size:clamp(34px,5vw,52px);font-weight:400;line-height:1.25;margin:6px 0 14px}
+.hero .sub{color:var(--ink-soft);max-width:620px;margin:0 auto}
+.hero .legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.legend span{font-size:12.5px;border:1.5px solid var(--ink);padding:2px 10px;border-radius:999px;background:var(--paper)}
+
+/* section titles */
+.sec-title{display:flex;align-items:baseline;gap:14px;margin:72px 0 10px}
+.sec-title .num{font-family:var(--note);font-size:34px;color:var(--red)}
+.sec-title h2{font-family:var(--hand);font-size:32px;font-weight:400}
+.sec-hint{color:var(--ink-soft);font-size:13.5px;margin-bottom:28px}
+.sec-hint .click{font-family:var(--note);font-size:17px;color:var(--blue)}
+
+/* chain */
+.chain-wrap{position:relative}
+#wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+.chain-row{position:relative;z-index:1;display:grid;grid-template-columns:280px 1fr 1fr;column-gap:72px;row-gap:14px;align-items:stretch;margin-bottom:14px}
+.pass{grid-column:1;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--green);font-family:var(--hand);font-size:17px;margin:2px 0 14px}
+.pass .arr{font-family:var(--note);font-size:22px}
+.gate{position:relative;background:var(--paper2);border:2.5px solid var(--ink);padding:18px 20px 14px;cursor:pointer;transition:transform .18s ease}
+.gate:hover{transform:rotate(-1.2deg) scale(1.03)}
+.gate .g-num{font-family:var(--note);font-size:20px;color:var(--ink-soft)}
+.gate h3{font-family:var(--hand);font-size:25px;font-weight:400;line-height:1.3}
+.gate .g-judge{margin-top:8px;font-size:13px;color:var(--ink-soft);border-top:1.5px dashed rgba(51,48,42,.3);padding-top:8px}
+.gate .g-judge b{font-weight:400;background:var(--hl);padding:0 3px}
+.exit{position:relative;background:var(--paper2);border:2px solid var(--ink);padding:16px 18px 12px;cursor:pointer;transition:transform .18s ease}
+.exit:hover{transform:rotate(1.1deg) scale(1.03)}
+.exit h4{font-family:var(--hand);font-size:22px;font-weight:400;line-height:1.3}
+.exit .e-sub{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.exit .e-tag{position:absolute;top:-11px;right:12px;font-family:var(--note);font-size:15px;background:var(--paper);border:1.5px solid var(--ink);border-radius:999px;padding:0 9px;transform:rotate(2deg)}
+.sel{box-shadow:4px 5px 0 rgba(51,48,42,.28);outline:2px dashed var(--ink);outline-offset:-7px}
+.dim{opacity:.16;filter:grayscale(.6)}
+.g-c1 h3,.g-c1 .g-num{color:var(--purple)} .g-c2 h3,.g-c2 .g-num{color:var(--red)}
+.g-c3 h3,.g-c3 .g-num{color:var(--orange)} .g-c4 h3,.g-c4 .g-num{color:var(--blue)}
+
+/* ticket callout */
+.ticket{position:relative;background:var(--paper2);border:2.5px solid var(--ink);padding:26px 28px 20px;margin:6px 0 34px;box-shadow:4px 5px 0 rgba(51,48,42,.28)}
+.ticket h3{font-family:var(--hand);font-size:24px;font-weight:400;margin-bottom:8px}
+.ticket h3 .tag{font-family:var(--note);font-size:17px;color:var(--red);margin-right:8px}
+.ticket p{color:var(--ink);font-size:14.5px}
+.ticket .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;font-size:13.5px}
+.ticket .flow .st{border:1.5px solid var(--ink);background:var(--paper);padding:2px 10px;border-radius:999px}
+.ticket .flow .st.no{border-color:var(--red);color:var(--red)}
+.ticket .flow .st.yes{color:var(--green)}
+.ticket .flow .to{font-family:var(--note);font-size:18px;color:var(--ink-soft)}
+.ticket .flow .final{background:var(--purple);color:#fff;border-color:var(--purple);font-weight:500}
+
+/* scenarios */
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:26px}
+.sc{position:relative;background:var(--paper2);border:2px solid var(--ink);padding:22px 22px 16px;cursor:pointer;transition:transform .18s ease}
+.sc:hover{transform:rotate(-1.2deg) scale(1.03);box-shadow:4px 5px 0 rgba(51,48,42,.28)}
+.sc .s-idx{position:absolute;top:-14px;left:16px;font-family:var(--note);font-size:19px;background:var(--paper);border:1.5px solid var(--ink);border-radius:999px;padding:0 10px;transform:rotate(-2deg)}
+.sc h4{font-family:var(--hand);font-size:21px;font-weight:400;line-height:1.4;margin-bottom:6px}
+.sc .s-desc{font-size:13.5px;color:var(--ink-soft);margin-bottom:12px}
+.path{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.pb{font-size:12px;border:1.5px solid;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.pb.yes{color:var(--green);border-color:var(--green)}
+.pb.no{color:var(--red);border-color:var(--red)}
+.pb.skip{color:var(--ink-soft);border-color:rgba(51,48,42,.3)}
+.concl{display:inline-block;margin-top:12px;font-family:var(--hand);font-size:17px;color:#fff;padding:2px 14px;border:2px solid var(--ink);transform:rotate(-1deg)}
+.concl.c-purple{background:var(--purple)}.concl.c-red{background:var(--red)}
+.concl.c-orange{background:var(--orange)}.concl.c-blue{background:var(--blue)}
+
+/* sticky notes */
+.notes{display:flex;flex-wrap:wrap;gap:26px}
+.note{position:relative;flex:1 1 300px;max-width:360px;background:#fdf6d8;border:2px solid var(--ink);padding:24px 20px 16px;transition:transform .18s ease}
+.note:nth-child(2n){background:#eef3e2}.note:nth-child(3n){background:#f3e9f6}.note:nth-child(4n){background:#e5eef7}.note:nth-child(5n){background:#faeae3}
+.note:hover{transform:rotate(-1.2deg) scale(1.04);box-shadow:4px 5px 0 rgba(51,48,42,.28)}
+.note h5{font-family:var(--hand);font-size:20px;font-weight:400;margin-bottom:6px}
+.note p{font-size:13.5px;color:var(--ink)}
+.note .n-idx{position:absolute;top:-13px;right:14px;font-family:var(--note);font-size:20px;color:var(--red)}
+
+/* drawer */
+.backdrop{position:fixed;inset:0;background:rgba(51,48,42,.25);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40}
+.backdrop.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;left:50%;bottom:0;transform:translate(-50%,120%);width:min(920px,94vw);max-height:72vh;overflow:auto;background:var(--paper2);border:2.5px solid var(--ink);border-bottom:none;padding:34px 38px 30px;z-index:50;transition:transform .45s cubic-bezier(.2,1.1,.3,1);box-shadow:0 -6px 0 rgba(51,48,42,.15)}
+.drawer.open{transform:translate(-50%,0)}
+.drawer h3{font-family:var(--hand);font-size:28px;font-weight:400;margin-bottom:4px}
+.drawer .d-sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:16px}
+.drawer .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px}
+.drawer .d-block h6{font-family:var(--hand);font-size:18px;font-weight:400;color:var(--ink);border-bottom:1.5px dashed rgba(51,48,42,.35);padding-bottom:4px;margin-bottom:6px}
+.drawer .d-block p{font-size:14px;color:var(--ink)}
+.drawer .d-close{position:absolute;top:14px;right:16px;font-family:var(--note);font-size:20px;border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:2px 12px;cursor:pointer}
+.drawer .d-close:hover{background:var(--hl)}
+
+/* tweaks */
+.tweaks{position:fixed;right:18px;bottom:18px;z-index:60;background:var(--paper2);border:2px solid var(--ink);padding:12px 16px;box-shadow:4px 5px 0 rgba(51,48,42,.28);font-size:13px}
+.tweaks h6{font-family:var(--note);font-size:19px;margin-bottom:6px}
+.tweaks label{display:flex;align-items:center;gap:7px;padding:2px 0;cursor:pointer;white-space:nowrap}
+.tweaks input{accent-color:var(--blue)}
+
+footer{margin-top:80px;text-align:center;color:var(--ink-soft);font-size:13px}
+footer .hand{font-size:17px}
+
+@media (max-width:1080px){
+  #wires{display:none}
+  .chain-row{grid-template-columns:1fr;row-gap:14px}
+  .pass{grid-column:auto}
+  .drawer .d-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4"/></filter>
+</svg>
+
+<div class="wrap">
+
+  <header class="hero sk-br1">
+    <div class="tape"></div>
+    <p class="kicker">Issue Triage Field Notes</p>
+    <h1>问题性质判断 · 四问归类法</h1>
+    <p class="sub">一条反馈进来，依次过四个闸口；答「否」即出局，按判据一分为二。<span class="hl">归类是排除法，不是贴标签</span>——每个「是 / 否」都要有证据。以 Agent 沙箱为演练场。</p>
+    <div class="legend">
+      <span>需求</span><span>Bug</span><span>体验优化</span><span>文档或提示缺失</span>
+      <span>未产品化</span><span>稳定性问题</span><span>性能优化</span><span>用法问题</span>
+    </div>
+  </header>
+
+  <section id="chainSec">
+    <div class="sec-title"><span class="num">01</span><h2>四闸口 · 八出口</h2></div>
+    <p class="sec-hint"><span class="click">click!</span> 点击闸口卡高亮它的两个出口；点击出口卡查看定义、判据与处理方向。再点一次或按 Esc 复位。</p>
+    <div class="chain-wrap" id="chainWrap">
+      <svg id="wires"><g id="wireG" filter="url(#wobble)"></g></svg>
+      <!-- rows injected by JS -->
+      <div id="chainRows" style="position:relative;z-index:1"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="num">02</span><h2>Agent 沙箱 · 八场景演练</h2></div>
+    <p class="sec-hint">每条都完整走一遍四问链。「—」表示链条已出局、无需再问。<span class="click">click!</span> 点击卡片查看完整判定路径与追问话术。</p>
+
+    <div class="ticket sk-br3">
+      <div class="tape"></div>
+      <h3><span class="tag">real ticket</span>真实工单回放：N5 · 沙箱总内存配额扩容</h3>
+      <p>07-13 18:35 用户在群里问「AGS 的 sandbox 总的 memory quota 可以加一些吗」→ 19:45 工程师后台把北京区从 49152000 MiB 改为 60000000 MiB → 20:30 第三人确认「当前是 64000G 限制，问题已修复」。两小时人工链路完成一次配额调整：用户不可见用量、撞墙无预警、扩容无自助入口。</p>
+      <div class="flow">
+        <span class="st yes">闸口一 · 能力存在</span><span class="to">是 →</span>
+        <span class="st yes">闸口二 · 结果正确</span><span class="to">是 →</span>
+        <span class="st yes">闸口三 · 够快够顺</span><span class="to">是 →</span>
+        <span class="st no">闸口四 · 用户会用：否</span><span class="to">⇒</span>
+        <span class="st final">未产品化</span>
+      </div>
+    </div>
+
+    <div class="sc-grid" id="scGrid"></div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="num">03</span><h2>判定陷阱与实战要点</h2></div>
+    <p class="sec-hint">五张便签，贴在显示器边框上的那种。</p>
+    <div class="notes" id="noteRow"></div>
+  </section>
+
+  <footer>
+    <p class="hand">先过闸口，再下结论。</p>
+    <p>四问归类法 · 需求 / Bug / 体验优化 / 文档或提示缺失 / 未产品化 / 稳定性问题 / 性能优化 / 用法问题</p>
+  </footer>
+</div>
+
+<div class="backdrop" id="backdrop"></div>
+<div class="drawer sk-br2" id="drawer">
+  <div class="tape"></div>
+  <button class="d-close" id="drawerClose">close ×</button>
+  <div id="drawerBody"></div>
+</div>
+
+<div class="tweaks sk-br1">
+  <h6>Tweaks</h6>
+  <label><input type="checkbox" id="twWires" checked>连线显示</label>
+  <label><input type="checkbox" id="twPaper" checked>纸张纹理</label>
+  <label><input type="checkbox" id="twWobble" checked>手绘抖动</label>
+</div>
+
+<script>
+var GATES=[
+  {key:'g1',num:'Gate 1',q:'能力存在吗？',judge:'判据：<b>底层有无能力</b>',color:'#8a5fb0',cls:'g-c1',
+   exits:[
+     {key:'需求',sub:'底层能力也没有，要从零新建',tag:'无 → 需求'},
+     {key:'未产品化',sub:'底层已在跑，缺产品封装',tag:'有 → 未产品化'}]},
+  {key:'g2',num:'Gate 2',q:'结果正确吗？',judge:'判据：<b>必现或偶发</b>',color:'#b8453a',cls:'g-c2',
+   exits:[
+     {key:'Bug',sub:'行为违反设计预期，必然复现',tag:'必现 → Bug'},
+     {key:'稳定性问题',sub:'偶发失败，与负载/时序相关',tag:'偶发 → 稳定性'}]},
+  {key:'g3',num:'Gate 3',q:'够快够顺吗？',judge:'判据：<b>客观指标或主观手感</b>',color:'#d07a2d',cls:'g-c3',
+   exits:[
+     {key:'性能优化',sub:'结果对，但慢、卡、耗资源',tag:'指标差 → 性能'},
+     {key:'体验优化',sub:'能用无错，但别扭、绕、费手',tag:'手感差 → 体验'}]},
+  {key:'g4',num:'Gate 4',q:'用户会用吗？',judge:'判据：<b>产品没讲或用户没照做</b>',color:'#2f6fb2',cls:'g-c4',
+   exits:[
+     {key:'文档或提示缺失',sub:'行为符合设计，只是没人告知',tag:'没讲 → 文档'},
+     {key:'用法问题',sub:'产品无缺陷，操作/理解偏差',tag:'没照做 → 用法'}]}
+];
+
+var EXIT_DATA={
+  '需求':{color:'#8a5fb0',def:'想要的能力在底层也不存在，需要从立项开始新建。',judge:'闸口一答「否」，且底层无此能力。',handle:'立项新建能力：实例池、镜像、计费……八类中成本最高、周期最长。',ex:'沙箱完全没有 GPU 规格，用户想跑模型推理。'},
+  '未产品化':{color:'#8a5fb0',def:'底层能力已经在跑，但缺「可见、可配、可感知」的产品封装，只以内部接口或人工运维的形式存在。',judge:'闸口一答「否」，但底层已有能力——事实问题，先查代码和内部 API，别被用户措辞带偏。',handle:'暴露入口与参数、补文档、定 SLA。性价比最高的隐藏机会：能力已经付钱建好，只缺最后一公里。',ex:'快照恢复内部 API 已通但产品无入口；内存配额只能工程师后台手工调整。'},
+  'Bug':{color:'#b8453a',def:'已有功能的行为违反设计预期，同样的步骤必然复现。',judge:'闸口二答「否」，且必现。',handle:'直接修代码，并补回归用例防止复发。',ex:'配置了网络白名单后，沙箱仍能访问任意外网，每次都复现。'},
+  '稳定性问题':{color:'#b8453a',def:'时好时坏的偶发失败，与负载、时序、容量相关，重启常常「自愈」。',judge:'闸口二答「否」，且偶发。',handle:'靠日志、监控、压测定位，不指望稳定复现；排查成本远高于 Bug。',ex:'高峰期偶发启动失败（镜像拉取超时），重启就好。'},
+  '性能优化':{color:'#d07a2d',def:'结果完全正确，但慢、卡、耗资源——用户可以等，但等得太久。',judge:'闸口三答「否」，问题出在可量化的客观指标。',handle:'预热池、镜像缓存、增量同步，用指标验收。',ex:'沙箱冷启动 8 秒，Agent 每步工具调用都在等。'},
+  '体验优化':{color:'#d07a2d',def:'功能可用、结果无错，但用起来别扭、绕路、费手。',judge:'闸口三答「否」，问题出在主观手感。',handle:'可读报错、合理默认值、减少必填参数与步骤。',ex:'报错只有 exit code 1 没有可读原因；超时时间每次都要手动传。'},
+  '文档或提示缺失':{color:'#2f6fb2',def:'行为符合设计，限制也合理，只是没人告诉用户——改的是信息，不是产品。',judge:'闸口四答「否」，且产品从未讲清楚。',handle:'补文档，并在场景内主动提示（如会话快销毁时弹提醒）。',ex:'空闲 10 分钟回收是设计行为，但文档没写，用户长任务被杀后一脸茫然。'},
+  '用法问题':{color:'#2f6fb2',def:'产品没有任何缺陷，是用户操作或理解偏差——八类中唯一指向「改认知」而非「改产品」的出口。',judge:'闸口四答「否」，但讲过了、用户没照做或误解设计。',handle:'解答并引导正确用法；同类问题聚集时向上反哺为文档、体验甚至需求。',ex:'用户把重要数据只存在沙箱临时目录，会话销毁后丢失——设计本就如此。'}
+};
+
+var SCENARIOS=[
+  {t:'想跑模型推理，沙箱没有任何 GPU 规格',concl:'需求',cc:'c-purple',
+   path:[{g:1,v:'no',note:'底层无'}],
+   handle:'立项新建：GPU 实例池、镜像、计费体系。',
+   ask:'闸口一证据：查底层能力清单——引擎/服务端是否已有此能力。问系统，不是问用户。'},
+  {t:'快照恢复内部 API 已通，产品无入口',concl:'未产品化',cc:'c-purple',
+   path:[{g:1,v:'no',note:'底层有'}],
+   handle:'暴露入口与参数、补文档、定 SLA。',
+   ask:'闸口一证据：内部已有 snapshot/restore API 并验证可用——能力在，缺封装。'},
+  {t:'配了网络白名单，仍能访问任意外网',concl:'Bug',cc:'c-red',
+   path:[{g:1,v:'yes'},{g:2,v:'no',note:'必现'}],
+   handle:'直接修代码，补回归用例。',
+   ask:'闸口二证据：「按同样步骤再做一次，还错吗？」——每次都错，必现。'},
+  {t:'高峰期偶发启动失败，重启就好',concl:'稳定性问题',cc:'c-red',
+   path:[{g:1,v:'yes'},{g:2,v:'no',note:'偶发'}],
+   handle:'日志 + 监控 + 压测定位，别指望稳定复现。',
+   ask:'闸口二证据：发生频率多少？是否与负载、时段相关？——时好时坏，偶发。'},
+  {t:'冷启动 8 秒，Agent 每步都在等',concl:'性能优化',cc:'c-orange',
+   path:[{g:1,v:'yes'},{g:2,v:'yes'},{g:3,v:'no',note:'指标差'}],
+   handle:'预热池、镜像缓存、增量同步。',
+   ask:'闸口三证据：「慢到什么程度？」——8 秒，可量化的客观指标。'},
+  {t:'报错只有 exit code 1，超时每次手动传',concl:'体验优化',cc:'c-orange',
+   path:[{g:1,v:'yes'},{g:2,v:'yes'},{g:3,v:'no',note:'手感差'}],
+   handle:'可读报错文案、合理默认值、减少必填参数。',
+   ask:'闸口三证据：「几步能完成？哪里最别扭？」——靠体感描述，无明确指标。'},
+  {t:'空闲 10 分钟回收是设计行为，但文档没写',concl:'文档或提示缺失',cc:'c-blue',
+   path:[{g:1,v:'yes'},{g:2,v:'yes'},{g:3,v:'yes'},{g:4,v:'no',note:'没讲'}],
+   handle:'补文档，并在运行中主动提示回收倒计时。',
+   ask:'闸口四证据：「你在哪看到的说明？」——哪都没有，产品没讲。'},
+  {t:'重要数据只存临时目录，会话销毁后丢失',concl:'用法问题',cc:'c-blue',
+   path:[{g:1,v:'yes'},{g:2,v:'yes'},{g:3,v:'yes'},{g:4,v:'no',note:'没照做'}],
+   handle:'解答并引导正确用法；同类聚集时反哺文档。',
+   ask:'闸口四证据：「你当时是怎么操作的？」——拿到操作路径，确认讲了没照做。'}
+];
+
+var NOTES=[
+  {t:'归类是排除法，不是贴标签',p:'每个「是 / 否」都要给出证据，结论才可辩护、可复盘。走到哪个闸口出局，结论就唯一确定。'},
+  {t:'别在闸口一被表象骗过',p:'「quota 能加吗」听起来像需求，但配额机制明明在跑。需求 vs 未产品化是事实问题，先查底层再下结论。'},
+  {t:'闸口四必须拿到操作路径',p:'同一句「我不知道会回收」，可能是没写、写了没人看见、或写了没读——三种归类，必须追问。'},
+  {t:'类别会互相转化',p:'用法问题聚集 → 文档缺失 → 体验优化 → 需求。归类不是一锤子买卖，值得定期重看。'},
+  {t:'优先级参考',p:'稳定性 ≈ Bug > 需求 > 性能 > 体验 > 文档 > 用法（个案）。未产品化是性价比最高的隐藏机会。'}
+];
+
+var GATE_NAMES=['闸口一','闸口二','闸口三','闸口四'];
+var brs=['sk-br1','sk-br2','sk-br3'];
+
+/* build chain rows */
+var chainRows=document.getElementById('chainRows');
+GATES.forEach(function(g,gi){
+  var row=document.createElement('div');row.className='chain-row';
+  var gate=document.createElement('div');
+  gate.className='gate '+g.cls+' '+brs[gi%3];gate.dataset.gate=gi;
+  gate.innerHTML='<div class="g-num">'+g.num+'</div><h3>'+g.q+'</h3><div class="g-judge">'+g.judge+'</div>';
+  row.appendChild(gate);
+  g.exits.forEach(function(e,ei){
+    var ex=document.createElement('div');
+    ex.className='exit '+brs[(gi+ei+1)%3];ex.dataset.exit=e.key;ex.dataset.gate=gi;
+    ex.innerHTML='<span class="e-tag">'+e.tag+'</span><h4>'+e.key+'</h4><div class="e-sub">'+e.sub+'</div>';
+    row.appendChild(ex);
+  });
+  chainRows.appendChild(row);
+  if(gi<3){
+    var pass=document.createElement('div');pass.className='pass';
+    pass.innerHTML='<span>答「是」</span><span class="arr">↓</span><span>进入下一闸</span>';
+    chainRows.appendChild(pass);
+  }
+});
+
+/* build scenarios */
+var scGrid=document.getElementById('scGrid');
+SCENARIOS.forEach(function(s,i){
+  var card=document.createElement('div');card.className='sc '+brs[i%3];card.dataset.sc=i;
+  var pathHtml=s.path.map(function(p){
+    var label='G'+p.g+' '+(p.v==='yes'?'是':'否'+(p.note?'·'+p.note:''));
+    return '<span class="pb '+p.v+'">'+label+'</span>';
+  }).join('<span style="color:var(--ink-soft);font-size:12px">→</span>');
+  for(var k=s.path.length;k<4;k++){pathHtml+='<span class="pb skip">G'+(k+1)+' —</span>';}
+  card.innerHTML='<span class="s-idx">case 0'+(i+1)+'</span><h4>'+s.t+'</h4><div class="path">'+pathHtml+'</div><span class="concl '+s.cc+'">'+s.concl+'</span>';
+  scGrid.appendChild(card);
+});
+
+/* build notes */
+var noteRow=document.getElementById('noteRow');
+NOTES.forEach(function(n,i){
+  var d=document.createElement('div');d.className='note '+brs[i%3];
+  d.style.transform='rotate('+((i%2?1:-1)*(0.6+i*0.2))+'deg)';
+  d.innerHTML='<span class="n-idx">#'+(i+1)+'</span><h5>'+n.t+'</h5><p>'+n.p+'</p>';
+  noteRow.appendChild(d);
+});
+
+/* wires */
+var wrap=document.getElementById('chainWrap');
+var wireG=document.getElementById('wireG');
+var selectedGate=-1;
+function drawWires(){
+  wireG.innerHTML='';
+  var wr=wrap.getBoundingClientRect();
+  GATES.forEach(function(g,gi){
+    var gateEl=chainRows.querySelector('.gate[data-gate="'+gi+'"]');
+    var gr=gateEl.getBoundingClientRect();
+    g.exits.forEach(function(e){
+      var exEl=chainRows.querySelector('.exit[data-exit="'+e.key+'"]');
+      var er=exEl.getBoundingClientRect();
+      var x1=gr.right-wr.left,y1=gr.top-wr.top+gr.height/2;
+      var x2=er.left-wr.left,y2=er.top-wr.top+er.height/2;
+      var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d','M '+x1+' '+y1+' C '+((x1+x2)/2)+' '+y1+', '+((x1+x2)/2)+' '+y2+', '+x2+' '+y2);
+      p.setAttribute('fill','none');
+      p.setAttribute('stroke',g.color);
+      p.setAttribute('stroke-width',(selectedGate===-1||selectedGate===gi)?2.5:1.2);
+      p.setAttribute('opacity',(selectedGate===-1||selectedGate===gi)?0.85:0.14);
+      p.dataset.gate=gi;
+      wireG.appendChild(p);
+    });
+  });
+}
+
+/* selection */
+function selectGate(gi){
+  selectedGate=(selectedGate===gi)?-1:gi;
+  chainRows.querySelectorAll('.gate,.exit').forEach(function(el){
+    el.classList.remove('sel','dim');
+    if(selectedGate===-1)return;
+    var mine=(el.classList.contains('gate')&&+el.dataset.gate===selectedGate)||(el.classList.contains('exit')&&+el.dataset.gate===selectedGate);
+    el.classList.add(mine?'sel':'dim');
+  });
+  drawWires();
+}
+chainRows.addEventListener('click',function(ev){
+  var g=ev.target.closest('.gate');
+  if(g){selectGate(+g.dataset.gate);return;}
+  var ex=ev.target.closest('.exit');
+  if(ex){openExit(ex.dataset.exit);}
+});
+
+/* drawer */
+var drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop'),drawerBody=document.getElementById('drawerBody');
+function openDrawer(html){drawerBody.innerHTML=html;drawer.classList.add('open');backdrop.classList.add('open');}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');}
+function openExit(key){
+  var d=EXIT_DATA[key];
+  openDrawer('<h3 style="color:'+d.color+'">'+key+'</h3><div class="d-sub">出口卡 · 点击任意处空白或按 Esc 关闭</div>'+
+    '<div class="d-grid">'+
+    '<div class="d-block"><h6>定义</h6><p>'+d.def+'</p></div>'+
+    '<div class="d-block"><h6>判定</h6><p>'+d.judge+'</p></div>'+
+    '<div class="d-block"><h6>处理方向</h6><p>'+d.handle+'</p></div>'+
+    '<div class="d-block"><h6>沙箱例子</h6><p>'+d.ex+'</p></div></div>');
+}
+function openScenario(i){
+  var s=SCENARIOS[i];
+  var steps='';
+  for(var k=0;k<4;k++){
+    var p=s.path[k];
+    if(p){steps+='<div class="d-block"><h6>'+GATE_NAMES[k]+' · '+GATES[k].q+'</h6><p style="color:'+(p.v==='yes'?'var(--green)':'var(--red)')+'">答「'+(p.v==='yes'?'是':'否')+'」'+(p.note?'（'+p.note+'）':'')+(p.v==='no'?'——出局，定位':'——进入下一闸')+'</p></div>';}
+  }
+  openDrawer('<h3>case 0'+(i+1)+' · '+s.t+'</h3><div class="d-sub">结论：<b style="color:var(--ink)">'+s.concl+'</b></div>'+
+    '<div class="d-grid">'+steps+'</div>'+
+    '<div class="d-grid" style="margin-top:18px">'+
+    '<div class="d-block"><h6>处理方向</h6><p>'+s.handle+'</p></div>'+
+    '<div class="d-block"><h6>追问话术 / 证据</h6><p>'+s.ask+'</p></div></div>');
+}
+scGrid.addEventListener('click',function(ev){
+  var c=ev.target.closest('.sc');if(c)openScenario(+c.dataset.sc);
+});
+document.getElementById('drawerClose').addEventListener('click',closeDrawer);
+backdrop.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',function(ev){
+  if(ev.key==='Escape'){closeDrawer();if(selectedGate!==-1)selectGate(selectedGate);}
+});
+
+/* tweaks */
+document.getElementById('twWires').addEventListener('change',function(e){
+  document.getElementById('wires').style.opacity=e.target.checked?1:0;
+});
+document.getElementById('twPaper').addEventListener('change',function(e){
+  document.body.classList.toggle('no-grid',!e.target.checked);
+});
+document.getElementById('twWobble').addEventListener('change',function(e){
+  if(e.target.checked){wireG.setAttribute('filter','url(#wobble)');}
+  else{wireG.removeAttribute('filter');}
+});
+
+/* resize redraw */
+var rzT;
+window.addEventListener('resize',function(){clearTimeout(rzT);rzT=setTimeout(drawWires,150);});
+window.addEventListener('load',function(){setTimeout(drawWires,300);});
+drawWires();
+</script>
+</body>
+</html>
