@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>envd · 沙箱内管理守护进程｜手绘草图式信息图</title>
+<style>
+  :root{
+    --paper:#f7f1df;
+    --paper-2:#fffaf0;
+    --ink:#20211f;
+    --muted:#6e6b63;
+    --line:#2a2b28;
+    --blue:#89c7e8;
+    --blue2:#dff1fa;
+    --yellow:#f3d66d;
+    --yellow2:#fff2b9;
+    --green:#9dcea8;
+    --green2:#e1f1e4;
+    --red:#e89783;
+    --red2:#f8ddd6;
+    --purple:#c7b2df;
+    --purple2:#eee5f6;
+    --shadow:rgba(32,33,31,.14);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 20% 10%, rgba(60,55,40,.035) 0 1px, transparent 1.5px) 0 0/18px 18px,
+      linear-gradient(90deg, rgba(70,70,60,.018) 1px, transparent 1px) 0 0/38px 38px,
+      var(--paper);
+    font-family:"Comic Sans MS","Bradley Hand","Kaiti SC","STKaiti","KaiTi","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.68;
+  }
+
+  a{color:inherit;text-decoration-thickness:1.5px;text-underline-offset:3px}
+  code,pre{
+    font-family:"SFMono-Regular","Cascadia Code","JetBrains Mono","Menlo","Consolas",monospace;
+  }
+
+  .wrap{width:min(1180px,calc(100% - 28px));margin:auto}
+  .hero{padding:54px 0 22px;position:relative}
+  .hero:before{
+    content:"";
+    position:absolute;left:4%;right:4%;top:28px;height:14px;
+    background:var(--yellow);opacity:.55;transform:rotate(-.35deg);
+    border-radius:50%;
+  }
+
+  .kicker{
+    display:inline-block;
+    border:2px solid var(--ink);
+    border-radius:13px 7px 12px 9px;
+    padding:5px 11px;
+    background:var(--paper-2);
+    box-shadow:3px 3px 0 var(--ink);
+    transform:rotate(-1deg);
+    font-weight:800;
+    letter-spacing:.04em;
+  }
+
+  h1{
+    font-size:clamp(42px,8vw,86px);
+    line-height:.95;
+    margin:24px 0 12px;
+    letter-spacing:-.055em;
+    position:relative;
+    display:inline-block;
+  }
+  h1 .mark{
+    position:relative;z-index:1;
+  }
+  h1 .mark:after{
+    content:"";
+    position:absolute;left:-2%;right:-4%;bottom:4px;height:18px;
+    background:var(--blue);opacity:.62;z-index:-1;
+    transform:rotate(-1.2deg);
+    border-radius:50% 15% 45% 10%;
+  }
+
+  .subtitle{font-size:clamp(17px,2.3vw,25px);max-width:900px;color:#3b3b36}
+  .subtitle strong{background:linear-gradient(transparent 56%,rgba(243,214,109,.75) 56%)}
+
+  .chips{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+  .chip{
+    padding:7px 12px;border:1.8px solid var(--ink);border-radius:999px;background:var(--paper-2);
+    box-shadow:2px 2px 0 rgba(32,33,31,.75);font-weight:700;font-size:14px
+  }
+  .chip:nth-child(2n){transform:rotate(.8deg)}
+  .chip:nth-child(3n){transform:rotate(-.7deg)}
+
+  nav{
+    position:sticky;top:0;z-index:20;
+    backdrop-filter:blur(10px);
+    background:rgba(247,241,223,.88);
+    border-top:1px dashed rgba(32,33,31,.35);
+    border-bottom:2px solid rgba(32,33,31,.72);
+  }
+  nav .inner{
+    display:flex;align-items:center;gap:14px;overflow-x:auto;padding:10px 0;
+    scrollbar-width:none
+  }
+  nav .inner::-webkit-scrollbar{display:none}
+  nav a{
+    text-decoration:none;white-space:nowrap;font-size:14px;font-weight:800;
+    padding:4px 8px;border-radius:8px
+  }
+  nav a:hover{background:var(--yellow2)}
+  nav .brand{font-size:17px;margin-right:6px}
+
+  section{padding:52px 0}
+  .section-title{
+    display:flex;align-items:center;gap:12px;margin:0 0 24px;
+    font-size:clamp(28px,4.5vw,46px);line-height:1.1
+  }
+  .num{
+    width:42px;height:42px;display:grid;place-items:center;flex:0 0 auto;
+    border:2.2px solid var(--ink);border-radius:50% 47% 52% 44%;
+    background:var(--yellow2);box-shadow:3px 2px 0 var(--ink);
+    font-size:19px;
+  }
+  .section-note{color:var(--muted);max-width:900px;margin:-12px 0 26px;font-size:15px}
+
+  .card{
+    position:relative;
+    background:var(--paper-2);
+    border:2px solid var(--ink);
+    border-radius:18px 13px 20px 11px;
+    padding:22px;
+    box-shadow:6px 7px 0 var(--shadow);
+  }
+  .card:before{
+    content:"";position:absolute;inset:5px -4px -4px 5px;border:1px solid rgba(32,33,31,.28);
+    border-radius:14px 20px 11px 17px;pointer-events:none
+  }
+  .card h3{font-size:21px;margin:0 0 10px}
+  .card p:last-child{margin-bottom:0}
+  .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+
+  .tape{
+    position:absolute;width:92px;height:25px;background:rgba(243,214,109,.58);
+    top:-12px;left:50%;transform:translateX(-50%) rotate(-2deg);
+    border-left:1px solid rgba(32,33,31,.13);border-right:1px solid rgba(32,33,31,.13)
+  }
+  .tape.blue{background:rgba(137,199,232,.55)}
+  .tape.green{background:rgba(157,206,168,.55)}
+  .tape.red{background:rgba(232,151,131,.48)}
+  .tape.purple{background:rgba(199,178,223,.5)}
+
+  .big-quote{
+    max-width:980px;margin:22px auto;
+    font-size:clamp(22px,3vw,34px);font-weight:800;line-height:1.45;
+    padding:26px 30px;background:var(--yellow2);
+    border:2.2px solid var(--ink);border-radius:16px 9px 20px 13px;
+    box-shadow:7px 7px 0 rgba(32,33,31,.15);
+    position:relative;transform:rotate(-.35deg)
+  }
+  .big-quote:after{
+    content:"✓ 建议长期记住这句";
+    position:absolute;right:18px;bottom:-25px;font-size:13px;font-weight:700;color:#565248;
+    transform:rotate(2deg)
+  }
+
+  .diagram{
+    border:2px dashed rgba(32,33,31,.55);
+    padding:22px;border-radius:20px;background:rgba(255,250,240,.62);
+    overflow:hidden
+  }
+  .arch{
+    display:grid;grid-template-columns:1fr 90px 1.45fr;gap:12px;align-items:center;
+  }
+  .node{
+    border:2px solid var(--ink);background:var(--paper-2);padding:16px;
+    border-radius:14px 10px 17px 11px;position:relative;box-shadow:3px 4px 0 rgba(32,33,31,.1)
+  }
+  .node.blue{background:var(--blue2)}
+  .node.green{background:var(--green2)}
+  .node.yellow{background:var(--yellow2)}
+  .node.red{background:var(--red2)}
+  .node.purple{background:var(--purple2)}
+  .node .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
+  .node .title{font-size:20px;font-weight:900;margin-top:3px}
+  .node .mini{font-size:13px;color:#56564f;margin-top:5px}
+
+  .arrow{
+    display:grid;place-items:center;text-align:center;font-size:13px;font-weight:800;color:#58574f;
+  }
+  .arrow svg{width:78px;height:40px;overflow:visible}
+  .arrow path{stroke:var(--ink);stroke-width:2.3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  .sandbox{
+    border:3px solid var(--ink);border-radius:24px 17px 25px 15px;
+    padding:20px;background:rgba(223,241,250,.28);position:relative;
+  }
+  .sandbox:before{
+    content:"SANDBOX 边界";
+    position:absolute;top:-14px;left:24px;background:var(--paper);padding:0 8px;
+    font-size:13px;font-weight:900;letter-spacing:.06em
+  }
+  .inside{
+    display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:4px
+  }
+  .port{
+    display:inline-flex;align-items:center;gap:7px;padding:3px 8px;border:1.8px solid var(--ink);
+    border-radius:999px;background:white;font-weight:900;font-size:12px
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);border:1px solid var(--ink)}
+
+  .cap{
+    display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start
+  }
+  .icon{
+    width:52px;height:52px;display:grid;place-items:center;font-size:26px;
+    border:2px solid var(--ink);border-radius:15px 11px 16px 9px;background:white
+  }
+  .cap ul{padding-left:18px;margin:8px 0 0}
+  .cap li{margin:3px 0}
+
+  .flow{
+    display:flex;align-items:stretch;gap:10px;flex-wrap:wrap
+  }
+  .step{
+    flex:1 1 150px;min-height:120px;padding:16px 14px;border:2px solid var(--ink);
+    border-radius:14px 8px 18px 12px;background:var(--paper-2);position:relative
+  }
+  .step strong{font-size:18px}
+  .step .snum{
+    position:absolute;top:-14px;left:-8px;width:32px;height:32px;border:2px solid var(--ink);
+    border-radius:50%;display:grid;place-items:center;background:var(--yellow2);font-weight:900
+  }
+  .step:after{
+    content:"→";position:absolute;right:-17px;top:42%;font-size:24px;font-weight:900;z-index:2
+  }
+  .step:last-child:after{display:none}
+
+  .terminal{
+    background:#242623;color:#f6f1e5;padding:18px 20px;border-radius:12px 9px 15px 8px;
+    border:2px solid var(--ink);box-shadow:5px 6px 0 rgba(32,33,31,.16);overflow:auto;
+    font-size:13px;line-height:1.7;position:relative
+  }
+  .terminal:before{
+    content:"●  ●  ●";position:absolute;top:4px;left:13px;color:#d2b878;letter-spacing:5px;font-size:10px
+  }
+  .terminal code{display:block;padding-top:12px;white-space:pre}
+  .annot{
+    display:grid;grid-template-columns:auto 1fr;gap:8px 12px;margin-top:15px
+  }
+  .annot .tag{
+    font-family:monospace;font-size:12px;border:1.6px solid var(--ink);background:var(--yellow2);
+    border-radius:8px;padding:2px 7px;font-weight:800;align-self:start
+  }
+
+  .compare{
+    display:grid;grid-template-columns:1fr 48px 1fr;gap:14px;align-items:stretch
+  }
+  .vs{display:grid;place-items:center;font-size:25px;font-weight:900;transform:rotate(-8deg)}
+  .version h3{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .badge{font-size:12px;padding:4px 8px;border:1.5px solid var(--ink);border-radius:999px;background:white}
+  .version dl{display:grid;grid-template-columns:116px 1fr;gap:8px 12px;margin:16px 0 0}
+  .version dt{font-weight:900}
+  .version dd{margin:0}
+
+  .warning{
+    border-left:8px solid var(--red);background:var(--red2);padding:14px 16px;border-radius:5px 14px 14px 5px;
+    margin:18px 0;font-weight:700
+  }
+  .info{
+    border-left:8px solid var(--blue);background:var(--blue2);padding:14px 16px;border-radius:5px 14px 14px 5px;
+    margin:18px 0
+  }
+
+  .checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .check{
+    padding:13px 14px 13px 42px;border-bottom:2px dashed rgba(32,33,31,.35);position:relative;
+    background:rgba(255,250,240,.35)
+  }
+  .check:before{
+    content:"□";position:absolute;left:10px;top:8px;font-size:25px;font-weight:900;transform:rotate(-6deg)
+  }
+
+  .not-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .not{
+    padding:16px;border:2px solid var(--ink);border-radius:13px;background:var(--paper-2);text-align:center;
+    position:relative;font-weight:800
+  }
+  .not:before{
+    content:"×";position:absolute;top:-17px;right:4px;font-size:31px;color:#b84f41;font-weight:900;transform:rotate(8deg)
+  }
+
+  .layers{
+    display:grid;grid-template-columns:1fr;gap:10px;max-width:920px;margin:auto
+  }
+  .layer{
+    border:2px solid var(--ink);border-radius:16px 9px 18px 11px;padding:15px 18px;
+    display:grid;grid-template-columns:190px 1fr;gap:18px;align-items:center
+  }
+  .layer:nth-child(1){background:var(--purple2)}
+  .layer:nth-child(2){background:var(--blue2)}
+  .layer:nth-child(3){background:var(--yellow2)}
+  .layer:nth-child(4){background:var(--green2)}
+  .layer strong{font-size:19px}
+
+  table{border-collapse:separate;border-spacing:0;width:100%;overflow:hidden;border:2px solid var(--ink);border-radius:15px;background:var(--paper-2)}
+  th,td{padding:12px 13px;border-right:1px dashed rgba(32,33,31,.35);border-bottom:1px dashed rgba(32,33,31,.35);vertical-align:top;text-align:left}
+  th:last-child,td:last-child{border-right:none}
+  tr:last-child td{border-bottom:none}
+  thead th{background:var(--yellow2);font-weight:900}
+
+  .source-list{display:grid;gap:10px}
+  .source{
+    border-left:4px solid var(--ink);padding:8px 12px;background:rgba(255,250,240,.55)
+  }
+  .source small{color:var(--muted)}
+
+  footer{padding:28px 0 60px;color:#615e55;font-size:13px}
+  .print-note{font-size:12px;color:#777267;margin-top:18px}
+
+  .high-y{background:linear-gradient(transparent 58%,rgba(243,214,109,.68) 58%)}
+  .high-b{background:linear-gradient(transparent 58%,rgba(137,199,232,.62) 58%)}
+  .high-g{background:linear-gradient(transparent 58%,rgba(157,206,168,.62) 58%)}
+  .scribble{position:relative}
+  .scribble:after{
+    content:"";position:absolute;left:0;right:0;bottom:-4px;height:7px;
+    border-bottom:2px solid var(--ink);border-radius:50%;transform:rotate(-.4deg)
+  }
+
+  .toggle-bar{
+    display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px
+  }
+  button.toggle{
+    border:2px solid var(--ink);background:var(--paper-2);font:inherit;font-weight:900;padding:7px 11px;border-radius:10px;
+    box-shadow:2px 2px 0 rgba(32,33,31,.7);cursor:pointer
+  }
+  button.toggle.active{background:var(--yellow2);transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(32,33,31,.7)}
+  [data-detail="deep"].is-hidden{display:none}
+
+  @media (max-width:900px){
+    .grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:1fr}
+    .arch{grid-template-columns:1fr}
+    .arrow{transform:rotate(90deg);height:50px}
+    .inside{grid-template-columns:1fr}
+    .compare{grid-template-columns:1fr}
+    .vs{min-height:38px}
+    .step:after{display:none}
+    .not-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:640px){
+    .wrap{width:min(100% - 18px,1180px)}
+    .hero{padding-top:34px}
+    section{padding:38px 0}
+    .grid-2,.grid-4,.checklist{grid-template-columns:1fr}
+    .not-grid{grid-template-columns:1fr 1fr}
+    .layer{grid-template-columns:1fr;gap:4px}
+    .card{padding:17px}
+    .diagram{padding:14px}
+    .big-quote{padding:20px;font-size:21px}
+    .version dl{grid-template-columns:1fr}
+    .version dd{padding-bottom:8px}
+    table{font-size:13px}
+    th,td{padding:9px}
+  }
+
+  @media print{
+    nav,.toggle-bar,.print-note{display:none!important}
+    body{background:white}
+    section{break-inside:avoid}
+    .card,.node,.sandbox,.terminal{box-shadow:none}
+    a{text-decoration:none}
+  }
+</style>
+</head>
+<body>
+
+<nav style="position:relative;z-index:999;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;max-width:1180px;margin:12px auto 0;padding:10px 14px;background:#fffdf7;border:3px solid #2c2c2c;border-radius:14px 10px 16px 11px;box-shadow:4px 5px 0 rgba(44,44,44,.16);font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,sans-serif;font-size:13.5px;font-weight:700;">
+  <a href="https://charles-yueyue831.github.io/agentruntime/" style="color:#2c2c2c;text-decoration:none;background:#fff2b8;border:2px solid #2c2c2c;border-radius:999px;padding:4px 12px;">🏠 README 首页</a>
+  <a href="https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%A7%E8%A1%8C/envd%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html" style="color:#fff;text-decoration:none;background:#2c2c2c;border:2px solid #2c2c2c;border-radius:999px;padding:4px 12px;">⚙️ envd 使用指南 · 当前</a>
+  <a href="https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html" style="color:#1d3a52;text-decoration:none;background:#dff1ff;border:2px solid #2c2c2c;border-radius:999px;padding:4px 12px;">📦 挂载路径覆盖</a>
+  <a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html" style="color:#4a3b12;text-decoration:none;background:#fff2b8;border:2px solid #2c2c2c;border-radius:999px;padding:4px 12px;">📖 产品经理黑话</a>
+  <a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html" style="color:#1d3a52;text-decoration:none;background:#dff1ff;border:2px solid #2c2c2c;border-radius:999px;padding:4px 12px;">🗺️ 用户旅程图</a>
+  <a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html" style="color:#2c5a2c;text-decoration:none;background:#e8f7df;border:2px solid #2c2c2c;border-radius:999px;padding:4px 12px;">🧭 问题性质</a>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">Agent Sandbox · Guest Runtime</span>
+    <h1><span class="mark">envd</span></h1>
+    <div class="subtitle">
+      沙箱内部的 <strong>管理守护进程 / Guest Management Agent</strong>：<br/>
+      把 SDK / 云侧管理请求，转换成 Guest Linux 中真实的 <b>命令、进程、文件与健康检查</b>操作。
+    </div>
+    <div class="chips">
+      <span class="chip">📍 运行在 Sandbox 内</span>
+      <span class="chip">🔌 默认管理端口 49983</span>
+      <span class="chip">⌨️ commands / process</span>
+      <span class="chip">📁 filesystem</span>
+      <span class="chip">❤️ /health</span>
+      <span class="chip">🔐 用户 / UID / GID / Token</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap inner">
+    <a class="brand" href="#mental">envd 🖍️</a>
+    <a href="#where">在哪里</a>
+    <a href="#why">为什么需要</a>
+    <a href="#abilities">核心能力</a>
+    <a href="#user">用户与权限</a>
+    <a href="#port">49983</a>
+    <a href="#versions">版本差异</a>
+    <a href="#start">启动方式</a>
+    <a href="#debug">排查</a>
+    <a href="#position">产品定位</a>
+    <a href="#flow">完整链路</a>
+    <a href="#sources">资料来源</a>
+  </div>
+</nav>
+
+<main>
+<section id="mental">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">0</span>先建立一个正确的心智模型</h2>
+    <div class="big-quote">
+      envd ≠ 沙箱本身。<br/>
+      <span class="high-b">envd 是装在沙箱里的“管理代理”</span>，位于「外部 SDK / Agent Runtime」与「沙箱内部 Linux」之间。
+    </div>
+    <div class="grid-4" style="margin-top:46px">
+      <div class="not">不是 Sandbox</div>
+      <div class="not">不是 Agent</div>
+      <div class="not">不是 KVM / VMM</div>
+      <div class="not">不是业务进程</div>
+    </div>
+  </div>
+</section>
+
+<section id="where">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">1</span>envd 在哪里？</h2>
+    <p class="section-note">最关键的层级关系：云侧负责“创建/调度/生命周期”，envd 负责“进入具体沙箱后，执行内部管理动作”。</p>
+
+    <div class="diagram">
+      <div class="arch">
+        <div>
+          <div class="node purple">
+            <div class="label">外部调用方</div>
+            <div class="title">Agent / 客户应用 / SDK</div>
+            <div class="mini">commands.run() · files.write() · API</div>
+          </div>
+          <div style="height:12px"></div>
+          <div class="node blue">
+            <div class="label">腾讯云侧</div>
+            <div class="title">Agent Runtime / AGS 控制面</div>
+            <div class="mini">创建 · 启动 · 停止 · 调度 · Token · 网络 · 生命周期</div>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <svg viewBox="0 0 90 40" aria-hidden="true">
+            <path d="M4 18 C26 13, 50 22, 78 17"/>
+            <path d="M68 10 L80 17 L69 25"/>
+          </svg>
+          <div>管理请求</div>
+        </div>
+
+        <div class="sandbox">
+          <div class="inside">
+            <div class="node yellow">
+              <div class="label">Guest-side 管理代理</div>
+              <div class="title">/usr/bin/envd</div>
+              <div style="margin-top:8px"><span class="port"><span class="dot"></span> :49983</span></div>
+              <div class="mini">把结构化 SDK/API 请求翻译成 Guest OS 操作</div>
+            </div>
+            <div class="node green">
+              <div class="label">Guest Linux</div>
+              <div class="title">Linux 用户态环境</div>
+              <div class="mini">bash · python · node · java · /proc · /etc/passwd · filesystem</div>
+            </div>
+          </div>
+          <div style="height:14px"></div>
+          <div class="node red">
+            <div class="label">业务负载</div>
+            <div class="title">Web / Agent / Notebook / 自定义服务</div>
+            <div class="mini">例如 8080 / 3000 等业务端口；与 envd 管理端口不是一回事。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info"><b>结论：</b>envd 更适合类比为“每台沙箱里都装了一个 Guest Agent”，而不是把它理解成整个沙箱。</div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">2</span>为什么沙箱需要 envd？</h2>
+    <p class="section-note">一个 Linux 沙箱被创建出来以后，只是一个执行环境。外部的高级 API 仍然需要一个“落地执行者”。</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="tape blue"></span>
+        <h3>⌨️ 例 1：执行命令</h3>
+        <div class="terminal"><code>sandbox.commands.run("python main.py")</code></div>
+        <p>这条高级 API 最终必须有人解决：</p>
+        <div class="annot">
+          <span class="tag">USER</span><span>用哪个系统用户？UID/GID 是多少？</span>
+          <span class="tag">CWD</span><span>工作目录在哪里？是否存在？</span>
+          <span class="tag">PATH</span><span>命令从哪里查找？</span>
+          <span class="tag">ENV</span><span>HOME / USER / LOGNAME / 注入环境变量是什么？</span>
+          <span class="tag">EXEC</span><span>如何创建 Linux 子进程并返回 stdout / stderr / exit code？</span>
+        </div>
+        <p><b>→ envd 就是这层执行与转换组件。</b></p>
+      </div>
+
+      <div class="card">
+        <span class="tape green"></span>
+        <h3>📁 例 2：写文件</h3>
+        <div class="terminal"><code>sandbox.files.write(
+  "/workspace/hello.txt",
+  "hello envd"
+)</code></div>
+        <p>内部实际面对的是：</p>
+        <div class="flow" style="margin-top:20px">
+          <div class="step"><span class="snum">1</span><strong>解析路径</strong><br><small>相对路径 / HOME / 用户</small></div>
+          <div class="step"><span class="snum">2</span><strong>创建父目录</strong><br><small>必要时 mkdir</small></div>
+          <div class="step"><span class="snum">3</span><strong>写入文件</strong><br><small>Unix 文件权限</small></div>
+          <div class="step"><span class="snum">4</span><strong>设置 owner</strong><br><small>必要时 chown</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="abilities">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">3</span>envd 的核心能力</h2>
+
+    <div class="toggle-bar">
+      <button class="toggle active" data-mode="all">全部</button>
+      <button class="toggle" data-mode="core">腾讯指南核心</button>
+      <button class="toggle" data-mode="deep">E2B upstream 延伸</button>
+    </div>
+
+    <div class="grid-3">
+      <div class="card" data-detail="core">
+        <span class="tape blue"></span>
+        <div class="cap"><div class="icon">⌨️</div><div><h3>命令 / 进程执行</h3>
+          <ul><li>接收 command / args</li><li>确定 user / cwd / PATH / env</li><li>创建 Linux 子进程</li><li>处理 stdout / stderr / exit</li></ul>
+        </div></div>
+      </div>
+      <div class="card" data-detail="core">
+        <span class="tape green"></span>
+        <div class="cap"><div class="icon">📁</div><div><h3>文件系统操作</h3>
+          <ul><li>读 / 写 / 上传 / 下载</li><li>解析用户 HOME</li><li>创建父目录</li><li>按目标用户处理 ownership</li></ul>
+        </div></div>
+      </div>
+      <div class="card" data-detail="core">
+        <span class="tape red"></span>
+        <div class="cap"><div class="icon">❤️</div><div><h3>健康检查</h3>
+          <ul><li>默认管理端口 49983</li><li>推荐探针 /health</li><li>AGS 通过健康探针判断实例是否可用</li></ul>
+        </div></div>
+      </div>
+      <div class="card" data-detail="core">
+        <span class="tape purple"></span>
+        <div class="cap"><div class="icon">👤</div><div><h3>执行上下文</h3>
+          <ul><li>/etc/passwd</li><li>UID / GID</li><li>HOME / USER / LOGNAME</li><li>defaultUser / defaultWorkdir（版本相关）</li></ul>
+        </div></div>
+      </div>
+      <div class="card" data-detail="deep">
+        <span class="tape blue"></span>
+        <div class="cap"><div class="icon">🔐</div><div><h3>安全访问</h3>
+          <ul><li>Sandbox controller API 可受 access token 保护</li><li>腾讯 AuthMode 可对 envd 49983 单独保持 Token 认证</li></ul>
+        </div></div>
+      </div>
+      <div class="card" data-detail="deep">
+        <span class="tape green"></span>
+        <div class="cap"><div class="icon">⚙️</div><div><h3>upstream 运行时能力</h3>
+          <ul><li>filesystem / process service</li><li>cgroup 管理</li><li>端口扫描/转发等运行时组件</li><li>当前 upstream 还包含 live-upgrade / handover 相关逻辑</li></ul>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="warning">
+      <b>边界提醒：</b>“E2B upstream 当前源码具备的能力”不等于“腾讯修改版 v0.5.14 已全部支持”。腾讯场景应以腾讯版指南和实际产品行为为准。
+    </div>
+  </div>
+</section>
+
+<section id="user">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">4</span>为什么 username / root / 权限这么重要？</h2>
+    <div class="grid-2">
+      <div class="card">
+        <span class="tape yellow"></span>
+        <h3>username 不是一个“标签”</h3>
+        <div class="flow" style="margin-top:22px">
+          <div class="step"><span class="snum">1</span><strong>username=user</strong></div>
+          <div class="step"><span class="snum">2</span><strong>/etc/passwd</strong><br><small>查询系统用户</small></div>
+          <div class="step"><span class="snum">3</span><strong>UID / GID</strong><br><small>例如 1000 / 1000</small></div>
+          <div class="step"><span class="snum">4</span><strong>HOME</strong><br><small>/home/user</small></div>
+        </div>
+        <p>腾讯指南要求：目标用户必须能被系统用户库查到，UID/GID 必须可解析；相对路径通常按用户 HOME 解析。</p>
+      </div>
+      <div class="card">
+        <span class="tape red"></span>
+        <h3>envd 以 root 启动 ≠ 业务一定 root 运行</h3>
+        <div class="diagram" style="margin-top:12px">
+          <div class="node yellow">
+            <div class="title">envd · UID 0 root</div>
+            <div class="mini">拥有 setuid/setgid/chown 等更完整的管理权限</div>
+          </div>
+          <div class="arrow" style="height:52px;transform:rotate(90deg)">
+            <svg viewBox="0 0 90 40"><path d="M4 18 C26 13,50 22,78 17"/><path d="M68 10 L80 17 L69 25"/></svg>
+          </div>
+          <div class="grid-2">
+            <div class="node blue"><b>命令 A</b><br>以 user(1000) 运行</div>
+            <div class="node green"><b>命令 B</b><br>以 sandbox(1001) 运行</div>
+          </div>
+        </div>
+        <p>root 启动 envd 的意义是让“管理代理”具备足够权限去代表不同用户执行操作，而不是要求业务代码都以 root 身份运行。</p>
+      </div>
+    </div>
+
+    <div class="warning">
+      <b>非 root envd 的典型限制：</b>健康检查通常仍可工作；但切换到其他 UID、把文件 chown 给 root/其他用户时可能因 Unix 权限失败。上传失败还可能发生在文件已创建/截断之后，因此要注意副作用。
+    </div>
+  </div>
+</section>
+
+<section id="port">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">5</span>为什么 49983 是“特殊端口”？</h2>
+    <div class="grid-2">
+      <div class="card">
+        <span class="tape red"></span>
+        <h3>envd 管理端口 · 49983</h3>
+        <p class="port"><span class="dot"></span> TCP / HTTP 管理入口</p>
+        <ul>
+          <li>健康检查</li>
+          <li>命令 / 进程管理</li>
+          <li>文件系统管理</li>
+          <li>属于高权限“控制能力”入口</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tape green"></span>
+        <h3>业务端口 · 8080 / 3000 / …</h3>
+        <p class="port"><span class="dot"></span> 业务流量入口</p>
+        <ul>
+          <li>Web 服务</li>
+          <li>Agent 服务</li>
+          <li>Notebook / Preview</li>
+          <li>安全语义与 49983 不同</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info">
+      腾讯云当前 <b>AuthMode=PUBLIC</b> 的官方定义明确区分了二者：<span class="high-y">envd 管理端口 49983 仍需 Token，其他端口可公开访问</span>。这反映出管理端口与业务端口不同的风险级别。
+    </div>
+  </div>
+</section>
+
+<section id="versions">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">6</span>腾讯修改版：v0.2.11 vs v0.5.14</h2>
+    <p class="section-note">以下差异以你上传的《envd 使用指南》为基准，不用 upstream 新版行为反向覆盖腾讯版文档。</p>
+
+    <div class="compare">
+      <div class="card version">
+        <span class="tape blue"></span>
+        <h3>v0.2.11 <span class="badge">旧版行为</span></h3>
+        <dl>
+          <dt>命令执行</dt><dd>直接执行请求中的 cmd + args，不自动包一层 shell。</dd>
+          <dt>Shell 语法</dt><dd>管道、重定向、&&、通配符等需显式 /bin/bash -lc 或 /bin/sh -c。</dd>
+          <dt>/init</dt><dd>指南中描述为仅设置环境变量。</dd>
+          <dt>文件上传</dt><dd>/files 仅支持 multipart/form-data；不支持 application/octet-stream 原始 body。</dd>
+          <dt>OOM 行为</dt><dd>命令启动后会尝试写 /proc/&lt;pid&gt;/oom_score_adj；失败仅记录错误，不阻止命令继续。</dd>
+        </dl>
+      </div>
+
+      <div class="vs">VS</div>
+
+      <div class="card version">
+        <span class="tape green"></span>
+        <h3>v0.5.14 <span class="badge">指南推荐</span></h3>
+        <dl>
+          <dt>命令执行</dt><dd>SDK 命令会被 envd 包装为 /bin/sh -c，并涉及 oom_score_adj 与 /usr/bin/nice。</dd>
+          <dt>镜像依赖</dt><dd>需要 /bin/sh、/usr/bin/nice，且相应 /proc/…/oom_score_adj 需要满足写入条件。</dd>
+          <dt>-cmd 参数</dt><dd>使用 /bin/bash -l -c；工作目录固定为 /home/user，因此需 bash 且目录存在。</dd>
+          <dt>默认用户</dt><dd>默认 root；可通过 /init 的 defaultUser 设置。</dd>
+          <dt>默认工作目录</dt><dd>支持 /init 的 defaultWorkdir。</dd>
+          <dt>文件上传</dt><dd>支持 multipart/form-data 与 application/octet-stream；后者需 path 查询参数。</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">7</span>为什么经常这样启动？</h2>
+    <div class="terminal"><code>/usr/bin/envd &gt; /tmp/envd.log 2&gt;&amp;1 &amp; exec node /app/server.js</code></div>
+
+    <div class="grid-2" style="margin-top:20px">
+      <div class="card">
+        <span class="tape blue"></span>
+        <h3>逐段拆开</h3>
+        <div class="annot">
+          <span class="tag">/usr/bin/envd</span><span>启动沙箱管理守护进程。</span>
+          <span class="tag">&gt; /tmp/envd.log</span><span>stdout 写入 envd 日志。</span>
+          <span class="tag">2&gt;&amp;1</span><span>stderr 合并到 stdout。</span>
+          <span class="tag">&amp;</span><span>envd 放到后台运行。</span>
+          <span class="tag">exec node...</span><span>业务进程替换当前 shell，作为前台主进程。</span>
+        </div>
+      </div>
+      <div class="card">
+        <span class="tape yellow"></span>
+        <h3>容器内典型进程结构</h3>
+        <div class="diagram">
+          <div class="node yellow"><b>/usr/bin/envd</b> <span class="port">:49983</span><br><small>AGS 管理能力</small></div>
+          <div style="height:10px"></div>
+          <div class="node green"><b>node /app/server.js</b> <span class="port">:8080</span><br><small>业务能力</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning"><b>注意：</b>如果使用 <code>/bin/bash -l -c</code> 启动模板，最终镜像必须真的包含 <code>/bin/bash</code>。distroless / scratch / 极简镜像常常没有。</div>
+  </div>
+</section>
+
+<section id="debug">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">8</span>沙箱起不来 / SDK 命令失败，怎么查？</h2>
+    <div class="checklist">
+      <div class="check"><b>镜像架构</b><br><small>是否为 AGS 推荐的 linux/amd64？</small></div>
+      <div class="check"><b>/usr/bin/envd</b><br><small>是否存在且具备执行权限？</small></div>
+      <div class="check"><b>envd 进程</b><br><small><code>ps aux | grep envd</code></small></div>
+      <div class="check"><b>49983 监听</b><br><small><code>ss -lntp</code></small></div>
+      <div class="check"><b>/health</b><br><small><code>curl http://127.0.0.1:49983/health</code></small></div>
+      <div class="check"><b>健康探针</b><br><small>路径 /health，端口 49983。</small></div>
+      <div class="check"><b>用户</b><br><small>username 是否存在于 /etc/passwd？</small></div>
+      <div class="check"><b>cwd</b><br><small>命令工作目录是否已经存在？</small></div>
+      <div class="check"><b>PATH</b><br><small>envd 的 PATH 是否能找到业务命令？必要时用绝对路径。</small></div>
+      <div class="check"><b>v0.5.14 依赖</b><br><small>/bin/sh、/usr/bin/nice、/proc/oom_score_adj 条件。</small></div>
+      <div class="check"><b>启动命令</b><br><small>是否覆盖/遗漏 envd 启动逻辑？</small></div>
+      <div class="check"><b>业务前台进程</b><br><small>是否过早退出导致实例异常？</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="position">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">9</span>从产品架构看，envd 属于哪里？</h2>
+    <div class="layers">
+      <div class="layer"><strong>接入 / 控制面</strong><span>Agent / SDK / AGS API：创建、启动、停止、Token、调度、配置。</span></div>
+      <div class="layer"><strong>运行域 · 沙箱运行时</strong><span><b class="scribble">envd：Guest Management Agent</b>，承接管理请求。</span></div>
+      <div class="layer"><strong>Guest OS</strong><span>用户、UID/GID、进程、文件系统、/proc、shell、运行时。</span></div>
+      <div class="layer"><strong>业务负载</strong><span>Web / Agent / Notebook / Python / Node / Java 等实际服务。</span></div>
+    </div>
+
+    <div class="big-quote" style="font-size:24px;margin-top:34px">
+      产品定义建议：<br>
+      <span class="high-g">“运行域 → 沙箱运行时 → 沙箱内管理代理（Guest Management Agent）”</span>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">10</span>一条 commands.run() 到底经历什么？</h2>
+    <div class="flow">
+      <div class="step"><span class="snum">1</span><strong>Agent</strong><br><small>提出执行请求</small></div>
+      <div class="step"><span class="snum">2</span><strong>SDK</strong><br><small>commands.run()</small></div>
+      <div class="step"><span class="snum">3</span><strong>云侧接入</strong><br><small>定位 Sandbox / 鉴权</small></div>
+      <div class="step"><span class="snum">4</span><strong>envd :49983</strong><br><small>收到管理请求</small></div>
+      <div class="step"><span class="snum">5</span><strong>解析上下文</strong><br><small>user / cwd / PATH / env</small></div>
+      <div class="step"><span class="snum">6</span><strong>创建进程</strong><br><small>shell / exec / nice（版本相关）</small></div>
+      <div class="step"><span class="snum">7</span><strong>Guest Linux</strong><br><small>真正执行程序</small></div>
+      <div class="step"><span class="snum">8</span><strong>结果返回</strong><br><small>stdout / stderr / exit code</small></div>
+    </div>
+
+    <div class="big-quote" style="margin-top:46px">
+      <span class="high-y">SDK/API 语义</span>
+      &nbsp;→&nbsp; <b>envd</b> &nbsp;→&nbsp;
+      <span class="high-b">Linux 内部操作</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">✓</span>最后用一张“速记表”收尾</h2>
+    <div style="overflow:auto">
+      <table>
+        <thead><tr><th>问题</th><th>正确理解</th></tr></thead>
+        <tbody>
+          <tr><td>envd 是什么？</td><td>沙箱内部管理守护进程 / Guest Management Agent。</td></tr>
+          <tr><td>它在哪里？</td><td>运行在具体 Sandbox 的 Guest 环境内部。</td></tr>
+          <tr><td>谁调用它？</td><td>SDK / 沙箱控制路径，用它把高级管理请求落地到 Linux。</td></tr>
+          <tr><td>最核心能力？</td><td>命令/进程、文件系统、健康检查，以及用户/工作目录/环境上下文处理。</td></tr>
+          <tr><td>默认端口？</td><td>49983。</td></tr>
+          <tr><td>为什么建议 root？</td><td>为了更完整地执行 setuid/setgid/chown 等跨用户管理动作；不代表业务必须 root。</td></tr>
+          <tr><td>为什么业务活着仍可能沙箱不可用？</td><td>业务进程和 envd 是两个角色；envd 未正常提供 49983 /health 时，AGS 管理能力可能失败。</td></tr>
+          <tr><td>腾讯版和 upstream 能否直接等同？</td><td><b>不能。</b>腾讯修改版行为优先看腾讯指南；upstream 只用于理解设计与演进。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <h2 class="section-title"><span class="num">S</span>资料来源与边界</h2>
+    <div class="source-list">
+      <div class="source">
+        <b>[T0] 用户上传：《envd 使用指南》</b><br>
+        <small>作为腾讯修改版 envd v0.5.14 / v0.2.11 的主要依据：镜像引入、49983、/health、用户/路径/权限、启动方式、版本差异、非 root 限制。</small>
+      </div>
+      <div class="source">
+        <b>[T1] 腾讯云 Agent Runtime · StartSandboxInstance</b><br>
+        <small>核验 AuthMode=PUBLIC 对 envd 49983 的特殊认证语义，以及官方示例中的 /health:49983 探针。</small><br>
+        <a href="https://cloud.tencent.com/document/product/1814/124816" target="_blank" rel="noreferrer">cloud.tencent.com/document/product/1814/124816</a>
+      </div>
+      <div class="source">
+        <b>[E1] E2B envd · Go package README</b><br>
+        <small>官方定义：envd 是运行在 sandbox 内、允许 SDK 调用与 sandbox 交互的 daemon。</small><br>
+        <a href="https://pkg.go.dev/github.com/e2b-dev/infra/packages/envd" target="_blank" rel="noreferrer">pkg.go.dev/github.com/e2b-dev/infra/packages/envd</a>
+      </div>
+      <div class="source">
+        <b>[E2] E2B · Secured access</b><br>
+        <small>说明 sandbox controller 位于 sandbox 内并暴露 filesystem / command / control APIs，secure access 使用 access token 保护。</small><br>
+        <a href="https://e2b.dev/docs/sandbox/secured-access" target="_blank" rel="noreferrer">e2b.dev/docs/sandbox/secured-access</a>
+      </div>
+      <div class="source">
+        <b>[E3] E2B infra · packages/envd/main.go（当前 upstream）</b><br>
+        <small>核验当前源码中的 defaultPort=49983、defaultUser=root、filesystem/process/cgroups 等模块；此处仅用于 upstream 演进说明。</small><br>
+        <a href="https://github.com/e2b-dev/infra/blob/main/packages/envd/main.go" target="_blank" rel="noreferrer">github.com/e2b-dev/infra/blob/main/packages/envd/main.go</a>
+      </div>
+    </div>
+
+    <div class="warning">
+      <b>重要边界：</b>本信息图将“腾讯修改版 envd”与“E2B 当前 upstream”明确分开。若二者存在差异，腾讯 AGS 场景以腾讯版使用指南和腾讯云产品行为为准。
+    </div>
+    <p class="print-note">提示：此 HTML 为单文件、无外部字体/脚本依赖，支持桌面与手机浏览；可直接打印为 PDF。</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>envd · 手绘草图式信息图</b><br>
+    设计语言：纸张底纹 / 手绘边框 / 胶带便签 / 草图箭头 / 高亮笔记。内容基于用户上传指南，并结合腾讯云与 E2B 官方资料核验。
+  </div>
+</footer>
+
+<script>
+(function(){
+  const buttons=[...document.querySelectorAll('button.toggle')];
+  const deep=[...document.querySelectorAll('[data-detail="deep"]')];
+  const core=[...document.querySelectorAll('[data-detail="core"]')];
+
+  function apply(mode){
+    buttons.forEach(b=>b.classList.toggle('active', b.dataset.mode===mode));
+    if(mode==='all'){
+      [...deep,...core].forEach(x=>x.classList.remove('is-hidden'));
+    }else if(mode==='core'){
+      core.forEach(x=>x.classList.remove('is-hidden'));
+      deep.forEach(x=>x.classList.add('is-hidden'));
+    }else{
+      deep.forEach(x=>x.classList.remove('is-hidden'));
+      core.forEach(x=>x.classList.add('is-hidden'));
+    }
+  }
+  buttons.forEach(b=>b.addEventListener('click',()=>apply(b.dataset.mode)));
+})();
+</script>
+</body>
+</html>

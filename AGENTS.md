@@ -10,14 +10,15 @@
 1. **每次执行任务前，必须先读取本项目根目录的 `AGENTS.md`（即本文件）**，获取项目上下文与最新约定，再开始任何编码、修改或生成操作。
 2. 修改 `README.md` 或新增项目文件时，必须同步维护本文件中「第 3 节：项目文件与在线访问路径」表格，保证文档与项目实际文件一一对应。
 3. 新生成的 HTML / 文档等可在线访问的文件，必须按「第 3 节」规则生成对应的 GitHub Pages 访问路径，并登记到表格中。
-4. 提交（commit / push）前，检查文档内容与项目实际文件保持一致，避免遗漏。
-5. 项目仓库：`git@github.com:Charles-yueyue831/agentruntime.git`（分支 `main`）。
+4. **新增或修改 HTML 文档时，必须维护各文档顶部的互链导航条**：包含「🏠 README 首页」链接与全部文档的跳转链接，当前页以深色背景 + "· 当前" 标记高亮；新增文档需在其余所有文档的导航条中同步加入。
+5. 提交（commit / push）前，检查文档内容与项目实际文件保持一致，避免遗漏。
+6. 项目仓库：`git@github.com:Charles-yueyue831/agentruntime.git`（分支 `main`）。
 
 ---
 
 ## 2. 项目概述
 
-本项目为 **腾讯云 Agent Runtime（Agent 沙箱）学习资料库**，以手绘草图（Excalidraw 风）HTML 页面讲解核心概念，覆盖技术向（存储挂载 `StorageMount` / `MountOption`、实例覆盖 Tool 挂载配置、存储管控边界）与产品向（产品经理元概念词典、用户旅程观察、问题性质四问归类法）两类学习内容。
+本项目为 **腾讯云 Agent Runtime（Agent 沙箱）学习资料库**，以手绘草图（Excalidraw 风）HTML 页面讲解核心概念，覆盖技术向（沙箱内管理守护进程 envd、存储挂载 `StorageMount` / `MountOption`、实例覆盖 Tool 挂载配置、存储管控边界）与产品向（产品经理元概念词典、用户旅程观察、问题性质四问归类法）两类学习内容。
 
 - **仓库名称**：`agentruntime`
 - **GitHub Pages 站点根路径**：`https://charles-yueyue831.github.io/agentruntime/`
@@ -29,16 +30,18 @@
 | # | 本地路径（仓库内） | 内容说明 | 在线访问路径 |
 | --- | --- | --- | --- |
 | 1 | `README.md` | 项目总览与学习资料索引 | https://charles-yueyue831.github.io/agentruntime/ |
-| 2 | `Agent 沙箱/存储/挂载路径覆盖.html` | 图解「为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控」（MountPath 是位置，StorageSource / ReadOnly 上限 / 路径规则才是边界） | https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html |
-| 3 | `产品经理/产品经理黑话.html` | 腾讯云 Agent 沙箱 · 产品经理元概念词典（从「为什么做」到「怎么证明可信」共 11 章 + 总链路 + 官方事实锚点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html |
-| 4 | `产品经理/用户旅程图.html` | 姿势 · 流程 · 旅程图：三个观察高度（手绘笔记：三层观察台可下钻、三者对比速查、为四问归类法供证据、实操顺序与误区便签） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html |
-| 5 | `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html |
+| 2 | `Agent 沙箱/计算与执行/envd 使用指南.html` | envd · 沙箱内管理守护进程（Guest Management Agent，把 SDK / 云侧管理请求转换为 Guest Linux 中真实的命令、进程、文件与健康检查操作；管理端口 49983 与业务端口分离） | https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%A7%E8%A1%8C/envd%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html |
+| 3 | `Agent 沙箱/存储/挂载路径覆盖.html` | 图解「为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控」（MountPath 是位置，StorageSource / ReadOnly 上限 / 路径规则才是边界） | https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html |
+| 4 | `产品经理/产品经理黑话.html` | 腾讯云 Agent 沙箱 · 产品经理元概念词典（从「为什么做」到「怎么证明可信」共 11 章 + 总链路 + 官方事实锚点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html |
+| 5 | `产品经理/用户旅程图.html` | 姿势 · 流程 · 旅程图：三个观察高度（手绘笔记：三层观察台可下钻、三者对比速查、为四问归类法供证据、实操顺序与误区便签） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html |
+| 6 | `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html |
 
 **访问路径生成规则**：任意新增文件，其在线访问路径 = `https://charles-yueyue831.github.io/agentruntime/` + 仓库内相对路径（空格 → `%20`，中文 → UTF-8 百分号编码）。
 
 ## 4. 学习主题
 
-**技术向（Agent Runtime 存储挂载）**
+**技术向（Agent Runtime 沙箱）**
+- **envd（沙箱内管理守护进程）**：Guest Management Agent，把 SDK / 云侧管理请求转换为 Guest Linux 中真实的命令、进程、文件与健康检查操作；管理端口 49983 与业务端口（8080 / 3000 / …）相分离
 - **StorageMount（Tool 级）**：定义默认存储来源（StorageSource）、默认 MountPath、默认 ReadOnly，即「允许使用什么存储、最多能有什么权限、默认挂到哪里」
 - **MountOption（Instance 级）**：引用已有的 StorageMount.Name，可覆盖本地 MountPath、追加 SubPath、收紧 ReadOnly，但不能替换存储来源或放宽权限
 - **管控边界**：MountPath 只是容器内「位置」；StorageSource 不可换、ReadOnly 只能收紧、路径合法性由平台统一校验
