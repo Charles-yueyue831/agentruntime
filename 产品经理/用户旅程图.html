@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>姿势 · 流程 · 旅程图：三个观察高度（手绘笔记）</title>
+<style>
+@font-face{font-family:'Ma Shan Zheng';src:url('assets/fonts/MaShanZheng-Regular.ttf') format('truetype');font-display:swap}
+@font-face{font-family:'Caveat';src:url('assets/fonts/Caveat.ttf') format('truetype');font-display:swap}
+:root{
+  --paper:#f7f1e3;--paper2:#fdfaf2;--ink:#33302a;--ink-soft:#6b665c;
+  --blue:#2f6fb2;--green:#3d8a5a;--orange:#d07a2d;--purple:#8a5fb0;--red:#b8453a;
+  --hl:rgba(242,209,61,.38);
+  --hand:'Ma Shan Zheng',cursive;--note:'Caveat',cursive;
+  --body:'Noto Sans SC','Hiragino Sans GB','PingFang SC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background-color:var(--paper);
+  background-image:linear-gradient(rgba(51,48,42,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(51,48,42,.045) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);font-family:var(--body);font-weight:400;font-size:15px;line-height:1.7;text-wrap:pretty;
+}
+body.no-grid{background-image:none}
+.wrap{max-width:1180px;margin:0 auto;padding:48px 32px 140px}
+.sk-br1{border-radius:255px 15px 225px 15px/15px 225px 15px 255px}
+.sk-br2{border-radius:15px 225px 15px 255px/255px 15px 225px 15px}
+.sk-br3{border-radius:225px 15px 255px 15px/15px 255px 15px 225px}
+.hl{background:var(--hl);padding:0 4px}
+.tape{position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(-2deg);width:110px;height:26px;background:rgba(242,209,61,.75);border-left:2px dashed rgba(51,48,42,.3);border-right:2px dashed rgba(51,48,42,.3)}
+
+.hero{position:relative;text-align:center;margin:24px auto 60px;max-width:840px;background:var(--paper2);border:2.5px solid var(--ink);padding:44px 40px 34px;box-shadow:4px 5px 0 rgba(51,48,42,.28)}
+.hero .kicker{font-family:var(--note);font-size:22px;color:var(--ink-soft);letter-spacing:.06em}
+.hero h1{font-family:var(--hand);font-size:clamp(32px,4.6vw,48px);font-weight:400;line-height:1.25;margin:6px 0 14px}
+.hero .sub{color:var(--ink-soft);max-width:640px;margin:0 auto}
+.hero .formula{display:inline-block;margin-top:16px;font-family:var(--hand);font-size:19px;border:2px solid var(--ink);padding:4px 18px;background:var(--paper);transform:rotate(-1deg)}
+
+.sec-title{display:flex;align-items:baseline;gap:14px;margin:72px 0 10px}
+.sec-title .num{font-family:var(--note);font-size:34px;color:var(--red)}
+.sec-title h2{font-family:var(--hand);font-size:32px;font-weight:400}
+.sec-hint{color:var(--ink-soft);font-size:13.5px;margin-bottom:26px}
+.sec-hint .click{font-family:var(--note);font-size:17px;color:var(--blue)}
+
+/* three-layer observatory */
+.obs{position:relative}
+.band{position:relative;background:var(--paper2);border:2.5px solid var(--ink);padding:22px 24px 18px;margin-bottom:6px}
+.band .b-label{position:absolute;top:-14px;left:22px;font-family:var(--hand);font-size:19px;background:var(--paper);border:2px solid var(--ink);padding:0 14px;transform:rotate(-1.5deg)}
+.band .b-desc{font-size:12.5px;color:var(--ink-soft);margin:6px 0 14px 2px}
+.band-journey{border-color:var(--blue)}
+.band-journey .b-label{color:var(--blue)}
+.band-flow{border-color:var(--orange)}
+.band-flow .b-label{color:var(--orange)}
+.band-posture{border-color:var(--green)}
+.band-posture .b-label{color:var(--green)}
+.drill{display:flex;justify-content:center;align-items:center;gap:8px;color:var(--ink-soft);font-size:12.5px;margin:4px 0 10px}
+.drill .d-arr{font-family:var(--note);font-size:20px;color:var(--red)}
+.crumb{font-family:var(--hand);font-size:16px;color:var(--ink)}
+.crumb b{font-weight:400;background:var(--hl);padding:0 4px}
+
+.stages{display:flex;gap:10px;flex-wrap:wrap}
+.stage{flex:1 1 150px;min-width:140px;border:2px solid var(--ink);background:var(--paper);padding:12px 12px 10px;cursor:pointer;text-align:center;transition:transform .18s ease}
+.stage:hover{transform:rotate(-1.2deg) scale(1.04)}
+.stage h4{font-family:var(--hand);font-size:19px;font-weight:400;line-height:1.35}
+.stage .s-emo{font-family:var(--note);font-size:15px;color:var(--ink-soft)}
+.stage.on{background:#fff;box-shadow:4px 5px 0 rgba(51,48,42,.28);outline:2px dashed var(--blue);outline-offset:-6px}
+.stage.pain .s-emo{color:var(--red)}
+.stage .pain-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-left:5px}
+.emo-svg{margin-top:14px;width:100%;height:64px;display:block}
+
+.steps{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.step{flex:1 1 130px;min-width:120px;border:2px solid var(--ink);background:var(--paper);padding:12px 10px 9px;cursor:pointer;text-align:center;transition:transform .18s ease;position:relative}
+.step:hover{transform:rotate(1.1deg) scale(1.04)}
+.step h5{font-family:var(--hand);font-size:18px;font-weight:400;line-height:1.35}
+.step .st-n{font-family:var(--note);font-size:14px;color:var(--ink-soft)}
+.step.on{background:#fff;box-shadow:4px 5px 0 rgba(51,48,42,.28);outline:2px dashed var(--orange);outline-offset:-6px}
+.step .has-p{position:absolute;top:-9px;right:8px;font-family:var(--note);font-size:13px;color:#fff;background:var(--green);border:1.5px solid var(--ink);border-radius:999px;padding:0 7px;transform:rotate(2deg)}
+.step.no-p{cursor:default;opacity:.75}
+.step .arr-cell{display:flex;align-items:center;font-family:var(--note);font-size:22px;color:var(--ink-soft)}
+
+.postures{display:flex;gap:14px;flex-wrap:wrap}
+.posture{flex:1 1 240px;max-width:340px;border:2px solid var(--ink);background:#fdf6d8;padding:14px 16px 11px;cursor:pointer;transition:transform .18s ease;position:relative}
+.posture:nth-child(2n){background:#eef3e2}
+.posture:nth-child(3n){background:#e5eef7}
+.posture:hover{transform:rotate(-1.2deg) scale(1.04);box-shadow:4px 5px 0 rgba(51,48,42,.28)}
+.posture h6{font-family:var(--hand);font-size:17px;font-weight:400;line-height:1.4}
+.posture .p-sig{font-size:12px;color:var(--ink-soft);margin-top:4px}
+.posture .p-cat{display:inline-block;margin-top:8px;font-size:12px;border:1.5px solid;border-radius:999px;padding:0 9px}
+.p-empty{border:2px dashed rgba(51,48,42,.35);padding:18px;color:var(--ink-soft);font-size:13.5px;text-align:center;flex:1}
+
+.loop-legend{display:flex;justify-content:space-between;gap:16px;margin-top:16px;flex-wrap:wrap}
+.loop-legend .lg{flex:1 1 320px;font-size:13px;border:2px dashed rgba(51,48,42,.35);padding:10px 16px;background:var(--paper)}
+.loop-legend .up{color:var(--green)}
+.loop-legend .down{color:var(--red)}
+.loop-legend b{font-weight:500}
+
+/* journey lanes */
+.lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.lane{border:2px solid var(--ink);background:var(--paper);padding:10px 14px 9px;font-size:13px;line-height:1.5}
+.lane .l-label{font-family:var(--hand);font-size:16px;display:block;margin-bottom:2px}
+.lane .l-new{font-family:var(--note);font-size:14px;color:var(--red)}
+.lane.new{background:rgba(242,209,61,.28)}
+.lane .l-actors span{display:inline-block;border:1.5px solid var(--ink);border-radius:999px;padding:0 8px;font-size:12px;margin:2px 4px 0 0;background:var(--paper2)}
+@media (max-width:900px){.lanes{grid-template-columns:1fr 1fr}}
+
+/* compare table */
+.cmp{width:100%;border-collapse:separate;border-spacing:0;background:var(--paper2);border:2.5px solid var(--ink)}
+.cmp th,.cmp td{border-bottom:1.5px dashed rgba(51,48,42,.3);border-right:1.5px dashed rgba(51,48,42,.3);padding:12px 14px;font-size:13.5px;text-align:left;vertical-align:top}
+.cmp th{font-family:var(--hand);font-size:18px;font-weight:400;background:var(--paper)}
+.cmp tr:last-child td{border-bottom:none}
+.cmp th:last-child,.cmp td:last-child{border-right:none}
+.cmp td.rowh{font-family:var(--hand);font-size:16px;white-space:nowrap}
+.cmp .c1{color:var(--green)}.cmp .c2{color:var(--orange)}.cmp .c3{color:var(--blue)}
+
+/* gate mapping */
+.gmap{display:flex;flex-direction:column;gap:14px}
+.gm-row{display:grid;grid-template-columns:1fr 90px 1fr;gap:0 10px;align-items:center}
+.gm-l,.gm-r{border:2px solid var(--ink);background:var(--paper2);padding:12px 16px;font-size:13.5px}
+.gm-l b,.gm-r b{font-weight:500}
+.gm-mid{text-align:center;font-family:var(--note);font-size:19px;color:var(--red)}
+.gm-row .tag{display:inline-block;font-size:11.5px;border:1.5px solid;border-radius:999px;padding:0 8px;margin-right:6px}
+
+/* notes */
+.notes{display:flex;flex-wrap:wrap;gap:26px}
+.note{position:relative;flex:1 1 300px;max-width:370px;background:#fdf6d8;border:2px solid var(--ink);padding:24px 20px 16px;transition:transform .18s ease}
+.note:nth-child(2n){background:#eef3e2}.note:nth-child(3n){background:#f3e9f6}.note:nth-child(4n){background:#e5eef7}.note:nth-child(5n){background:#faeae3}
+.note:hover{transform:rotate(-1.2deg) scale(1.04);box-shadow:4px 5px 0 rgba(51,48,42,.28)}
+.note h5{font-family:var(--hand);font-size:20px;font-weight:400;margin-bottom:6px}
+.note p{font-size:13.5px}
+.note .n-idx{position:absolute;top:-13px;right:14px;font-family:var(--note);font-size:20px;color:var(--red)}
+
+/* drawer */
+.backdrop{position:fixed;inset:0;background:rgba(51,48,42,.25);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40}
+.backdrop.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;left:50%;bottom:0;transform:translate(-50%,120%);width:min(880px,94vw);max-height:70vh;overflow:auto;background:var(--paper2);border:2.5px solid var(--ink);border-bottom:none;padding:34px 38px 30px;z-index:50;transition:transform .45s cubic-bezier(.2,1.1,.3,1)}
+.drawer.open{transform:translate(-50%,0)}
+.drawer h3{font-family:var(--hand);font-size:27px;font-weight:400;margin-bottom:4px}
+.drawer .d-sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:16px}
+.drawer .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 28px}
+.drawer .d-block h6{font-family:var(--hand);font-size:18px;font-weight:400;border-bottom:1.5px dashed rgba(51,48,42,.35);padding-bottom:4px;margin-bottom:6px}
+.drawer .d-block p{font-size:14px}
+.drawer .d-close{position:absolute;top:14px;right:16px;font-family:var(--note);font-size:20px;border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:2px 12px;cursor:pointer}
+.drawer .d-close:hover{background:var(--hl)}
+
+.tweaks{position:fixed;right:18px;bottom:18px;z-index:60;background:var(--paper2);border:2px solid var(--ink);padding:12px 16px;box-shadow:4px 5px 0 rgba(51,48,42,.28);font-size:13px}
+.tweaks h6{font-family:var(--note);font-size:19px;margin-bottom:6px}
+.tweaks label{display:flex;align-items:center;gap:7px;padding:2px 0;cursor:pointer;white-space:nowrap}
+.tweaks input{accent-color:var(--blue)}
+
+footer{margin-top:80px;text-align:center;color:var(--ink-soft);font-size:13px}
+footer .hand{font-family:var(--hand);font-size:17px}
+
+@media (max-width:900px){
+  .gm-row{grid-template-columns:1fr}
+  .gm-mid{padding:4px 0}
+  .drawer .d-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4"/></filter>
+</svg>
+
+<div class="wrap">
+
+  <header class="hero sk-br1">
+    <div class="tape"></div>
+    <p class="kicker">Zoom Levels of Usage</p>
+    <h1>使用姿势 · 使用流程 · 用户旅程图</h1>
+    <p class="sub">三者不是并列的三个工具，而是<span class="hl">同一件事的三个观察高度</span>：旅程图 ⊃ 流程 ⊃ 姿势。数据向上聚合，问题向下定位。仍以 Agent 沙箱为例。</p>
+    <div class="formula">旅程图标痛点 → 流程找断点 → 姿势拿证据</div>
+  </header>
+
+  <section>
+    <div class="sec-title"><span class="num">01</span><h2>三层观察台（可下钻）</h2></div>
+    <p class="sec-hint"><span class="click">click!</span> 点旅程阶段看它的使用流程，再点流程步骤看采集到的真实姿势，点姿势看证据与指向的问题类别。</p>
+
+    <div class="obs">
+      <div class="band band-journey sk-br1">
+        <span class="b-label">宏观 · 用户旅程图</span>
+        <p class="b-desc">阶段 × 目标 × 行为 × 触点 × 情绪 × 痛点 × <b>角色</b> × <b>机会点</b> × <b>责任人</b>——回答「客户在哪段爽、哪段痛、谁来改」</p>
+        <div class="stages" id="stageRow"></div>
+        <svg class="emo-svg" id="emoSvg" viewBox="0 0 1000 64" preserveAspectRatio="none"><g id="emoG" filter="url(#wobble)"></g></svg>
+        <div class="lanes" id="laneGrid"></div>
+        <p class="b-desc" style="margin-top:10px">黄色 = 按语音备忘录补全的三层：<b>涉及角色 / 机会点 / 责任人</b>。旅程图的终态不是一张图，而是一张分工表——痛点 → 机会点 → 责任人，链条不能断。</p>
+      </div>
+
+      <div class="drill"><span class="crumb" id="crumb1"></span><span class="d-arr">▼</span><span>下钻：这个阶段客户具体要走哪几步</span></div>
+
+      <div class="band band-flow sk-br2">
+        <span class="b-label">中观 · 产品使用流程</span>
+        <p class="b-desc">单一阶段内的任务路径——<b>永远画两张</b>：设计版 vs 从姿势聚合还原的真实版，偏差即问题清单</p>
+        <div class="steps" id="stepRow"></div>
+      </div>
+
+      <div class="drill"><span class="crumb" id="crumb2"></span><span class="d-arr">▼</span><span>再下钻：这一步客户实际怎么操作</span></div>
+
+      <div class="band band-posture sk-br3">
+        <span class="b-label">微观 · 客户使用姿势</span>
+        <p class="b-desc">观测到的真实操作事实（埋点 / 回放 / 工单聚类）——<b>只能被看见，不能被设计</b></p>
+        <div class="postures" id="postureRow"></div>
+      </div>
+
+      <div class="loop-legend">
+        <div class="lg up"><b>▲ 数据向上聚合：</b>姿势聚类 → 还原真实流程 → 修正旅程图。姿势是唯一不靠人说的原料。</div>
+        <div class="lg down"><b>▼ 问题向下定位：</b>旅程图情绪低谷 → 定位到阶段；流程偏差 → 定位到步骤；姿势 → 拿到证据。</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="num">02</span><h2>三者对比速查</h2></div>
+    <p class="sec-hint">粒度、来源、回答的问题、产出者，一列一个高度。</p>
+    <table class="cmp sk-br2">
+      <tr><th></th><th class="c1">使用姿势（微观）</th><th class="c2">使用流程（中观）</th><th class="c3">用户旅程图（宏观）</th></tr>
+      <tr><td class="rowh">粒度</td><td class="c1">单次操作、习惯、误用、绕路</td><td class="c2">一个任务的完整步骤序列</td><td class="c3">客户与产品的整个生命周期</td></tr>
+      <tr><td class="rowh">怎么来的</td><td class="c1">观测：埋点、回放、工单聚类</td><td class="c2">一半设计、一半从姿势聚合还原</td><td class="c3">综合：流程之上叠加触点、情绪、痛点，以及角色、机会点、责任人</td></tr>
+      <tr><td class="rowh">回答什么</td><td class="c1">客户实际做了什么</td><td class="c2">事是怎么一步步办成的</td><td class="c3">客户在哪段爽、哪段痛</td></tr>
+      <tr><td class="rowh">谁产出</td><td class="c1">客观存在，数据/客服采集</td><td class="c2">产品设计 + 数据还原</td><td class="c3">产品 / 用研主动构建</td></tr>
+      <tr><td class="rowh">常见误区</td><td class="c1">只看工单文本，不看操作路径</td><td class="c2">只画设计版，以为那就是现实</td><td class="c3">没有姿势支撑，画成愿望投影</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="num">03</span><h2>给四问归类法供证据</h2></div>
+    <p class="sec-hint">三层观察恰好接上四问链的四个闸口——观察是证据，归类是结论。</p>
+    <div class="gmap" id="gmap"></div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="num">04</span><h2>实操顺序与误区便签</h2></div>
+    <p class="sec-hint">性价比最高的顺序是反着来的：先姿势，再流程，最后才画旅程大图。</p>
+    <div class="notes" id="noteRow"></div>
+  </section>
+
+  <footer>
+    <p class="hand">先看见，再归类，最后才画大图。</p>
+    <p>使用姿势 · 使用流程 · 用户旅程图 —— 三个观察高度 × 四问归类法</p>
+  </footer>
+</div>
+
+<div class="backdrop" id="backdrop"></div>
+<div class="drawer sk-br2" id="drawer">
+  <div class="tape"></div>
+  <button class="d-close" id="drawerClose">close ×</button>
+  <div id="drawerBody"></div>
+</div>
+
+<div class="tweaks sk-br1">
+  <h6>Tweaks</h6>
+  <label><input type="checkbox" id="twEmo" checked>情绪曲线</label>
+  <label><input type="checkbox" id="twPaper" checked>纸张纹理</label>
+  <label><input type="checkbox" id="twWobble" checked>手绘抖动</label>
+</div>
+
+<script>
+var STAGES=[
+  {name:'开通接入',emo:0,flow:['申请账号','审核开通','获取 API Key','配置 SDK'],pain:false,
+   goal:'拿到可用环境',touch:'文档站 · 销售',actors:['客户开发','我方销售'],
+   painTxt:'示例代码已过期',opp:'示例版本化 + 过期警告',owner:'文档 Owner'},
+  {name:'首次创建沙箱',emo:-2,flow:['配网络白名单','创建沙箱','装依赖','跑脚本'],pain:true,note:'情绪低谷：首次失败率最高、工单最密集',
+   goal:'建出首个沙箱',touch:'控制台 · API',actors:['客户开发','我方客服'],
+   painTxt:'装依赖又慢又重复',opp:'镜像预装产品化',owner:'产品 + 研发'},
+  {name:'跑通首个任务',emo:2,flow:['编写任务脚本','上传文件','执行','查看结果'],pain:false,
+   goal:'验证产品价值',touch:'控制台 · 日志页',actors:['客户开发'],
+   painTxt:'日志藏得太深',opp:'内嵌日志面板',owner:'前端'},
+  {name:'日常集成',emo:1,flow:['CI/CD 接入','监控告警','用量观察'],pain:false,
+   goal:'稳定跑量',touch:'监控告警 · 工单',actors:['客户运维','我方 SRE'],
+   painTxt:'高峰期偶发失败',opp:'稳定性治理专项',owner:'SRE'},
+  {name:'扩容续约',emo:1,flow:['用量评估','申请扩容','续约'],pain:false,
+   goal:'顺利扩量',touch:'微信群 · 工单',actors:['客户决策者','我方研发'],
+   painTxt:'扩容靠群里喊（N5）',opp:'配额产品化 + 自助申请',owner:'产品经理'}
+];
+
+/* postures keyed by "stageIdx:stepIdx" */
+var POSTURES={
+  '0:3':[{t:'复制群里流传的过期示例代码',sig:'入口姿势 · 入口偏移',cat:'文档或提示缺失',cc:'#2f6fb2',ev:'工单中客户贴的代码与最新 SDK 版本比对，参数已过期两代',handle:'文档示例加版本号与过期警告；群内置顶纠正'}],
+  '1:1':[{t:'超时参数每次都手动传，没有默认值',sig:'路径姿势 · 手感差',cat:'体验优化',cc:'#d07a2d',ev:'API 调用参数统计：92% 调用显式传了相同的 timeout',handle:'设合理默认值，参数改为可选'}],
+  '1:2':[{t:'每次手动 pip install 同一串包',sig:'频率姿势 · 重复劳动',cat:'需求 / 未产品化',cc:'#8a5fb0',ev:'会话日志聚类：每个会话开头平均执行 5 条相同安装命令，耗时 3-4 分钟',handle:'自定义镜像（新需求）或镜像预装能力产品化（未产品化）'},
+        {t:'从旧文档复制已下线的镜像名',sig:'入口姿势 · 信息过期',cat:'文档或提示缺失',cc:'#2f6fb2',ev:'创建失败工单中 40% 使用了 deprecated 镜像名',handle:'旧文档加跳转横幅；报错文案提示可用镜像列表'}],
+  '2:2':[{t:'冷启动等待超 10 秒的任务，三成被手动取消',sig:'放弃姿势 · 指标差',cat:'性能优化',cc:'#d07a2d',ev:'埋点：wait>10s 的任务取消率 31%，<5s 的仅 4%',handle:'预热池 + 镜像缓存，把 p95 冷启动压到 5 秒内'}],
+  '2:3':[{t:'拉一次日志要点三层页面、复制三次 ID',sig:'路径姿势 · 绕路',cat:'体验优化',cc:'#d07a2d',ev:'点击路径埋点：日志查看平均路径深度 3.2 层',handle:'会话详情页内嵌日志面板，一键复制上下文'}],
+  '4:1':[{t:'想扩容只能在群里喊工程师后台改',sig:'组合/误用 · 无自助入口',cat:'未产品化',cc:'#8a5fb0',ev:'真实工单 N5：49152000 → 60000000 MiB，两小时纯人工链路',handle:'配额查询 API + 控制台用量页 + 扩容申请入口 + 预警提示'}],
+  '3:2':[{t:'重要数据只存临时目录，会话销毁后丢失',sig:'误用姿势 · 误解设计',cat:'用法问题',cc:'#2f6fb2',ev:'数据丢失类工单聚类，每周约 20 起',handle:'个案解答引导；同类聚集后反哺：回收策略写进文档 + 销毁前主动提示'}]
+};
+
+var GMAP=[
+  {l:'<b>旅程图</b> · 情绪低谷标出的痛点阶段',m:'供证据',r:'<span class="tag" style="color:#5F5E5A;border-color:#5F5E5A">优先级</span><b>决定先处理哪批工单</b>——痛点阶段的反馈优先过闸'},
+  {l:'<b>流程</b> · 设计版 vs 真实版的偏差',m:'供证据',r:'<span class="tag" style="color:#d07a2d;border-color:#d07a2d">闸口三</span><b>够快够顺吗</b>——绕路是体验，慢是性能'},
+  {l:'<b>姿势</b> · 重复劳动与意外组合',m:'供证据',r:'<span class="tag" style="color:#8a5fb0;border-color:#8a5fb0">闸口一</span><b>能力存在吗</b>——客户在手工代偿的，就是要立项的'},
+  {l:'<b>姿势</b> · 实际操作路径回放',m:'供证据',r:'<span class="tag" style="color:#2f6fb2;border-color:#2f6fb2">闸口四</span><b>用户会用吗</b>——没讲还是没照做，看路径便知'}
+];
+
+var NOTES=[
+  {t:'顺序反过来做',p:'先采集姿势（工单聚类 + 埋点，成本最低）→ 还原关键任务的真实流程 → 再合成旅程图。此时情绪曲线有数据背书。'},
+  {t:'流程永远画两张',p:'设计版和真实还原版并排挂，两张之间的偏差就是现成的问题清单，直接送四问链归类。'},
+  {t:'姿势只能被看见',p:'它不被设计、不受愿望影响。工单告诉你客户哪里疼，姿势告诉你为什么疼。'},
+  {t:'警惕愿望投影',p:'没有姿势支撑的旅程图，画出来通常是团队愿望的投影——阶段正确、情绪优美、痛点是假的。'},
+  {t:'访谈的正确问法',p:'不问「你想要什么」（收集的是愿望），问「上次你做 X 的时候，具体点了哪里」（收集的才是姿势）。'},
+  {t:'终态是分工表',p:'痛点 → 机会点 → 责任人的链条不能断。只画到痛点的旅程图是诉苦墙；角色泳道一补，协调成本立现（N5：三个角色靠微信群人肉协调扩容）。'}
+];
+
+var brs=['sk-br1','sk-br2','sk-br3'];
+var selStage=1, selStep='1:2';
+
+/* journey band */
+var stageRow=document.getElementById('stageRow');
+function renderStages(){
+  stageRow.innerHTML='';
+  STAGES.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='stage '+brs[i%3]+(i===selStage?' on':'')+(s.pain?' pain':'');
+    var emoTxt=s.emo>0?'情绪 ↑':(s.emo<0?'情绪 ↓↓':'情绪 →');
+    d.innerHTML='<h4>'+s.name+(s.pain?'<span class="pain-dot"></span>':'')+'</h4><div class="s-emo">'+emoTxt+'</div>';
+    d.addEventListener('click',function(){selStage=i;autoStep();renderAll();});
+    stageRow.appendChild(d);
+  });
+  renderEmo();
+}
+function renderEmo(){
+  var g=document.getElementById('emoG');g.innerHTML='';
+  var n=STAGES.length,pts=[];
+  for(var i=0;i<n;i++){var x=60+i*(880/(n-1));var y=30-STAGES[i].emo*10;pts.push([x,y]);}
+  var line=document.createElementNS('http://www.w3.org/2000/svg','polyline');
+  line.setAttribute('points',pts.map(function(p){return p[0]+','+p[1];}).join(' '));
+  line.setAttribute('fill','none');line.setAttribute('stroke','#2f6fb2');line.setAttribute('stroke-width','2');
+  g.appendChild(line);
+  pts.forEach(function(p,i){
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',p[0]);c.setAttribute('cy',p[1]);
+    c.setAttribute('r',STAGES[i].pain?6:4);
+    c.setAttribute('fill',STAGES[i].pain?'#b8453a':'#2f6fb2');
+    g.appendChild(c);
+    if(STAGES[i].pain){
+      var t=document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',p[0]+12);t.setAttribute('y',p[1]+16);
+      t.setAttribute('font-size','15');t.setAttribute('fill','#b8453a');
+      t.textContent='痛点阶段';
+      g.appendChild(t);
+    }
+  });
+}
+
+/* flow band */
+var stepRow=document.getElementById('stepRow');
+function renderSteps(){
+  stepRow.innerHTML='';
+  var flow=STAGES[selStage].flow;
+  flow.forEach(function(st,i){
+    var key=selStage+':'+i;
+    var has=!!POSTURES[key];
+    var d=document.createElement('div');
+    d.className='step '+brs[i%3]+(key===selStep?' on':'')+(has?'':' no-p');
+    d.innerHTML=(has?'<span class="has-p">'+POSTURES[key].length+' 条姿势</span>':'')+
+      '<div class="st-n">step '+(i+1)+'</div><h5>'+st+'</h5>';
+    if(has){d.addEventListener('click',function(){selStep=key;renderAll();});}
+    stepRow.appendChild(d);
+    if(i<flow.length-1){
+      var a=document.createElement('div');a.className='arr-cell';a.textContent='→';
+      stepRow.appendChild(a);
+    }
+  });
+}
+function autoStep(){
+  var flow=STAGES[selStage].flow;
+  selStep='';
+  for(var i=0;i<flow.length;i++){if(POSTURES[selStage+':'+i]){selStep=selStage+':'+i;break;}}
+}
+
+/* posture band */
+var postureRow=document.getElementById('postureRow');
+function renderPostures(){
+  postureRow.innerHTML='';
+  var list=POSTURES[selStep]||[];
+  if(!list.length){
+    var e=document.createElement('div');e.className='p-empty';
+    e.textContent='这一步还没有姿势数据——埋点 / 回放 / 工单聚类，先采集再下结论。';
+    postureRow.appendChild(e);return;
+  }
+  list.forEach(function(p,i){
+    var d=document.createElement('div');d.className='posture '+brs[i%3];
+    d.style.transform='rotate('+((i%2?1:-1)*0.8)+'deg)';
+    d.innerHTML='<h6>'+p.t+'</h6><div class="p-sig">'+p.sig+'</div>'+
+      '<span class="p-cat" style="color:'+p.cc+';border-color:'+p.cc+'">⇒ '+p.cat+'</span>';
+    d.addEventListener('click',function(){openPosture(p);});
+    postureRow.appendChild(d);
+  });
+}
+
+/* journey lanes */
+function renderLanes(){
+  var s=STAGES[selStage];
+  var grid=document.getElementById('laneGrid');
+  var lanes=[
+    {label:'目标',txt:s.goal},
+    {label:'触点',txt:s.touch},
+    {label:'痛点',txt:s.painTxt},
+    {label:'涉及角色',actors:s.actors,isNew:true},
+    {label:'机会点',txt:s.opp,isNew:true},
+    {label:'责任人',txt:s.owner,isNew:true}
+  ];
+  grid.innerHTML='';
+  lanes.forEach(function(l,i){
+    var d=document.createElement('div');
+    d.className='lane '+brs[i%3]+(l.isNew?' new':'');
+    var body=l.actors
+      ?'<span class="l-actors">'+l.actors.map(function(a){return '<span>'+a+'</span>';}).join('')+'</span>'
+      :l.txt;
+    d.innerHTML='<span class="l-label">'+l.label+(l.isNew?'<span class="l-new"> new</span>':'')+'</span>'+body;
+    grid.appendChild(d);
+  });
+}
+
+/* crumbs */
+function renderCrumbs(){
+  var st=STAGES[selStage];
+  var stepName=selStep?st.flow[+selStep.split(':')[1]]:'（本阶段暂无姿势数据）';
+  document.getElementById('crumb1').innerHTML='当前：<b>'+st.name+'</b>';
+  document.getElementById('crumb2').innerHTML='当前：<b>'+st.name+' → '+stepName+'</b>';
+}
+
+/* gate mapping */
+var gmapEl=document.getElementById('gmap');
+GMAP.forEach(function(r,i){
+  var d=document.createElement('div');d.className='gm-row';
+  d.innerHTML='<div class="gm-l '+brs[i%3]+'">'+r.l+'</div><div class="gm-mid">── '+r.m+' ──▶</div><div class="gm-r '+brs[(i+1)%3]+'">'+r.r+'</div>';
+  gmapEl.appendChild(d);
+});
+
+/* notes */
+var noteRow=document.getElementById('noteRow');
+NOTES.forEach(function(n,i){
+  var d=document.createElement('div');d.className='note '+brs[i%3];
+  d.style.transform='rotate('+((i%2?1:-1)*(0.6+i*0.2))+'deg)';
+  d.innerHTML='<span class="n-idx">#'+(i+1)+'</span><h5>'+n.t+'</h5><p>'+n.p+'</p>';
+  noteRow.appendChild(d);
+});
+
+/* drawer */
+var drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop'),drawerBody=document.getElementById('drawerBody');
+function openPosture(p){
+  drawerBody.innerHTML='<h3 style="color:'+p.cc+'">'+p.t+'</h3><div class="d-sub">观察维度：'+p.sig+'</div>'+
+    '<div class="d-grid">'+
+    '<div class="d-block"><h6>证据来源</h6><p>'+p.ev+'</p></div>'+
+    '<div class="d-block"><h6>指向类别（过四问链后）</h6><p style="color:'+p.cc+'">'+p.cat+'</p></div>'+
+    '<div class="d-block" style="grid-column:1/-1"><h6>处理方向</h6><p>'+p.handle+'</p></div></div>';
+  drawer.classList.add('open');backdrop.classList.add('open');
+}
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open');}
+document.getElementById('drawerClose').addEventListener('click',closeDrawer);
+backdrop.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeDrawer();});
+
+/* tweaks */
+document.getElementById('twEmo').addEventListener('change',function(e){
+  document.getElementById('emoSvg').style.opacity=e.target.checked?1:0;
+});
+document.getElementById('twPaper').addEventListener('change',function(e){
+  document.body.classList.toggle('no-grid',!e.target.checked);
+});
+document.getElementById('twWobble').addEventListener('change',function(e){
+  var g=document.getElementById('emoG');
+  if(e.target.checked){g.setAttribute('filter','url(#wobble)');}else{g.removeAttribute('filter');}
+});
+
+function renderAll(){renderStages();renderSteps();renderPostures();renderCrumbs();renderLanes();}
+renderAll();
+</script>
+</body>
+</html>

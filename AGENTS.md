@@ -17,7 +17,7 @@
 
 ## 2. 项目概述
 
-本项目为 **腾讯云 Agent Runtime（Agent 沙箱）学习资料库**，以手绘草图（Excalidraw 风）HTML 页面讲解核心概念，覆盖技术向（存储挂载 `StorageMount` / `MountOption`、实例覆盖 Tool 挂载配置、存储管控边界）与产品向（产品经理元概念词典、问题性质四问归类法）两类学习内容。
+本项目为 **腾讯云 Agent Runtime（Agent 沙箱）学习资料库**，以手绘草图（Excalidraw 风）HTML 页面讲解核心概念，覆盖技术向（存储挂载 `StorageMount` / `MountOption`、实例覆盖 Tool 挂载配置、存储管控边界）与产品向（产品经理元概念词典、用户旅程观察、问题性质四问归类法）两类学习内容。
 
 - **仓库名称**：`agentruntime`
 - **GitHub Pages 站点根路径**：`https://charles-yueyue831.github.io/agentruntime/`
@@ -29,9 +29,10 @@
 | # | 本地路径（仓库内） | 内容说明 | 在线访问路径 |
 | --- | --- | --- | --- |
 | 1 | `README.md` | 项目总览与学习资料索引 | https://charles-yueyue831.github.io/agentruntime/ |
-| 2 | `storage/path override.html` | 图解「为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控」（MountPath 是位置，StorageSource / ReadOnly 上限 / 路径规则才是边界） | https://charles-yueyue831.github.io/agentruntime/storage/path%20override.html |
-| 3 | `产品经理黑话.html` | 腾讯云 Agent 沙箱 · 产品经理元概念词典（从「为什么做」到「怎么证明可信」共 11 章 + 总链路 + 官方事实锚点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html |
-| 4 | `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html |
+| 2 | `Agent 沙箱/存储/挂载路径覆盖.html` | 图解「为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控」（MountPath 是位置，StorageSource / ReadOnly 上限 / 路径规则才是边界） | https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html |
+| 3 | `产品经理/产品经理黑话.html` | 腾讯云 Agent 沙箱 · 产品经理元概念词典（从「为什么做」到「怎么证明可信」共 11 章 + 总链路 + 官方事实锚点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html |
+| 4 | `产品经理/用户旅程图.html` | 姿势 · 流程 · 旅程图：三个观察高度（手绘笔记：三层观察台可下钻、三者对比速查、为四问归类法供证据、实操顺序与误区便签） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html |
+| 5 | `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html |
 
 **访问路径生成规则**：任意新增文件，其在线访问路径 = `https://charles-yueyue831.github.io/agentruntime/` + 仓库内相对路径（空格 → `%20`，中文 → UTF-8 百分号编码）。
 
@@ -44,6 +45,7 @@
 
 **产品向（产品思维与元概念）**
 - **产品经理元概念词典**：从「为什么做 / 怎么看问题 / 怎么解决」到「怎么增长 / 怎么经营市场 / 怎么组织资源 / 怎么证明可信」的产品思维抽象层级梯子
+- **用户旅程观察**：使用姿势 · 使用流程 · 用户旅程图三个观察高度，可下钻的「三层观察台」，为问题定性提供证据
 - **问题性质判断 · 四问归类法**：四闸口 · 八出口，快速判断问题性质（需求类 / 实现类 / 认知类等），配合 Agent 沙箱八场景演练
 
 ## 5. 参考资料
