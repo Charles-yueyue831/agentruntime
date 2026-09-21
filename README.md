@@ -1,22 +1,30 @@
 # 腾讯云 Agent Runtime（Agent 沙箱）学习资料
 
 > 仓库：`agentruntime`
-> 在线访问：<https://charles-yueyue831.github.io/agentruntime/>
+> 在线访问：[在线查看](https://charles-yueyue831.github.io/agentruntime/)
 
 ## 项目简介
 
 收集、整理**腾讯云 Agent Runtime（Agent 沙箱）**相关学习资料，以手绘草图（Excalidraw 风）HTML 页面讲解核心概念，帮助开发者直观理解存储挂载（`StorageMount` / `MountOption`）、沙箱内管理守护进程（envd）、实例如何覆盖 Tool 的挂载配置、存储管控边界，以及产品视角下的元概念（需求、价值、增长、组织等）、问题性质判断与用户旅程观察方法。
 
+## GPU 沙箱用户体验
+
+[观看体验录像与时间点导航](prototype/gpu/) · [阅读体验报告及 14 张操作截图](prototype/gpu/体验报告.md)
+
+体验 GPU 资源购买、通过资源组名称绑定沙箱工具、设置系统盘、启动实例、暂停与释放 GPU 的完整操作流程。录像支持按时间点跳转。
+
 ## 内容结构
 
 | 本地路径 | 内容说明 | 在线访问路径 |
 | --- | --- | --- |
-| `README.md` | 项目总览（本文件） | <https://charles-yueyue831.github.io/agentruntime/> |
-| `Agent 沙箱/计算与执行/envd 使用指南.html` | envd · 沙箱内管理守护进程（Guest Management Agent，把 SDK / 云侧管理请求转换为 Guest Linux 中的命令、进程、文件与健康检查操作） | <https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%A7%E8%A1%8C/envd%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html> |
-| `Agent 沙箱/存储/挂载路径覆盖.html` | 图解「为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控」（MountPath 是位置，StorageSource / ReadOnly 上限 / 路径规则才是边界） | <https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html> |
-| `产品经理/产品经理黑话.html` | 腾讯云 Agent 沙箱 · 产品经理元概念词典（从「为什么做」到「怎么证明可信」共 11 个章节 + 最终总链路 + 官方事实锚点） | <https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html> |
-| `产品经理/用户旅程图.html` | 姿势 · 流程 · 旅程图：三个观察高度（手绘笔记：三层观察台可下钻、三者对比速查、为四问归类法供证据、实操顺序与误区便签） | <https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html> |
-| `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | <https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html> |
+| `README.md` | 项目总览（本文件） | [在线查看](https://charles-yueyue831.github.io/agentruntime/) |
+| `Agent 沙箱/计算与执行/envd 使用指南.html` | envd · 沙箱内管理守护进程（Guest Management Agent，把 SDK / 云侧管理请求转换为 Guest Linux 中的命令、进程、文件与健康检查操作） | [在线查看](https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%A7%E8%A1%8C/envd%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html) |
+| `Agent 沙箱/存储/挂载路径覆盖.html` | 图解「为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控」（MountPath 是位置，StorageSource / ReadOnly 上限 / 路径规则才是边界） | [在线查看](https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html) |
+| `产品经理/产品经理黑话.html` | 腾讯云 Agent 沙箱 · 产品经理元概念词典（从「为什么做」到「怎么证明可信」共 11 个章节 + 最终总链路 + 官方事实锚点） | [在线查看](https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html) |
+| `产品经理/用户旅程图.html` | 姿势 · 流程 · 旅程图：三个观察高度（手绘笔记：三层观察台可下钻、三者对比速查、为四问归类法供证据、实操顺序与误区便签） | [在线查看](https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html) |
+| `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | [在线查看](https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html) |
+
+| `prototype/gpu/` | GPU 沙箱用户体验录像、时间点导航、体验报告及 14 张操作截图 | [观看体验录像](prototype/gpu/) |
 
 > 在线访问路径基于 GitHub Pages 站点 `https://charles-yueyue831.github.io/agentruntime/`，与仓库目录结构一一对应；路径中的空格以 `%20`、中文以 URL 编码（UTF-8）表示。
 

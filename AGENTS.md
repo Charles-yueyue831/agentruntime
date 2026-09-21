@@ -36,6 +36,26 @@
 | 5 | `产品经理/用户旅程图.html` | 姿势 · 流程 · 旅程图：三个观察高度（手绘笔记：三层观察台可下钻、三者对比速查、为四问归类法供证据、实操顺序与误区便签） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html |
 | 6 | `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html |
 
+| 7 | `prototype/gpu/01.png` | GPU 沙箱用户体验截图 01 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/01.png |
+| 8 | `prototype/gpu/02.png` | GPU 沙箱用户体验截图 02 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/02.png |
+| 9 | `prototype/gpu/03.png` | GPU 沙箱用户体验截图 03 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/03.png |
+| 10 | `prototype/gpu/04.png` | GPU 沙箱用户体验截图 04 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/04.png |
+| 11 | `prototype/gpu/05.png` | GPU 沙箱用户体验截图 05 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/05.png |
+| 12 | `prototype/gpu/06.png` | GPU 沙箱用户体验截图 06 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/06.png |
+| 13 | `prototype/gpu/07.png` | GPU 沙箱用户体验截图 07 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/07.png |
+| 14 | `prototype/gpu/08.png` | GPU 沙箱用户体验截图 08 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/08.png |
+| 15 | `prototype/gpu/09.png` | GPU 沙箱用户体验截图 09 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/09.png |
+| 16 | `prototype/gpu/10.png` | GPU 沙箱用户体验截图 10 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/10.png |
+| 17 | `prototype/gpu/11.png` | GPU 沙箱用户体验截图 11 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/11.png |
+| 18 | `prototype/gpu/12.png` | GPU 沙箱用户体验截图 12 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/12.png |
+| 19 | `prototype/gpu/13.png` | GPU 沙箱用户体验截图 13 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/13.png |
+| 20 | `prototype/gpu/14.png` | GPU 沙箱用户体验截图 14 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/14.png |
+| 21 | `prototype/gpu/GPU原型用户体验.webm` | GPU 沙箱用户体验录像 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/GPU%E5%8E%9F%E5%9E%8B%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C.webm |
+| 22 | `prototype/gpu/index.html` | GPU 沙箱用户体验页面 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/index.html |
+| 23 | `prototype/gpu/体验录像.html` | GPU 沙箱用户体验页面 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/%E4%BD%93%E9%AA%8C%E5%BD%95%E5%83%8F.html |
+| 24 | `prototype/gpu/体验报告.md` | GPU 沙箱用户体验报告 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/%E4%BD%93%E9%AA%8C%E6%8A%A5%E5%91%8A.md |
+| 25 | `prototype/gpu/操作轨迹.json` | GPU 沙箱用户体验操作记录 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/%E6%93%8D%E4%BD%9C%E8%BD%A8%E8%BF%B9.json |
+
 **访问路径生成规则**：任意新增文件，其在线访问路径 = `https://charles-yueyue831.github.io/agentruntime/` + 仓库内相对路径（空格 → `%20`，中文 → UTF-8 百分号编码）。
 
 ## 4. 学习主题
