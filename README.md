@@ -13,6 +13,10 @@
 
 体验 GPU 资源购买、通过资源组名称绑定沙箱工具、设置系统盘、启动实例、暂停与释放 GPU 的完整操作流程。录像支持按时间点跳转。
 
+## 镜像预热客户使用演示
+
+[查看四段视频、合集与字幕](prototype/preheat/README.md)。中文配音 + 步骤字幕，涵盖预热任务、自动预热、自动卸载和预热任务监控；合集约 4 分 13 秒。
+
 ## 内容结构
 
 | 本地路径 | 内容说明 | 在线访问路径 |
@@ -24,6 +28,7 @@
 | `产品经理/用户旅程图.html` | 姿势 · 流程 · 旅程图：三个观察高度（手绘笔记：三层观察台可下钻、三者对比速查、为四问归类法供证据、实操顺序与误区便签） | [在线查看](https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html) |
 | `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | [在线查看](https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html) |
 | `prototype/gpu/` | GPU 沙箱用户体验录像、时间点导航、体验报告及 14 张操作截图 | [观看体验录像](prototype/gpu/) |
+| `prototype/preheat/` | 镜像预热客户使用演示：五个 MP4、配套 SRT 字幕与播放说明 | [查看视频](prototype/preheat/README.md) |
 
 > 在线访问路径基于 GitHub Pages 站点 `https://charles-yueyue831.github.io/agentruntime/`，与仓库目录结构一一对应；路径中的空格以 `%20`、中文以 URL 编码（UTF-8）表示。
 

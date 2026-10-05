@@ -56,6 +56,18 @@
 | 24 | `prototype/gpu/体验报告.md` | GPU 沙箱用户体验报告 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/%E4%BD%93%E9%AA%8C%E6%8A%A5%E5%91%8A.md |
 | 25 | `prototype/gpu/操作轨迹.json` | GPU 沙箱用户体验操作记录 | https://charles-yueyue831.github.io/agentruntime/prototype/gpu/%E6%93%8D%E4%BD%9C%E8%BD%A8%E8%BF%B9.json |
 
+| 26 | `prototype/preheat/01 预热任务.mp4` | 01 预热任务 · 中文配音演示视频 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/01%20%E9%A2%84%E7%83%AD%E4%BB%BB%E5%8A%A1.mp4 |
+| 27 | `prototype/preheat/01 预热任务.srt` | 01 预热任务 · 中文字幕 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/01%20%E9%A2%84%E7%83%AD%E4%BB%BB%E5%8A%A1.srt |
+| 28 | `prototype/preheat/02 自动预热.mp4` | 02 自动预热 · 中文配音演示视频 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/02%20%E8%87%AA%E5%8A%A8%E9%A2%84%E7%83%AD.mp4 |
+| 29 | `prototype/preheat/02 自动预热.srt` | 02 自动预热 · 中文字幕 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/02%20%E8%87%AA%E5%8A%A8%E9%A2%84%E7%83%AD.srt |
+| 30 | `prototype/preheat/03 自动卸载.mp4` | 03 自动卸载 · 中文配音演示视频 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/03%20%E8%87%AA%E5%8A%A8%E5%8D%B8%E8%BD%BD.mp4 |
+| 31 | `prototype/preheat/03 自动卸载.srt` | 03 自动卸载 · 中文字幕 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/03%20%E8%87%AA%E5%8A%A8%E5%8D%B8%E8%BD%BD.srt |
+| 32 | `prototype/preheat/04 预热任务监控.mp4` | 04 预热任务监控 · 中文配音演示视频 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/04%20%E9%A2%84%E7%83%AD%E4%BB%BB%E5%8A%A1%E7%9B%91%E6%8E%A7.mp4 |
+| 33 | `prototype/preheat/04 预热任务监控.srt` | 04 预热任务监控 · 中文字幕 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/04%20%E9%A2%84%E7%83%AD%E4%BB%BB%E5%8A%A1%E7%9B%91%E6%8E%A7.srt |
+| 34 | `prototype/preheat/README.md` | 镜像预热客户使用演示播放说明 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/README.md |
+| 35 | `prototype/preheat/镜像预热客户使用演示-合集.mp4` | 镜像预热客户使用演示-合集 · 中文配音演示视频 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/%E9%95%9C%E5%83%8F%E9%A2%84%E7%83%AD%E5%AE%A2%E6%88%B7%E4%BD%BF%E7%94%A8%E6%BC%94%E7%A4%BA-%E5%90%88%E9%9B%86.mp4 |
+| 36 | `prototype/preheat/镜像预热客户使用演示-合集.srt` | 镜像预热客户使用演示-合集 · 中文字幕 | https://charles-yueyue831.github.io/agentruntime/prototype/preheat/%E9%95%9C%E5%83%8F%E9%A2%84%E7%83%AD%E5%AE%A2%E6%88%B7%E4%BD%BF%E7%94%A8%E6%BC%94%E7%A4%BA-%E5%90%88%E9%9B%86.srt |
+
 **访问路径生成规则**：任意新增文件，其在线访问路径 = `https://charles-yueyue831.github.io/agentruntime/` + 仓库内相对路径（空格 → `%20`，中文 → UTF-8 百分号编码）。
 
 ## 4. 学习主题
