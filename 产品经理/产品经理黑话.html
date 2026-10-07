@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
-<title>腾讯云 Agent 沙箱 · 产品经理元概念词典</title>
+<title>AI 产品经理 · 产品概念词典</title>
 <style>
 :root {
   --paper:#f7f0df;
@@ -98,10 +98,12 @@ a{color:inherit}
 .term-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:1.6px dashed rgba(37,35,31,.35);padding-bottom:10px;margin-bottom:13px}
 .term-head h3{font-family:"Kaiti SC","STKaiti","KaiTi",serif;font-size:27px;line-height:1;margin:0}
 .micro{font:700 10px/1.25 "Courier New",monospace;color:var(--blue);text-align:right;max-width:128px}
-.def,.example{font-size:13.5px;line-height:1.72}
-.def b,.example b{display:inline-block;font-size:11px;letter-spacing:.08em;border:1.5px solid var(--line);border-radius:999px;padding:2px 7px;margin-bottom:4px;background:#f2d987}
+.def,.example,.judgment{font-size:13.5px;line-height:1.72}
+.def b,.example b,.judgment b{display:inline-block;font-size:11px;letter-spacing:.08em;border:1.5px solid var(--line);border-radius:999px;padding:2px 7px;margin-bottom:4px;background:#f2d987}
 .example b{background:#cfe1e8}
-.def p,.example p{margin:5px 0 12px}
+.judgment b{background:#dce8cf}
+.judgment{border-top:1px dashed rgba(37,35,31,.25);padding-top:9px}
+.def p,.example p,.judgment p{margin:5px 0 12px}
 .hidden{display:none!important}
 .compare-box{
   margin:28px 0;padding:26px;border:2px solid var(--line);border-radius:18px 25px 16px 22px;
@@ -201,7 +203,7 @@ a{color:inherit}
   <aside class="sidebar">
     <div class="brand">
       <div class="stamp">PRODUCT META DICTIONARY</div>
-      <h1>腾讯云 Agent 沙箱<br/>产品经理元概念词典</h1>
+      <h1>AI 产品经理<br/>产品概念词典</h1>
       <p>手绘草图式信息图 · 把“为什么 / 是什么 / 怎么做 / 做得怎样”放进同一张认知地图。</p>
     </div>
     <div class="sketch-line"></div>
@@ -222,13 +224,10 @@ a{color:inherit}
   <main class="main">
     <section class="hero" id="top">
       <div class="tape-main"></div>
-      <div class="eyebrow">TENCENT CLOUD · AGENT SANDBOX · META CONCEPT MAP</div>
-      <h1>把产品黑话<br/>放回它该在的位置</h1>
-      <p class="lead">
-        以腾讯云 Agent 沙箱为统一例子，解释“目的、目标、范式、策略、方法、方式、模块、能力、机制、状态、效果、价值、生态、转化、操盘、审计……”之间的真正边界。
-        这里既包含产品工程语言，也包含互联网增长与经营语境中的口语化词汇。
-      </p>
-      <div class="quote">一句话：先分层，再定义；先问它回答哪类问题，再谈这个词是什么意思。</div>
+      <div class="eyebrow">AI PRODUCT MANAGEMENT · TASK / VALUE / DECISION</div>
+      <h1>从产品黑话<br/>到 AI 产品判断</h1>
+      <p class="lead">从 AI 产品经理的视角重写 67 个常用词：以用户任务为起点，区分模型能力、执行能力与完整产品能力，再把质量、成本、延迟和人工介入纳入判断。沿用 Agent 与沙箱作为部分示例，也覆盖分析报告、产品交付、增长和经营场景。</p>
+      <div class="quote">阅读顺序：这个词指什么 → 在任务中如何体现 → 它会改变哪项产品决策。</div>
 
       <div class="meta-map" aria-label="核心元概念链路">
         <div class="meta-node">目的 / 痛点<br><small>为什么做</small></div>
@@ -242,7 +241,8 @@ a{color:inherit}
     </section>
 
     <section class="compare-box">
-      <h2>最容易混淆的一条“抽象层级梯子”</h2>
+      <h2>容易混淆的六个概念 · 按决策关系理解</h2>
+      <p class="disclaimer">这是帮助讨论的概念关系，不是严格的上下级分类。功能组成能力，能力的限制也会反过来影响策略选择。</p>
       <div class="ladder">
         <div class="step"><strong>范式</strong><small>根本把问题看成什么</small></div>
         <div class="step"><strong>策略</strong><small>约束下怎么选择</small></div>
@@ -267,69 +267,75 @@ a{color:inherit}
         <span class="scribble">目的 / 目标 / 痛点 / 价值 / 意义 / 影响</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="why" data-search="目的 为什么要做这件事；它表达的是行动背后的根本意图，而不是量化终点。 建设 Agent 沙箱的目的，是让 Agent 能在独立、受控的环境里执行代码、浏览器操作、文件处理等真实动作，而不是把不确定执行直接放在业务主机上。">
+    <article class="term-card" data-cat="why" data-search="目的 产品为什么值得做：为哪类用户解决哪项任务障碍。AI 是实现手段，采用大模型本身不构成目的。 为数据分析用户减少从原始表格到可信报告的重复劳动；沙箱承载真实计算，模型负责理解与规划。 先写清用户任务及现有替代方案，再判断 AI 是否必要。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>目的</h3>
         <span class="micro">WHY · 根本意图</span>
       </div>
-      <div class="def"><b>元定义</b><p>为什么要做这件事；它表达的是行动背后的根本意图，而不是量化终点。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>建设 Agent 沙箱的目的，是让 Agent 能在独立、受控的环境里执行代码、浏览器操作、文件处理等真实动作，而不是把不确定执行直接放在业务主机上。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>产品为什么值得做：为哪类用户解决哪项任务障碍。AI 是实现手段，采用大模型本身不构成目的。</p></div>
+      <div class="example"><b>场景示例</b><p>为数据分析用户减少从原始表格到可信报告的重复劳动；沙箱承载真实计算，模型负责理解与规划。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>先写清用户任务及现有替代方案，再判断 AI 是否必要。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="why" data-search="目标 未来希望达到的明确状态；最好可量化、可验收、带时间边界。 例如把“沙箱启动快”转化为目标：P95 启动时延低于某个业务阈值、任务结束后在规定时间内完成回收、创建成功率达到既定 SLO。">
+    <article class="term-card" data-cat="why" data-search="目标 在明确时间、用户范围和约束下，产品希望达到的可验收状态。目标把目的转成可验证承诺。 假设一个月内，试点用户的报告任务验收通过率达到 90%，同时单次成功任务成本不超过约定预算。 必须说明成功口径、样本和期限；模型分数提高不能直接代表用户目标达成。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>目标</h3>
         <span class="micro">WHERE · 可验收终点</span>
       </div>
-      <div class="def"><b>元定义</b><p>未来希望达到的明确状态；最好可量化、可验收、带时间边界。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如把“沙箱启动快”转化为目标：P95 启动时延低于某个业务阈值、任务结束后在规定时间内完成回收、创建成功率达到既定 SLO。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>在明确时间、用户范围和约束下，产品希望达到的可验收状态。目标把目的转成可验证承诺。</p></div>
+      <div class="example"><b>场景示例</b><p>假设一个月内，试点用户的报告任务验收通过率达到 90%，同时单次成功任务成本不超过约定预算。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>必须说明成功口径、样本和期限；模型分数提高不能直接代表用户目标达成。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="why" data-search="痛点 当前状态与期望状态之间，真正给用户造成成本、风险或阻塞的差距。 例如：Agent 生成代码不宜直接在业务服务器执行；依赖环境复杂；多租户任务存在相互影响风险；任务结束后资源残留会造成浪费。">
+    <article class="term-card" data-cat="why" data-search="痛点 用户完成任务时反复遭遇、愿意付出代价解决的障碍；要区分需求缺口、模型错误、执行失败和理解困难。 用户拿到生成的分析代码后仍需安装依赖、运行和核对；障碍在执行与验证环节，不只在回答质量。 用任务观察验证发生频率、损失和替代成本，避免把缺少某项技术当成痛点。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>痛点</h3>
         <span class="micro">PROBLEM · 当前缺口</span>
       </div>
-      <div class="def"><b>元定义</b><p>当前状态与期望状态之间，真正给用户造成成本、风险或阻塞的差距。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如：Agent 生成代码不宜直接在业务服务器执行；依赖环境复杂；多租户任务存在相互影响风险；任务结束后资源残留会造成浪费。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>用户完成任务时反复遭遇、愿意付出代价解决的障碍；要区分需求缺口、模型错误、执行失败和理解困难。</p></div>
+      <div class="example"><b>场景示例</b><p>用户拿到生成的分析代码后仍需安装依赖、运行和核对；障碍在执行与验证环节，不只在回答质量。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>用任务观察验证发生频率、损失和替代成本，避免把缺少某项技术当成痛点。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="why" data-search="价值 对象给特定主体带来的收益、改善或成本下降，必须回答“对谁、改善什么”。 对开发者：减少自建执行环境的工程成本；对企业：获得更清晰的隔离、网络、生命周期和审计边界；对最终用户：缩短等待并降低任务互相干扰。">
+    <article class="term-card" data-cat="why" data-search="价值 产品为特定主体带来的净收益，来自任务改善减去使用、复核、接入和风险成本。 自动报告节省两小时，但人工核对花费一小时；实际价值应按节省的一小时及质量改善计算。 分别核算使用者、采购方和平台的收益，避免用生成量替代价值。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>价值</h3>
         <span class="micro">BENEFIT · 对谁有收益</span>
       </div>
-      <div class="def"><b>元定义</b><p>对象给特定主体带来的收益、改善或成本下降，必须回答“对谁、改善什么”。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>对开发者：减少自建执行环境的工程成本；对企业：获得更清晰的隔离、网络、生命周期和审计边界；对最终用户：缩短等待并降低任务互相干扰。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>产品为特定主体带来的净收益，来自任务改善减去使用、复核、接入和风险成本。</p></div>
+      <div class="example"><b>场景示例</b><p>自动报告节省两小时，但人工核对花费一小时；实际价值应按节省的一小时及质量改善计算。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>分别核算使用者、采购方和平台的收益，避免用生成量替代价值。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="why" data-search="意义 某个事实或变化为什么重要，以及它进一步说明了什么更深层的趋势。 Agent 沙箱把“执行代码”从业务中的零散函数提升为独立基础设施，说明 Agent 正从只生成文本，走向需要真实执行、安全边界与生产治理的阶段。">
+    <article class="term-card" data-cat="why" data-search="意义 某项变化为什么值得关注，以及它对用户工作方式或产品方向说明了什么；属于有依据的解释。 Agent 能生成并验证可用文件，意味着交付对象可以从文字建议扩展为任务产物。 说明结论的适用范围；一次演示不能证明整个行业已发生转变。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>意义</h3>
         <span class="micro">SO WHAT · 为什么重要</span>
       </div>
-      <div class="def"><b>元定义</b><p>某个事实或变化为什么重要，以及它进一步说明了什么更深层的趋势。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>Agent 沙箱把“执行代码”从业务中的零散函数提升为独立基础设施，说明 Agent 正从只生成文本，走向需要真实执行、安全边界与生产治理的阶段。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>某项变化为什么值得关注，以及它对用户工作方式或产品方向说明了什么；属于有依据的解释。</p></div>
+      <div class="example"><b>场景示例</b><p>Agent 能生成并验证可用文件，意味着交付对象可以从文字建议扩展为任务产物。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>说明结论的适用范围；一次演示不能证明整个行业已发生转变。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="why" data-search="影响 一个结果在后续时间里进一步改变了哪些对象、关系、决策或成本结构。 引入沙箱后，Agent 架构会从“主进程直接操作业务环境”转向“通过独立执行层完成任务”；运维对象也增加 Tool、Instance、镜像、网络、存储、生命周期等。">
+    <article class="term-card" data-cat="why" data-search="影响 产品变化进一步引起的行为、组织、成本或风险变化，既包括收益也包括副作用。 开放自动执行后，用户少了手动操作，但企业需要明确动作授权、责任分工和故障处理。 同时追踪下游收益与新增负担，不把预期影响写成已证实事实。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>影响</h3>
         <span class="micro">AFTER · 后续改变</span>
       </div>
-      <div class="def"><b>元定义</b><p>一个结果在后续时间里进一步改变了哪些对象、关系、决策或成本结构。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>引入沙箱后，Agent 架构会从“主进程直接操作业务环境”转向“通过独立执行层完成任务”；运维对象也增加 Tool、Instance、镜像、网络、存储、生命周期等。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>产品变化进一步引起的行为、组织、成本或风险变化，既包括收益也包括副作用。</p></div>
+      <div class="example"><b>场景示例</b><p>开放自动执行后，用户少了手动操作，但企业需要明确动作授权、责任分工和故障处理。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>同时追踪下游收益与新增负担，不把预期影响写成已证实事实。</p></div>
     </article>
     </div>
     </section>
@@ -341,36 +347,39 @@ a{color:inherit}
         <span class="scribble">范式 / 格局 / 逻辑</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="think" data-search="范式 面对一类问题时，默认采用的基本假设、核心对象和总体解决框架；它决定“我们根本把问题看成什么”。 传统方式是“先长期准备服务器，再把任务放进去”；Agent 沙箱范式是“先产生任务，再按任务创建独立、受控、可回收的执行环境”。腾讯云官方也将 Agent Runtime 描述为围绕 Agent 原生执行范式构建。">
+    <article class="term-card" data-cat="think" data-search="范式 解决一类问题时采用的基本假设和组织框架，决定交付什么、由谁决策、如何验证。 从“用户逐条操作软件”转向“用户提出目标，Agent 执行，用户在关键节点确认并验收”。 判断是否真的改变任务与责任分工；加一个聊天入口通常不足以构成范式变化。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>范式</h3>
         <span class="micro">WORLDVIEW · 总框架</span>
       </div>
-      <div class="def"><b>元定义</b><p>面对一类问题时，默认采用的基本假设、核心对象和总体解决框架；它决定“我们根本把问题看成什么”。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>传统方式是“先长期准备服务器，再把任务放进去”；Agent 沙箱范式是“先产生任务，再按任务创建独立、受控、可回收的执行环境”。腾讯云官方也将 Agent Runtime 描述为围绕 Agent 原生执行范式构建。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>解决一类问题时采用的基本假设和组织框架，决定交付什么、由谁决策、如何验证。</p></div>
+      <div class="example"><b>场景示例</b><p>从“用户逐条操作软件”转向“用户提出目标，Agent 执行，用户在关键节点确认并验收”。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>判断是否真的改变任务与责任分工；加一个聊天入口通常不足以构成范式变化。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="think" data-search="格局 一个市场或领域里主要参与者是谁、分别处于什么位置、彼此如何竞争或互补。 分析 Agent 沙箱格局时，不只看功能清单，还会看云厂商、专业 Sandbox 厂商、Agent 框架、模型厂商、企业平台在资源、协议兼容、生态和客户层面的相对位置。">
+    <article class="term-card" data-cat="think" data-search="格局 市场参与者在客户入口、能力、成本、渠道和合作关系上的相对位置。 分析执行平台时，分别看模型厂商的用户入口、云厂商的企业资源和专门沙箱服务的接入体验。 按同一客户任务比较可替代性和切换成本，不按品牌声量推断竞争优势。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>格局</h3>
         <span class="micro">LANDSCAPE · 谁在什么位置</span>
       </div>
-      <div class="def"><b>元定义</b><p>一个市场或领域里主要参与者是谁、分别处于什么位置、彼此如何竞争或互补。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>分析 Agent 沙箱格局时，不只看功能清单，还会看云厂商、专业 Sandbox 厂商、Agent 框架、模型厂商、企业平台在资源、协议兼容、生态和客户层面的相对位置。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>市场参与者在客户入口、能力、成本、渠道和合作关系上的相对位置。</p></div>
+      <div class="example"><b>场景示例</b><p>分析执行平台时，分别看模型厂商的用户入口、云厂商的企业资源和专门沙箱服务的接入体验。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>按同一客户任务比较可替代性和切换成本，不按品牌声量推断竞争优势。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="think" data-search="逻辑 条件、原因、行为与结论之间为什么能够前后成立；它解释“为什么 A 可以推出 B”。 Agent 行为存在不确定性 + 业务环境含重要数据 + 沙箱可以限制进程/网络/存储边界 ⇒ 错误操作的影响范围更容易被收缩 ⇒ 整体风险下降。">
+    <article class="term-card" data-cat="think" data-search="逻辑 把前提、行动与预期结果连接起来的推理，需要明确哪些是事实、哪些是假设以及成立条件。 假设初始化是等待的主要来源，预热可能缩短首轮执行；若瓶颈在模型响应，预热收益就有限。 为关键因果关系找证据和反例，避免把相关变化当成因果。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>逻辑</h3>
         <span class="micro">WHY IT HOLDS · 因果关系</span>
       </div>
-      <div class="def"><b>元定义</b><p>条件、原因、行为与结论之间为什么能够前后成立；它解释“为什么 A 可以推出 B”。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>Agent 行为存在不确定性 + 业务环境含重要数据 + 沙箱可以限制进程/网络/存储边界 ⇒ 错误操作的影响范围更容易被收缩 ⇒ 整体风险下降。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>把前提、行动与预期结果连接起来的推理，需要明确哪些是事实、哪些是假设以及成立条件。</p></div>
+      <div class="example"><b>场景示例</b><p>假设初始化是等待的主要来源，预热可能缩短首轮执行；若瓶颈在模型响应，预热收益就有限。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>为关键因果关系找证据和反例，避免把相关变化当成因果。</p></div>
     </article>
     </div>
     </section>
@@ -382,102 +391,111 @@ a{color:inherit}
         <span class="scribble">策略 / 方法 / 方式 / 打法 / 玩法 / 布局 / 发力 / 降维打法 / 落地</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="solve" data-search="策略 为了达成目标，在资源与约束下如何选择、排序和取舍。 网络策略示例：需要公网 API 时选 PUBLIC；只处理已挂载数据时选 SANDBOX；需要访问企业内部服务时选 VPC。策略的关键是“什么条件下选哪个”。">
+    <article class="term-card" data-cat="solve" data-search="策略 为达成目标，在质量、成本、延迟、权限和资源约束下作出的选择与取舍。 高风险动作先人工确认；低风险任务自动执行；复杂任务再使用成本更高的模型。 说清适用条件、牺牲什么及退出条件；单项配置只是策略的落点。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>策略</h3>
         <span class="micro">CHOICE · 选择规则</span>
       </div>
-      <div class="def"><b>元定义</b><p>为了达成目标，在资源与约束下如何选择、排序和取舍。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>网络策略示例：需要公网 API 时选 PUBLIC；只处理已挂载数据时选 SANDBOX；需要访问企业内部服务时选 VPC。策略的关键是“什么条件下选哪个”。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>为达成目标，在质量、成本、延迟、权限和资源约束下作出的选择与取舍。</p></div>
+      <div class="example"><b>场景示例</b><p>高风险动作先人工确认；低风险任务自动执行；复杂任务再使用成本更高的模型。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>说清适用条件、牺牲什么及退出条件；单项配置只是策略的落点。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="solve" data-search="方法 为解决一类问题采用的、相对系统化且可重复的办法。 为了实现沙箱数据持久化，可采用“把外部持久化存储挂载到沙箱”的方法；具体可使用 CFS/COS 等对应产品能力。">
+    <article class="term-card" data-cat="solve" data-search="方法 解决一类问题的可重复步骤，说明如何收集证据、定位原因和验证方案。 对报告错误先建立任务集，再区分理解、检索、计算、验证环节，逐项修改并复测。 检查方法是否能被他人重复使用；方法服务策略，不替代目标选择。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>方法</h3>
         <span class="micro">METHOD · 系统化办法</span>
       </div>
-      <div class="def"><b>元定义</b><p>为解决一类问题采用的、相对系统化且可重复的办法。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>为了实现沙箱数据持久化，可采用“把外部持久化存储挂载到沙箱”的方法；具体可使用 CFS/COS 等对应产品能力。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>解决一类问题的可重复步骤，说明如何收集证据、定位原因和验证方案。</p></div>
+      <div class="example"><b>场景示例</b><p>对报告错误先建立任务集，再区分理解、检索、计算、验证环节，逐项修改并复测。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>检查方法是否能被他人重复使用；方法服务策略，不替代目标选择。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="solve" data-search="方式 某一个具体动作采用什么实现手段、入口或渠道。 同样是创建沙箱，可以通过 API、SDK、MCP 等方式触发；同样是查看状态，可以通过查询接口、CLI 或控制台观测。">
+    <article class="term-card" data-cat="solve" data-search="方式 某个具体动作采用的入口、手段或交互形态，通常可以在不改变目标时替换。 同样是发起分析任务，用户可上传表格并对话，也可由业务系统通过接口提交。 按用户使用场景选入口；接入方式增加不等于任务能力增强。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>方式</h3>
         <span class="micro">MEANS · 具体怎么做</span>
       </div>
-      <div class="def"><b>元定义</b><p>某一个具体动作采用什么实现手段、入口或渠道。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>同样是创建沙箱，可以通过 API、SDK、MCP 等方式触发；同样是查看状态，可以通过查询接口、CLI 或控制台观测。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>某个具体动作采用的入口、手段或交互形态，通常可以在不改变目标时替换。</p></div>
+      <div class="example"><b>场景示例</b><p>同样是发起分析任务，用户可上传表格并对话，也可由业务系统通过接口提交。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>按用户使用场景选入口；接入方式增加不等于任务能力增强。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="solve" data-search="打法 为打赢一个具体业务战役，把策略、方法、产品、资源、指标和节奏组合起来的一整套行动方案。 例如 Coding Agent 打法：优先解决启动、协议兼容和状态恢复 → 找头部客户验证 → 形成模板与最佳实践 → 标准化后扩大覆盖。">
+    <article class="term-card" data-cat="solve" data-search="打法 围绕一个具体业务目标，把客户选择、产品方案、交付、渠道和验证节奏组合起来的行动方案。 先为分析团队提供可验收的报告流程，再用试点证明节省时间，形成模板后向相似团队推广。 明确负责人、资源、阶段目标和停止条件，避免只有方向口号。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>打法</h3>
         <span class="micro">PLAYBOOK · 一整套行动</span>
       </div>
-      <div class="def"><b>元定义</b><p>为打赢一个具体业务战役，把策略、方法、产品、资源、指标和节奏组合起来的一整套行动方案。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如 Coding Agent 打法：优先解决启动、协议兼容和状态恢复 → 找头部客户验证 → 形成模板与最佳实践 → 标准化后扩大覆盖。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>围绕一个具体业务目标，把客户选择、产品方案、交付、渠道和验证节奏组合起来的行动方案。</p></div>
+      <div class="example"><b>场景示例</b><p>先为分析团队提供可验收的报告流程，再用试点证明节省时间，形成模板后向相似团队推广。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>明确负责人、资源、阶段目标和停止条件，避免只有方向口号。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="solve" data-search="玩法 产品或业务的一种可复用使用套路，通常比“打法”更局部、更贴近实际使用。 玩法 A：每个任务一个临时沙箱；玩法 B：一个会话绑定一个沙箱；玩法 C：暂停/快照后下次恢复；玩法 D：提前预热环境再承接请求。">
+    <article class="term-card" data-cat="solve" data-search="玩法 用户利用产品完成任务或参与活动的一种可复用套路，偏使用层面的非正式表达。 用户把月报需求保存为模板，每月换数据生成草稿、核对异常，再导出交付。 验证是否提高任务效率或复用率；复杂操作套路也可能暴露产品缺陷。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>玩法</h3>
         <span class="micro">PATTERN · 使用套路</span>
       </div>
-      <div class="def"><b>元定义</b><p>产品或业务的一种可复用使用套路，通常比“打法”更局部、更贴近实际使用。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>玩法 A：每个任务一个临时沙箱；玩法 B：一个会话绑定一个沙箱；玩法 C：暂停/快照后下次恢复；玩法 D：提前预热环境再承接请求。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>用户利用产品完成任务或参与活动的一种可复用套路，偏使用层面的非正式表达。</p></div>
+      <div class="example"><b>场景示例</b><p>用户把月报需求保存为模板，每月换数据生成草稿、核对异常，再导出交付。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>验证是否提高任务效率或复用率；复杂操作套路也可能暴露产品缺陷。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="solve" data-search="布局 为了未来目标，提前在哪些方向配置产品、资源与位置。 例如围绕 Agent Runtime 同时建设代码沙箱、浏览器沙箱、移动端沙箱、快照、持久化存储、网关、身份与观测，形成长期产品布局。">
+    <article class="term-card" data-cat="solve" data-search="布局 面向未来目标，提前安排能力建设、合作和资源投入的组合及顺序。 先建设执行与结果验证，再根据跨会话需求投入状态保存，并在出现规模需求后补充调度。 说明各项投入的依赖、验证里程碑和机会成本，避免按技术清单铺摊子。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>布局</h3>
         <span class="micro">POSITIONING · 提前占位</span>
       </div>
-      <div class="def"><b>元定义</b><p>为了未来目标，提前在哪些方向配置产品、资源与位置。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如围绕 Agent Runtime 同时建设代码沙箱、浏览器沙箱、移动端沙箱、快照、持久化存储、网关、身份与观测，形成长期产品布局。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>面向未来目标，提前安排能力建设、合作和资源投入的组合及顺序。</p></div>
+      <div class="example"><b>场景示例</b><p>先建设执行与结果验证，再根据跨会话需求投入状态保存，并在出现规模需求后补充调度。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>说明各项投入的依赖、验证里程碑和机会成本，避免按技术清单铺摊子。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="solve" data-search="发力 当前把更多资源、注意力和组织动作集中投入到某个方向。 “发力 Agent Sandbox”如果落到实处，通常意味着增加研发投入、完善协议兼容、提升关键性能、争取标杆客户并扩大市场曝光。">
+    <article class="term-card" data-cat="solve" data-search="发力 某个阶段集中增加资源投入的经营表达，只有明确投入和目标才有可执行含义。 本季度集中改善首次任务成功率，投入接入引导、默认环境和错误诊断，而非泛称“发力 Agent”。 写清新增投入、负责人、目标指标和复查时间。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>发力</h3>
         <span class="micro">FOCUS · 加大投入</span>
       </div>
-      <div class="def"><b>元定义</b><p>当前把更多资源、注意力和组织动作集中投入到某个方向。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>“发力 Agent Sandbox”如果落到实处，通常意味着增加研发投入、完善协议兼容、提升关键性能、争取标杆客户并扩大市场曝光。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>某个阶段集中增加资源投入的经营表达，只有明确投入和目标才有可执行含义。</p></div>
+      <div class="example"><b>场景示例</b><p>本季度集中改善首次任务成功率，投入接入引导、默认环境和错误诊断，而非泛称“发力 Agent”。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>写清新增投入、负责人、目标指标和复查时间。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="solve" data-search="降维打法 把自己在更高资源、能力或成熟度维度上的优势带入一个相对能力较弱的竞争场景，形成不对称竞争。 云厂商做 Agent Sandbox 时，可以把既有计算、VPC、CFS/COS、CAM、CLS、网关和企业服务体系组合进来，而不只竞争一个“沙箱 API”。">
+    <article class="term-card" data-cat="solve" data-search="降维打法 借助在某个维度上的既有优势，改变竞争条件的非正式表达；优势必须能转成客户收益。 已有企业网络与身份体系可能降低沙箱接入成本，但客户仍会比较执行质量、等待时间和总价。 先验证优势可迁移且难以复制，不能从资源规模直接推出必胜结论。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>降维打法</h3>
         <span class="micro">ASYMMETRY · 不对称优势</span>
       </div>
-      <div class="def"><b>元定义</b><p>把自己在更高资源、能力或成熟度维度上的优势带入一个相对能力较弱的竞争场景，形成不对称竞争。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>云厂商做 Agent Sandbox 时，可以把既有计算、VPC、CFS/COS、CAM、CLS、网关和企业服务体系组合进来，而不只竞争一个“沙箱 API”。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>借助在某个维度上的既有优势，改变竞争条件的非正式表达；优势必须能转成客户收益。</p></div>
+      <div class="example"><b>场景示例</b><p>已有企业网络与身份体系可能降低沙箱接入成本，但客户仍会比较执行质量、等待时间和总价。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>先验证优势可迁移且难以复制，不能从资源规模直接推出必胜结论。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="solve" data-search="落地 把概念、方案或技术真正转化为可用产品、真实业务和可验证结果。 “Agent 应该安全执行代码”只有转化成 Tool/Instance、API、镜像、权限、网络、生命周期、日志、文档、SLO 与客户接入，才算完成产品落地。">
+    <article class="term-card" data-cat="solve" data-search="落地 把概念或技术转成在真实约束下可持续使用、交付并验收的产品。 报告 Agent 除了生成代码，还需处理脏数据、运行失败、结果核对、授权、交付和费用。 以真实用户任务验收，并明确支持范围、人工兜底与运营责任；演示成功只是起点。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>落地</h3>
         <span class="micro">SHIP · 从方案到真实使用</span>
       </div>
-      <div class="def"><b>元定义</b><p>把概念、方案或技术真正转化为可用产品、真实业务和可验证结果。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>“Agent 应该安全执行代码”只有转化成 Tool/Instance、API、镜像、权限、网络、生命周期、日志、文档、SLO 与客户接入，才算完成产品落地。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>把概念或技术转成在真实约束下可持续使用、交付并验收的产品。</p></div>
+      <div class="example"><b>场景示例</b><p>报告 Agent 除了生成代码，还需处理脏数据、运行失败、结果核对、授权、交付和费用。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>以真实用户任务验收，并明确支持范围、人工兜底与运营责任；演示成功只是起点。</p></div>
     </article>
     </div>
     </section>
@@ -489,69 +507,75 @@ a{color:inherit}
         <span class="scribble">形式 / 模块 / 功能 / 能力 / 特点 / 特性</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="product" data-search="形式 对象以什么形态存在、被承载或呈现。 Agent 沙箱可表现为 Sandbox Tool、Sandbox Instance、Sandbox Snapshot 等资源形态；也可表现为 code-interpreter、browser、mobile、osworld/custom 等运行环境形态，以及 API/SDK/CLI/MCP 等接入形态。">
+    <article class="term-card" data-cat="product" data-search="形式 同一价值通过什么产品形态被承载和交付，例如对话助手、工作流、接口或嵌入式功能。 分析能力可以嵌入表格工具，也可以作为独立 Agent；两者的接入成本和使用路径不同。 由用户任务决定形态，避免默认所有 AI 产品都需要聊天框。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>形式</h3>
         <span class="micro">FORM · 长什么样</span>
       </div>
-      <div class="def"><b>元定义</b><p>对象以什么形态存在、被承载或呈现。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>Agent 沙箱可表现为 Sandbox Tool、Sandbox Instance、Sandbox Snapshot 等资源形态；也可表现为 code-interpreter、browser、mobile、osworld/custom 等运行环境形态，以及 API/SDK/CLI/MCP 等接入形态。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>同一价值通过什么产品形态被承载和交付，例如对话助手、工作流、接口或嵌入式功能。</p></div>
+      <div class="example"><b>场景示例</b><p>分析能力可以嵌入表格工具，也可以作为独立 Agent；两者的接入成本和使用路径不同。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>由用户任务决定形态，避免默认所有 AI 产品都需要聊天框。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="product" data-search="模块 系统按职责边界拆成的组成部分，每部分负责相对独立的职责。 可按产品分析拆为：Tool 配置、Instance 生命周期、计算调度、镜像、网络、存储、身份权限、代码/进程/文件操作、可观测、配额与快照恢复等模块。">
+    <article class="term-card" data-cat="product" data-search="模块 按职责拆分的产品或系统组成部分，便于界定输入输出、依赖和责任。 报告 Agent 可拆为任务理解、数据访问、执行环境、结果验证和交付模块。 明确故障归属和接口；模块划分不等于用户能独立完成的任务。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>模块</h3>
         <span class="micro">STRUCTURE · 由什么组成</span>
       </div>
-      <div class="def"><b>元定义</b><p>系统按职责边界拆成的组成部分，每部分负责相对独立的职责。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>可按产品分析拆为：Tool 配置、Instance 生命周期、计算调度、镜像、网络、存储、身份权限、代码/进程/文件操作、可观测、配额与快照恢复等模块。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>按职责拆分的产品或系统组成部分，便于界定输入输出、依赖和责任。</p></div>
+      <div class="example"><b>场景示例</b><p>报告 Agent 可拆为任务理解、数据访问、执行环境、结果验证和交付模块。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>明确故障归属和接口；模块划分不等于用户能独立完成的任务。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="product" data-search="功能 产品或模块可以直接执行的操作，常可映射为 API、按钮或命令。 例如创建 Tool、启动 Instance、执行 Shell、运行代码、上传/下载文件、查询实例、暂停/恢复/停止、配置网络与存储等。">
+    <article class="term-card" data-cat="product" data-search="功能 用户或系统能直接触发的一项操作，可对应按钮、接口或命令。 上传表格、运行代码、预览图表、导出报告分别是功能。 定义输入、输出、异常和权限；功能存在不代表组合后的任务一定成功。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>功能</h3>
         <span class="micro">DO · 能做什么</span>
       </div>
-      <div class="def"><b>元定义</b><p>产品或模块可以直接执行的操作，常可映射为 API、按钮或命令。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如创建 Tool、启动 Instance、执行 Shell、运行代码、上传/下载文件、查询实例、暂停/恢复/停止、配置网络与存储等。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>用户或系统能直接触发的一项操作，可对应按钮、接口或命令。</p></div>
+      <div class="example"><b>场景示例</b><p>上传表格、运行代码、预览图表、导出报告分别是功能。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>定义输入、输出、异常和权限；功能存在不代表组合后的任务一定成功。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="product" data-search="能力 综合多个功能、模块、资源与机制后，能够稳定完成的一类任务。 “运行一段 Python”是功能；“在多租户环境下提供可治理的安全代码执行”则是由计算、镜像、隔离、网络、存储、生命周期和日志共同形成的能力。">
+    <article class="term-card" data-cat="product" data-search="能力 产品在明确场景和约束下，能够稳定完成一类任务的综合表现，由模型、工具、流程和治理共同形成。 “生成 Python”是一项功能；“从真实业务表格交付经核对的分析报告”是一种任务能力。 用代表性任务的成功率、耗时和成本验证；区分模型能力与完整产品能力。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>能力</h3>
         <span class="micro">CAPABILITY · 稳定完成什么</span>
       </div>
-      <div class="def"><b>元定义</b><p>综合多个功能、模块、资源与机制后，能够稳定完成的一类任务。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>“运行一段 Python”是功能；“在多租户环境下提供可治理的安全代码执行”则是由计算、镜像、隔离、网络、存储、生命周期和日志共同形成的能力。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>产品在明确场景和约束下，能够稳定完成一类任务的综合表现，由模型、工具、流程和治理共同形成。</p></div>
+      <div class="example"><b>场景示例</b><p>“生成 Python”是一项功能；“从真实业务表格交付经核对的分析报告”是一种任务能力。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>用代表性任务的成功率、耗时和成本验证；区分模型能力与完整产品能力。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="product" data-search="特点 与其他对象比较后显得突出的地方，带有“对比视角”。 相对长期业务服务器，Agent 沙箱更强调按任务实例化、独立生命周期、强执行边界、快速启停以及为 Agent 工具调用而设计。">
+    <article class="term-card" data-cat="product" data-search="特点 相对某个明确比较对象表现突出的地方，是一种比较性描述。 相对用户手动配置服务器，任务级沙箱可能减少环境准备步骤，但需在相同任务条件下比较。 标明比较对象与条件；特点是否有价值取决于目标用户。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>特点</h3>
         <span class="micro">DIFFERENCE · 显著之处</span>
       </div>
-      <div class="def"><b>元定义</b><p>与其他对象比较后显得突出的地方，带有“对比视角”。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>相对长期业务服务器，Agent 沙箱更强调按任务实例化、独立生命周期、强执行边界、快速启停以及为 Agent 工具调用而设计。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>相对某个明确比较对象表现突出的地方，是一种比较性描述。</p></div>
+      <div class="example"><b>场景示例</b><p>相对用户手动配置服务器，任务级沙箱可能减少环境准备步骤，但需在相同任务条件下比较。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>标明比较对象与条件；特点是否有价值取决于目标用户。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="product" data-search="特性 对象自身较稳定、可描述、可验证的属性，不要求与别人比较。 例如独立生命周期、配置可继承、网络边界可选择、外部存储可挂载、可暂停/恢复、运行环境可模板化等。">
+    <article class="term-card" data-cat="product" data-search="特性 对象本身可描述、可验证的属性或行为约束，不必依赖竞品比较。 若设计为任务结束后自动回收，回收条件、保留数据范围和异常行为就是需验证的特性。 写清默认值、范围和限制，避免把“智能”“安全”当成可验收特性。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>特性</h3>
         <span class="micro">PROPERTY · 自身属性</span>
       </div>
-      <div class="def"><b>元定义</b><p>对象自身较稳定、可描述、可验证的属性，不要求与别人比较。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如独立生命周期、配置可继承、网络边界可选择、外部存储可挂载、可暂停/恢复、运行环境可模板化等。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>对象本身可描述、可验证的属性或行为约束，不必依赖竞品比较。</p></div>
+      <div class="example"><b>场景示例</b><p>若设计为任务结束后自动回收，回收条件、保留数据范围和异常行为就是需验证的特性。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>写清默认值、范围和限制，避免把“智能”“安全”当成可验收特性。</p></div>
     </article>
     </div>
     </section>
@@ -563,58 +587,63 @@ a{color:inherit}
         <span class="scribble">机制 / 流程 / 状态 / 闭环 / 体系</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="run" data-search="机制 内部各部分如何相互作用，从而产生某种行为或结果；机制解释“为什么系统能够工作”。 启动实例时，控制面读取 Tool 配置 → 合并 Instance 本次配置 → 准备资源/镜像 → 配网络与存储 → 启动进程 → 健康检查 → Instance 进入可运行状态。">
+    <article class="term-card" data-cat="run" data-search="机制 系统通过什么内部规则和相互作用产生某种行为，解释为什么方案能够工作。 执行失败后按错误类型重试，超出次数转交用户；输出经验证才交付，形成恢复机制。 检查触发条件、状态变化和终止条件；重试不能保证结果正确，也不能无限继续。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>机制</h3>
         <span class="micro">ENGINE · 内部怎么运转</span>
       </div>
-      <div class="def"><b>元定义</b><p>内部各部分如何相互作用，从而产生某种行为或结果；机制解释“为什么系统能够工作”。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>启动实例时，控制面读取 Tool 配置 → 合并 Instance 本次配置 → 准备资源/镜像 → 配网络与存储 → 启动进程 → 健康检查 → Instance 进入可运行状态。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>系统通过什么内部规则和相互作用产生某种行为，解释为什么方案能够工作。</p></div>
+      <div class="example"><b>场景示例</b><p>执行失败后按错误类型重试，超出次数转交用户；输出经验证才交付，形成恢复机制。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>检查触发条件、状态变化和终止条件；重试不能保证结果正确，也不能无限继续。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="run" data-search="流程 一项任务从开始到结束，角色、步骤和状态按照什么顺序衔接。 用户任务 → Agent 判断需要执行 → 创建 Instance → 启动 → 上传/读取文件 → 执行代码 → 获取结果 → 保存产物 → 停止/回收。">
+    <article class="term-card" data-cat="run" data-search="流程 任务从触发到结束，用户、Agent 和系统的步骤、交接与状态顺序。 提出分析目标 → 确认数据范围 → 执行计算 → 处理异常 → 核对结果 → 交付报告。 同时画出失败、取消、人工介入和恢复路径，不能只描述顺利完成的流程。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>流程</h3>
         <span class="micro">FLOW · 先后顺序</span>
       </div>
-      <div class="def"><b>元定义</b><p>一项任务从开始到结束，角色、步骤和状态按照什么顺序衔接。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>用户任务 → Agent 判断需要执行 → 创建 Instance → 启动 → 上传/读取文件 → 执行代码 → 获取结果 → 保存产物 → 停止/回收。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>任务从触发到结束，用户、Agent 和系统的步骤、交接与状态顺序。</p></div>
+      <div class="example"><b>场景示例</b><p>提出分析目标 → 确认数据范围 → 执行计算 → 处理异常 → 核对结果 → 交付报告。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>同时画出失败、取消、人工介入和恢复路径，不能只描述顺利完成的流程。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="run" data-search="状态 对象在某一个时间点现在处于什么情况或生命周期阶段。 例如 Tool 正在创建/可用/失败；Instance 在启动、运行、暂停、恢复、停止等阶段。状态回答“现在在哪”，不是“做得好不好”。">
+    <article class="term-card" data-cat="run" data-search="状态 对象当前的生命周期阶段，用于决定允许的动作和下一步处理。任务状态与资源状态应分别表达。 沙箱正在运行时，任务可能等待授权或已经失败；运行中不能推出任务成功。 区分资源、任务和产物状态，说明转换条件、超时和用户可执行动作。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>状态</h3>
         <span class="micro">STATE · 现在在哪</span>
       </div>
-      <div class="def"><b>元定义</b><p>对象在某一个时间点现在处于什么情况或生命周期阶段。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如 Tool 正在创建/可用/失败；Instance 在启动、运行、暂停、恢复、停止等阶段。状态回答“现在在哪”，不是“做得好不好”。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>对象当前的生命周期阶段，用于决定允许的动作和下一步处理。任务状态与资源状态应分别表达。</p></div>
+      <div class="example"><b>场景示例</b><p>沙箱正在运行时，任务可能等待授权或已经失败；运行中不能推出任务成功。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>区分资源、任务和产物状态，说明转换条件、超时和用户可执行动作。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="run" data-search="闭环 结果能被观测并反馈回来，驱动下一轮判断与动作，形成“输入—执行—反馈—调整”的循环。 启动慢 → 采集启动数据 → 定位镜像准备耗时 → 做镜像预热/缓存 → 再测试 → 指标达标则推广，否则继续调整，这才是性能优化闭环。">
+    <article class="term-card" data-cat="run" data-search="闭环 执行结果被观测和判断后，实际改变下一轮行动的反馈循环。 发现报告引用错误 → 归因到检索 → 修改来源规则 → 用保留任务集复测 → 决定是否发布。 同时具备反馈、决策、动作和再验证才算闭环；收集日志或交付文件并不充分。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>闭环</h3>
         <span class="micro">LOOP · 反馈再行动</span>
       </div>
-      <div class="def"><b>元定义</b><p>结果能被观测并反馈回来，驱动下一轮判断与动作，形成“输入—执行—反馈—调整”的循环。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>启动慢 → 采集启动数据 → 定位镜像准备耗时 → 做镜像预热/缓存 → 再测试 → 指标达标则推广，否则继续调整，这才是性能优化闭环。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>执行结果被观测和判断后，实际改变下一轮行动的反馈循环。</p></div>
+      <div class="example"><b>场景示例</b><p>发现报告引用错误 → 归因到检索 → 修改来源规则 → 用保留任务集复测 → 决定是否发布。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>同时具备反馈、决策、动作和再验证才算闭环；收集日志或交付文件并不充分。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="run" data-search="体系 多个相互关联的模块、机制、规则、流程组成的系统化整体。 “生命周期体系”不是只有 Stop API，而是创建、状态机、超时、暂停/恢复、停止、自动回收、快照、错误处理、观测和运营规则的整体。">
+    <article class="term-card" data-cat="run" data-search="体系 多个模块、规则、角色和流程形成的持续运作整体，覆盖正常与异常场景。 评估体系包含任务集、标准、评分、人工校准、版本比较和上线门槛。 说明各部分如何协作以及谁维护，不把组件清单当成体系。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>体系</h3>
         <span class="micro">SYSTEM · 系统化整体</span>
       </div>
-      <div class="def"><b>元定义</b><p>多个相互关联的模块、机制、规则、流程组成的系统化整体。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>“生命周期体系”不是只有 Stop API，而是创建、状态机、超时、暂停/恢复、停止、自动回收、快照、错误处理、观测和运营规则的整体。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>多个模块、规则、角色和流程形成的持续运作整体，覆盖正常与异常场景。</p></div>
+      <div class="example"><b>场景示例</b><p>评估体系包含任务集、标准、评分、人工校准、版本比较和上线门槛。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>说明各部分如何协作以及谁维护，不把组件清单当成体系。</p></div>
     </article>
     </div>
     </section>
@@ -626,113 +655,123 @@ a{color:inherit}
         <span class="scribble">性能 / 数据 / 测试 / 评估 / 阈值 / 高优 / 体验 / 结果 / 效果 / 作用</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="measure" data-search="性能 在特定条件下，完成任务有多快、多大、多稳，以及消耗多少资源。 常见指标包括启动时延、并发实例数、创建吞吐、成功率、CPU/内存、磁盘 I/O、网络吞吐、P95/P99、任务执行耗时和资源成本。">
+    <article class="term-card" data-cat="measure" data-search="性能 系统在明确负载与配置下的速度、吞吐和资源消耗表现，需与正确性和可靠性分开判断。 沙箱启动耗时、首个可用结果耗时、并发吞吐和执行资源占用分别反映不同环节。 看端到端耗时和 P95 等分位数；响应快不能证明结果准确，平均值也可能掩盖长等待。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>性能</h3>
-        <span class="micro">PERF · 快/大/稳/耗</span>
+        <span class="micro">PERF · 速度/吞吐/消耗</span>
       </div>
-      <div class="def"><b>元定义</b><p>在特定条件下，完成任务有多快、多大、多稳，以及消耗多少资源。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>常见指标包括启动时延、并发实例数、创建吞吐、成功率、CPU/内存、磁盘 I/O、网络吞吐、P95/P99、任务执行耗时和资源成本。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>系统在明确负载与配置下的速度、吞吐和资源消耗表现，需与正确性和可靠性分开判断。</p></div>
+      <div class="example"><b>场景示例</b><p>沙箱启动耗时、首个可用结果耗时、并发吞吐和执行资源占用分别反映不同环节。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>看端到端耗时和 P95 等分位数；响应快不能证明结果准确，平均值也可能掩盖长等待。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="数据 对事实、行为和结果进行记录或量化后的信息。 例如 InstanceId、ToolId、Status、CreateTime、启动耗时、CPU、内存峰值、错误码、网络流量、任务完成率和日志事件。">
+    <article class="term-card" data-cat="measure" data-search="数据 对输入、行为、过程和结果的记录，是判断产品的证据原料，本身不自动构成结论。 记录任务类型、模型版本、工具错误、耗时、费用和用户验收；内容记录按授权与必要性处理。 明确数据口径、来源和质量，避免把缺失样本或只成功任务的数据当成全貌。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>数据</h3>
         <span class="micro">FACT · 可记录事实</span>
       </div>
-      <div class="def"><b>元定义</b><p>对事实、行为和结果进行记录或量化后的信息。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如 InstanceId、ToolId、Status、CreateTime、启动耗时、CPU、内存峰值、错误码、网络流量、任务完成率和日志事件。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>对输入、行为、过程和结果的记录，是判断产品的证据原料，本身不自动构成结论。</p></div>
+      <div class="example"><b>场景示例</b><p>记录任务类型、模型版本、工具错误、耗时、费用和用户验收；内容记录按授权与必要性处理。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>明确数据口径、来源和质量，避免把缺失样本或只成功任务的数据当成全貌。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="测试 人为设置条件，通过实验验证系统行为是否符合预期。 例如固定地域、镜像和资源规格，连续创建 10,000 个 Instance，观察 P50/P95/P99、失败率、超时率和资源峰值。">
+    <article class="term-card" data-cat="measure" data-search="测试 设置输入与条件，观察行为是否符合预期的验证活动，产出事实证据。 对缺列、超大表格、执行超时和取消任务分别测试，并对同一任务重复运行观察波动。 覆盖正常、边界和异常条件；AI 输出有波动，单次通过不足以证明稳定。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>测试</h3>
         <span class="micro">TEST · 人为验证</span>
       </div>
-      <div class="def"><b>元定义</b><p>人为设置条件，通过实验验证系统行为是否符合预期。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如固定地域、镜像和资源规格，连续创建 10,000 个 Instance，观察 P50/P95/P99、失败率、超时率和资源峰值。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>设置输入与条件，观察行为是否符合预期的验证活动，产出事实证据。</p></div>
+      <div class="example"><b>场景示例</b><p>对缺列、超大表格、执行超时和取消任务分别测试，并对同一任务重复运行观察波动。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>覆盖正常、边界和异常条件；AI 输出有波动，单次通过不足以证明稳定。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="评估 依据数据、指标、基线与标准，对对象作出判断。 如果目标是 P99 &lt; 2 秒、失败率 &lt; 0.5%，测试得到 P99=1.7 秒、失败率=0.3%，则可以形成“达标”的评估结论。">
+    <article class="term-card" data-cat="measure" data-search="评估 根据任务、标准、样本和基线，对质量与可用性作出判断，服务上线和选型决策。 在代表性分析任务上比较验收通过率、事实错误、人工复核时间和成功任务成本。 明确评分依据与样本代表性；自动或模型评分需校准，测试数据不能自行给出达标结论。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>评估</h3>
         <span class="micro">JUDGE · 对照标准</span>
       </div>
-      <div class="def"><b>元定义</b><p>依据数据、指标、基线与标准，对对象作出判断。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>如果目标是 P99 &lt; 2 秒、失败率 &lt; 0.5%，测试得到 P99=1.7 秒、失败率=0.3%，则可以形成“达标”的评估结论。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>根据任务、标准、样本和基线，对质量与可用性作出判断，服务上线和选型决策。</p></div>
+      <div class="example"><b>场景示例</b><p>在代表性分析任务上比较验收通过率、事实错误、人工复核时间和成功任务成本。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>明确评分依据与样本代表性；自动或模型评分需校准，测试数据不能自行给出达标结论。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="阈值 触发某种判断或动作的临界值。 例如 CPU &gt; 80% 触发告警；创建失败率 &gt; 1% 停止灰度；实例空闲超过既定时间触发回收。">
+    <article class="term-card" data-cat="measure" data-search="阈值 触发判断或动作的边界，是把目标与风险偏好落实为执行规则的方式。 验收通过率低于发布门槛则暂停灰度；单次任务超过预算则终止或转交用户。 按场景、误判代价和可观测数据设定；模型自报置信度不宜未经校准直接作阈值。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>阈值</h3>
         <span class="micro">TRIGGER · 临界线</span>
       </div>
-      <div class="def"><b>元定义</b><p>触发某种判断或动作的临界值。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如 CPU &gt; 80% 触发告警；创建失败率 &gt; 1% 停止灰度；实例空闲超过既定时间触发回收。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>触发判断或动作的边界，是把目标与风险偏好落实为执行规则的方式。</p></div>
+      <div class="example"><b>场景示例</b><p>验收通过率低于发布门槛则暂停灰度；单次任务超过预算则终止或转交用户。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>按场景、误判代价和可观测数据设定；模型自报置信度不宜未经校准直接作阈值。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="高优 相对于其他待办，需要更早投入资源处理的事项；本质是优先级排序。 例如大规模创建失败通常高于“控制台字段说明不够清晰”；高优不只是“很严重”，还意味着在当前资源约束下应先处理。">
+    <article class="term-card" data-cat="measure" data-search="高优 在当前资源约束下应更早处理的事项，依据用户损失、覆盖范围、紧迫性和投入确定。 越权写入应优先处理；低频格式问题与普遍任务失败则按损失和修复成本排序。 给出排序理由、负责人和期限；高优是相对选择，不是每个需求的固定标签。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>高优</h3>
         <span class="micro">PRIORITY · 先处理什么</span>
       </div>
-      <div class="def"><b>元定义</b><p>相对于其他待办，需要更早投入资源处理的事项；本质是优先级排序。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如大规模创建失败通常高于“控制台字段说明不够清晰”；高优不只是“很严重”，还意味着在当前资源约束下应先处理。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>在当前资源约束下应更早处理的事项，依据用户损失、覆盖范围、紧迫性和投入确定。</p></div>
+      <div class="example"><b>场景示例</b><p>越权写入应优先处理；低频格式问题与普遍任务失败则按损失和修复成本排序。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>给出排序理由、负责人和期限；高优是相对选择，不是每个需求的固定标签。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="体验 用户完成整个任务过程中，对效率、理解成本、稳定性与操作连贯性的综合感受。 两个平台都能创建沙箱，但一个需要 20 个必填字段且失败只报 InternalError，另一个模板预设、状态清晰、错误原因明确；功能相似，体验可能差很多。">
+    <article class="term-card" data-cat="measure" data-search="体验 用户完成任务时对可理解性、控制感、等待、质量和连续性的整体感受。 Agent 展示正在做什么、何时需要确认，失败后保留已完成工作，让用户能接着处理。 观察完整任务和复核成本；自然对话、快速首字输出不能代表整体体验好。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>体验</h3>
         <span class="micro">UX · 用户感受</span>
       </div>
-      <div class="def"><b>元定义</b><p>用户完成整个任务过程中，对效率、理解成本、稳定性与操作连贯性的综合感受。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>两个平台都能创建沙箱，但一个需要 20 个必填字段且失败只报 InternalError，另一个模板预设、状态清晰、错误原因明确；功能相似，体验可能差很多。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>用户完成任务时对可理解性、控制感、等待、质量和连续性的整体感受。</p></div>
+      <div class="example"><b>场景示例</b><p>Agent 展示正在做什么、何时需要确认，失败后保留已完成工作，让用户能接着处理。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>观察完整任务和复核成本；自然对话、快速首字输出不能代表整体体验好。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="结果 行为或流程结束后，客观产生了什么事实、产物或状态。 例如成功创建 Instance、生成 report.csv、返回执行结果、写入持久化存储、最终进入 STOPPED，或者失败并产生明确错误原因。">
+    <article class="term-card" data-cat="measure" data-search="结果 一次行动或任务客观产生的产物、事实或终止状态，尚不包含好坏判断。 Agent 生成了 report.csv 并结束执行，是结果；内容是否正确、是否满足需求还需验证。 记录产物与结束原因，把“已生成”“已执行”和“已验收”分别表达。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>结果</h3>
         <span class="micro">OUTPUT · 客观产物</span>
       </div>
-      <div class="def"><b>元定义</b><p>行为或流程结束后，客观产生了什么事实、产物或状态。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如成功创建 Instance、生成 report.csv、返回执行结果、写入持久化存储、最终进入 STOPPED，或者失败并产生明确错误原因。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>一次行动或任务客观产生的产物、事实或终止状态，尚不包含好坏判断。</p></div>
+      <div class="example"><b>场景示例</b><p>Agent 生成了 report.csv 并结束执行，是结果；内容是否正确、是否满足需求还需验证。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>记录产物与结束原因，把“已生成”“已执行”和“已验收”分别表达。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="效果 实际结果相对于目标、预期或基准表现如何。 “Instance 创建成功”是结果；“P95 从 10 秒降到 1 秒并达到既定目标”才是效果。效果必须有参照物。">
+    <article class="term-card" data-cat="measure" data-search="效果 实际表现相对于目标、原有做法或对照基线的改善程度，必须有参照。 报告生成后，用户总处理时间从两小时降到一小时，且核对后质量达到同一标准。 用相同任务、条件和统计口径比较；同时记录新增成本，不能只凭一次成功归因。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>效果</h3>
         <span class="micro">EFFECT · 相对目标如何</span>
       </div>
-      <div class="def"><b>元定义</b><p>实际结果相对于目标、预期或基准表现如何。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>“Instance 创建成功”是结果；“P95 从 10 秒降到 1 秒并达到既定目标”才是效果。效果必须有参照物。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>实际表现相对于目标、原有做法或对照基线的改善程度，必须有参照。</p></div>
+      <div class="example"><b>场景示例</b><p>报告生成后，用户总处理时间从两小时降到一小时，且核对后质量达到同一标准。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>用相同任务、条件和统计口径比较；同时记录新增成本，不能只凭一次成功归因。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="measure" data-search="作用 对象放进一个具体场景后起什么用、解决什么问题。 沙箱的作用是把 Agent 的不确定执行放进受控边界；快照的作用是减少重复初始化；VPC 网络的作用是让沙箱访问企业内部服务。">
+    <article class="term-card" data-cat="measure" data-search="作用 某个能力或机制在具体任务中承担的职责，描述它如何帮助任务推进。 沙箱负责承载代码执行，验证环节负责检查产物；隔离边界并不负责保证模型判断正确。 指出作用发生的环节和边界，再验证该作用是否转成用户收益。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>作用</h3>
         <span class="micro">ROLE · 场景里起什么用</span>
       </div>
-      <div class="def"><b>元定义</b><p>对象放进一个具体场景后起什么用、解决什么问题。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>沙箱的作用是把 Agent 的不确定执行放进受控边界；快照的作用是减少重复初始化；VPC 网络的作用是让沙箱访问企业内部服务。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>某个能力或机制在具体任务中承担的职责，描述它如何帮助任务推进。</p></div>
+      <div class="example"><b>场景示例</b><p>沙箱负责承载代码执行，验证环节负责检查产物；隔离边界并不负责保证模型判断正确。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>指出作用发生的环节和边界，再验证该作用是否转成用户收益。</p></div>
     </article>
     </div>
     </section>
@@ -744,91 +783,99 @@ a{color:inherit}
         <span class="scribble">反馈 / 跟进 / 优化 / 迭代 / 敏捷 / 回顾 / 沉淀 / 创新</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="improve" data-search="反馈 执行后的信息返回给决策者，为下一轮判断提供输入。 例如客户反馈某网络模式下无法满足日志投递诉求，或者任务创建偶发超时；这些信息进入产品、研发和运维决策。">
+    <article class="term-card" data-cat="improve" data-search="反馈 来自用户行为、执行记录、评价和人工复核的返回信息，用于修正判断。 用户编辑了 Agent 的结论，可能因为错误、偏好或业务规则缺失，需要进一步确认原因。 区分事实、诉求与猜测；点赞和沉默都不能直接代表任务正确。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>反馈</h3>
         <span class="micro">FEEDBACK · 返回信息</span>
       </div>
-      <div class="def"><b>元定义</b><p>执行后的信息返回给决策者，为下一轮判断提供输入。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如客户反馈某网络模式下无法满足日志投递诉求，或者任务创建偶发超时；这些信息进入产品、研发和运维决策。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>来自用户行为、执行记录、评价和人工复核的返回信息，用于修正判断。</p></div>
+      <div class="example"><b>场景示例</b><p>用户编辑了 Agent 的结论，可能因为错误、偏好或业务规则缺失，需要进一步确认原因。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>区分事实、诉求与猜测；点赞和沉默都不能直接代表任务正确。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="improve" data-search="跟进 对尚未结束的问题持续推动，直到得到下一状态或最终关闭。 客户反馈挂载失败 → 建单 → 定位 → 修复 → 发布 → 通知客户 → 客户验证，这是一条完整跟进链。">
+    <article class="term-card" data-cat="improve" data-search="跟进 持续推动未完成事项直到有证据地解决或明确关闭，包含责任和状态管理。 收到执行失败反馈后记录任务条件、定位、修复、回归，再请用户验证原任务。 定义负责人、下一步和时间；回复“已收到”不等于问题解决。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>跟进</h3>
         <span class="micro">FOLLOW-UP · 持续推进</span>
       </div>
-      <div class="def"><b>元定义</b><p>对尚未结束的问题持续推动，直到得到下一状态或最终关闭。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>客户反馈挂载失败 → 建单 → 定位 → 修复 → 发布 → 通知客户 → 客户验证，这是一条完整跟进链。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>持续推动未完成事项直到有证据地解决或明确关闭，包含责任和状态管理。</p></div>
+      <div class="example"><b>场景示例</b><p>收到执行失败反馈后记录任务条件、定位、修复、回归，再请用户验证原任务。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>定义负责人、下一步和时间；回复“已收到”不等于问题解决。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="improve" data-search="优化 在已有方案上改善某项或多项指标，通常不改变产品本质。 例如调整镜像缓存和资源准备，使启动时间下降；优化参数校验，使错误更早暴露、更容易理解。">
+    <article class="term-card" data-cat="improve" data-search="优化 在已有目标和框架内改善表现，通常涉及质量、速度、成本和控制之间的取舍。 采用预热缩短等待，同时测算空闲资源费用和实际任务收益。 用同一任务集验证净改善及回归影响；降低 Token 数量未必降低成功任务成本。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>优化</h3>
         <span class="micro">TUNE · 改善指标</span>
       </div>
-      <div class="def"><b>元定义</b><p>在已有方案上改善某项或多项指标，通常不改变产品本质。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如调整镜像缓存和资源准备，使启动时间下降；优化参数校验，使错误更早暴露、更容易理解。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>在已有目标和框架内改善表现，通常涉及质量、速度、成本和控制之间的取舍。</p></div>
+      <div class="example"><b>场景示例</b><p>采用预热缩短等待，同时测算空闲资源费用和实际任务收益。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>用同一任务集验证净改善及回归影响；降低 Token 数量未必降低成功任务成本。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="improve" data-search="迭代 基于上一版本形成下一版本，把新能力、修复和学习持续加入产品。 V1 只有启动/停止 → V2 增加暂停恢复 → V3 增加快照 → V4 增加更完整的状态治理，这就是产品迭代。">
+    <article class="term-card" data-cat="improve" data-search="迭代 通过版本交付，把新能力、修复和用户学习纳入产品，并验证是否比上一版更好。 调整模型、提示词或执行工具后，记录版本，用固定任务集回归，再逐步发布。 模型与配置变化也应纳入版本管理，明确验收与回退条件。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>迭代</h3>
         <span class="micro">ITERATE · 一版接一版</span>
       </div>
-      <div class="def"><b>元定义</b><p>基于上一版本形成下一版本，把新能力、修复和学习持续加入产品。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>V1 只有启动/停止 → V2 增加暂停恢复 → V3 增加快照 → V4 增加更完整的状态治理，这就是产品迭代。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>通过版本交付，把新能力、修复和用户学习纳入产品，并验证是否比上一版更好。</p></div>
+      <div class="example"><b>场景示例</b><p>调整模型、提示词或执行工具后，记录版本，用固定任务集回归，再逐步发布。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>模型与配置变化也应纳入版本管理，明确验收与回退条件。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="improve" data-search="敏捷 用小步交付、快速反馈和频繁调整降低大规模一次性交付的不确定性。 不一次性做完“完整沙箱治理平台”，而是先补状态、再补错误原因、再补告警、再补运营分析，每一步都基于真实反馈调整。">
+    <article class="term-card" data-cat="improve" data-search="敏捷 用小范围、短周期的交付和反馈降低需求与方案不确定性的工作方式。 先对少量分析任务交付可验收流程，验证价值后再扩大数据格式和自动执行范围。 每轮验证一个关键假设；小步交付仍需要质量门槛和必要授权。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>敏捷</h3>
         <span class="micro">AGILE · 小步快跑</span>
       </div>
-      <div class="def"><b>元定义</b><p>用小步交付、快速反馈和频繁调整降低大规模一次性交付的不确定性。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>不一次性做完“完整沙箱治理平台”，而是先补状态、再补错误原因、再补告警、再补运营分析，每一步都基于真实反馈调整。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>用小范围、短周期的交付和反馈降低需求与方案不确定性的工作方式。</p></div>
+      <div class="example"><b>场景示例</b><p>先对少量分析任务交付可验收流程，验证价值后再扩大数据格式和自动执行范围。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>每轮验证一个关键假设；小步交付仍需要质量门槛和必要授权。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="improve" data-search="回顾 事情结束后重新分析发生了什么、为什么发生、哪些措施有效、下次如何改变。 一次高峰创建失败后，按时间线、指标、根因、应急处置、长期修复和遗漏项进行复盘。">
+    <article class="term-card" data-cat="improve" data-search="回顾 在一个阶段结束后，用证据分析目标、过程、偏差与原因，并改变下一阶段行动。 上线后任务失败上升，回看模型版本、输入分布、工具故障和人工处理，再确定改进项。 区分直接原因和系统原因，为行动指定责任与验证时间。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>回顾</h3>
         <span class="micro">REVIEW · 回头看</span>
       </div>
-      <div class="def"><b>元定义</b><p>事情结束后重新分析发生了什么、为什么发生、哪些措施有效、下次如何改变。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>一次高峰创建失败后，按时间线、指标、根因、应急处置、长期修复和遗漏项进行复盘。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>在一个阶段结束后，用证据分析目标、过程、偏差与原因，并改变下一阶段行动。</p></div>
+      <div class="example"><b>场景示例</b><p>上线后任务失败上升，回看模型版本、输入分布、工具故障和人工处理，再确定改进项。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>区分直接原因和系统原因，为行动指定责任与验证时间。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="improve" data-search="沉淀 把一次性经验转化为能够长期复用的知识、规则、工具或产品能力。 一次 CFS 路径问题处理后，把经验变成字段语义规范、控制台校验、FAQ、自动诊断和测试用例，才算真正沉淀。">
+    <article class="term-card" data-cat="improve" data-search="沉淀 把一次性经验转成可检索、可复用、可维护的知识、规则或产品能力。 把一次脏数据故障变成评估样本、输入校验、错误提示和恢复流程。 说明存放位置、使用入口、维护者和更新条件；写一份文档未必产生复用。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>沉淀</h3>
         <span class="micro">ASSET · 经验变资产</span>
       </div>
-      <div class="def"><b>元定义</b><p>把一次性经验转化为能够长期复用的知识、规则、工具或产品能力。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>一次 CFS 路径问题处理后，把经验变成字段语义规范、控制台校验、FAQ、自动诊断和测试用例，才算真正沉淀。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>把一次性经验转成可检索、可复用、可维护的知识、规则或产品能力。</p></div>
+      <div class="example"><b>场景示例</b><p>把一次脏数据故障变成评估样本、输入校验、错误提示和恢复流程。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>说明存放位置、使用入口、维护者和更新条件；写一份文档未必产生复用。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="improve" data-search="创新 采用新的问题解决方式并产生新的有效价值，而不只是“以前没做过”。 例如把运行时快照、预热和任务级环境结合起来，显著改变长会话 Agent 的启动与资源模型，才更接近产品创新。">
+    <article class="term-card" data-cat="improve" data-search="创新 采用新的解决方式，并在明确任务中创造可验证的新增价值。 让 Agent 执行计算并检查产物，若明显减少人工交接与复核，就构成值得验证的创新。 与现有替代方案比较收益和成本；技术新颖或增加模型不自动构成产品创新。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>创新</h3>
         <span class="micro">INNOVATE · 新办法带来新价值</span>
       </div>
-      <div class="def"><b>元定义</b><p>采用新的问题解决方式并产生新的有效价值，而不只是“以前没做过”。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如把运行时快照、预热和任务级环境结合起来，显著改变长会话 Agent 的启动与资源模型，才更接近产品创新。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>采用新的解决方式，并在明确任务中创造可验证的新增价值。</p></div>
+      <div class="example"><b>场景示例</b><p>让 Agent 执行计算并检查产物，若明显减少人工交接与复核，就构成值得验证的创新。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>与现有替代方案比较收益和成本；技术新颖或增加模型不自动构成产品创新。</p></div>
     </article>
     </div>
     </section>
@@ -840,80 +887,87 @@ a{color:inherit}
         <span class="scribble">流量 / 导流 / 分发 / 转化 / 裂变 / 渠道下沉 / UGC</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="growth" data-search="流量 进入某个入口的人、请求或注意力规模。 可对应 Agent Runtime 文档访问量、控制台访问、SDK 下载、API 调用、试用申请等不同层面的“流量”。">
+    <article class="term-card" data-cat="growth" data-search="流量 进入某个入口的人数、访问或请求规模，必须声明统计对象和单位。 文档访客、试用开发者、API 请求是三种流量；Agent 循环调用还可能包含自动重试。 区分用户、任务与调用量，剔除重复和重试后再判断增长。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>流量</h3>
         <span class="micro">TRAFFIC · 进入规模</span>
       </div>
-      <div class="def"><b>元定义</b><p>进入某个入口的人、请求或注意力规模。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>可对应 Agent Runtime 文档访问量、控制台访问、SDK 下载、API 调用、试用申请等不同层面的“流量”。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>进入某个入口的人数、访问或请求规模，必须声明统计对象和单位。</p></div>
+      <div class="example"><b>场景示例</b><p>文档访客、试用开发者、API 请求是三种流量；Agent 循环调用还可能包含自动重试。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>区分用户、任务与调用量，剔除重复和重试后再判断增长。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="growth" data-search="导流 把已有流量引向另一个目标入口。 例如在 Coding Agent 教程中引导用户进入 Agent Sandbox 快速入门，并继续创建第一个 Tool/Instance。">
+    <article class="term-card" data-cat="growth" data-search="导流 把已有入口中的目标用户引向下一入口或行动。 在开发者教程中引导运行样例，再进入自有数据的首次任务。 追踪到目标任务是否完成，避免只统计链接点击。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>导流</h3>
         <span class="micro">ROUTE · 把人引过去</span>
       </div>
-      <div class="def"><b>元定义</b><p>把已有流量引向另一个目标入口。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如在 Coding Agent 教程中引导用户进入 Agent Sandbox 快速入门，并继续创建第一个 Tool/Instance。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>把已有入口中的目标用户引向下一入口或行动。</p></div>
+      <div class="example"><b>场景示例</b><p>在开发者教程中引导运行样例，再进入自有数据的首次任务。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>追踪到目标任务是否完成，避免只统计链接点击。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="growth" data-search="分发 把产品、内容或能力主动送到目标用户面前。 可以通过官网、开发者文档、SDK、Agent Framework 集成、云市场、教程与生态合作把 Agent Sandbox 能力分发出去。">
+    <article class="term-card" data-cat="growth" data-search="分发 通过合适渠道把产品能力或内容送到目标用户的使用场景。 把分析能力嵌入现有表格工具，或通过开发框架集成降低调用门槛。 比较渠道触达、接入成本和有效任务使用；能被模型发现不保证会被正确调用。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>分发</h3>
         <span class="micro">DISTRIBUTE · 送达用户</span>
       </div>
-      <div class="def"><b>元定义</b><p>把产品、内容或能力主动送到目标用户面前。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>可以通过官网、开发者文档、SDK、Agent Framework 集成、云市场、教程与生态合作把 Agent Sandbox 能力分发出去。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>通过合适渠道把产品能力或内容送到目标用户的使用场景。</p></div>
+      <div class="example"><b>场景示例</b><p>把分析能力嵌入现有表格工具，或通过开发框架集成降低调用门槛。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>比较渠道触达、接入成本和有效任务使用；能被模型发现不保证会被正确调用。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="growth" data-search="转化 用户从一个业务阶段成功进入下一个关键阶段。 例如：访问文档 → 进入控制台 → 创建 Tool → 首次启动 Instance → 持续使用；每一步都可以计算转化率。">
+    <article class="term-card" data-cat="growth" data-search="转化 符合条件的用户或组织，从一个明确阶段进入下一阶段的行为；转化率衡量完成该行为的比例。 试用团队 → 完成首次有效任务 → 持续使用 → 付费，各阶段分别计算转化。 明确分子、分母、时间窗和对象；创建沙箱不是用户价值转化的终点。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>转化</h3>
         <span class="micro">CONVERT · 进入下一阶段</span>
       </div>
-      <div class="def"><b>元定义</b><p>用户从一个业务阶段成功进入下一个关键阶段。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如：访问文档 → 进入控制台 → 创建 Tool → 首次启动 Instance → 持续使用；每一步都可以计算转化率。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>符合条件的用户或组织，从一个明确阶段进入下一阶段的行为；转化率衡量完成该行为的比例。</p></div>
+      <div class="example"><b>场景示例</b><p>试用团队 → 完成首次有效任务 → 持续使用 → 付费，各阶段分别计算转化。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>明确分子、分母、时间窗和对象；创建沙箱不是用户价值转化的终点。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="growth" data-search="裂变 已有用户进一步带来新用户或新传播，使增长形成传播链。 假设未来开发者能分享可复用的 Sandbox 模板/镜像/工作流，A 分享给 B/C，B 再传播给团队，就形成裂变。">
+    <article class="term-card" data-cat="growth" data-search="裂变 已有用户带来新用户，且新用户还能继续传播的增长链路。 假设用户分享可复用报告模板，接收者成功运行后再分享给其他团队。 验证邀请到有效使用的比例和传播代际；分享次数多不代表形成裂变。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>裂变</h3>
         <span class="micro">VIRAL · 用户带用户</span>
       </div>
-      <div class="def"><b>元定义</b><p>已有用户进一步带来新用户或新传播，使增长形成传播链。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>假设未来开发者能分享可复用的 Sandbox 模板/镜像/工作流，A 分享给 B/C，B 再传播给团队，就形成裂变。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>已有用户带来新用户，且新用户还能继续传播的增长链路。</p></div>
+      <div class="example"><b>场景示例</b><p>假设用户分享可复用报告模板，接收者成功运行后再分享给其他团队。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>验证邀请到有效使用的比例和传播代际；分享次数多不代表形成裂变。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="growth" data-search="渠道下沉 从原有核心客户与核心渠道，继续进入更广、更基层或更细分的市场。 例如先服务大型模型厂商与头部 Agent 公司，再逐步覆盖中型 SaaS、小团队和独立开发者。">
+    <article class="term-card" data-cat="growth" data-search="渠道下沉 通过更适配的触达、价格和交付方式，进入此前覆盖不足的客户群。 从大企业定制接入扩展到小团队自助使用，需要更清晰的教程、默认配置和可控账单。 先证明服务成本与需求匹配；小客户不代表技术需求简单。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>渠道下沉</h3>
         <span class="micro">EXPAND · 覆盖更广</span>
       </div>
-      <div class="def"><b>元定义</b><p>从原有核心客户与核心渠道，继续进入更广、更基层或更细分的市场。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如先服务大型模型厂商与头部 Agent 公司，再逐步覆盖中型 SaaS、小团队和独立开发者。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>通过更适配的触达、价格和交付方式，进入此前覆盖不足的客户群。</p></div>
+      <div class="example"><b>场景示例</b><p>从大企业定制接入扩展到小团队自助使用，需要更清晰的教程、默认配置和可控账单。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>先证明服务成本与需求匹配；小客户不代表技术需求简单。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="growth" data-search="UGC User Generated Content：由用户而不是平台官方创造的内容。 若开发者可以创建并分享 Sandbox 模板、镜像、Tool 配置、Skill 或工作流，这些用户贡献物就是 UGC；此处用于解释概念，不表示当前一定存在完整公开 UGC 市场。">
+    <article class="term-card" data-cat="growth" data-search="UGC 用户创造并贡献的内容或可复用资产。AI 辅助生成时，仍需说明用户的创作与审核责任。 假设用户制作并分享 Agent 模板、提示词或工作流；未经用户参与的批量生成不等同于用户贡献。 明确资产质量、授权、隐私和复用收益，不能只以内容数量判断生态健康。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>UGC</h3>
         <span class="micro">CONTENT · 用户生产</span>
       </div>
-      <div class="def"><b>元定义</b><p>User Generated Content：由用户而不是平台官方创造的内容。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>若开发者可以创建并分享 Sandbox 模板、镜像、Tool 配置、Skill 或工作流，这些用户贡献物就是 UGC；此处用于解释概念，不表示当前一定存在完整公开 UGC 市场。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>用户创造并贡献的内容或可复用资产。AI 辅助生成时，仍需说明用户的创作与审核责任。</p></div>
+      <div class="example"><b>场景示例</b><p>假设用户制作并分享 Agent 模板、提示词或工作流；未经用户参与的批量生成不等同于用户贡献。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>明确资产质量、授权、隐私和复用收益，不能只以内容数量判断生态健康。</p></div>
     </article>
     </div>
     </section>
@@ -925,80 +979,87 @@ a{color:inherit}
         <span class="scribble">头部 / 腰部 / 长尾 / 垂直 / 生态 / 商业模式 / 沉浸</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="market" data-search="头部 数量较少，但规模、影响力、收入或行业示范效应很大的参与者。 例如日调用量极高的大模型厂商、头部 Coding Agent 平台或超大型企业客户，通常会被放在“头部客户”分析中。">
+    <article class="term-card" data-cat="market" data-search="头部 按明确市场和指标划分，规模、收入或示范影响位于前列的少数客户或参与者。 按有效任务量识别大客户，按收入贡献识别重点客户，两者未必重合。 声明划分依据，同时评估定制成本和收入集中风险。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>头部</h3>
         <span class="micro">TOP · 少而大</span>
       </div>
-      <div class="def"><b>元定义</b><p>数量较少，但规模、影响力、收入或行业示范效应很大的参与者。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>例如日调用量极高的大模型厂商、头部 Coding Agent 平台或超大型企业客户，通常会被放在“头部客户”分析中。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>按明确市场和指标划分，规模、收入或示范影响位于前列的少数客户或参与者。</p></div>
+      <div class="example"><b>场景示例</b><p>按有效任务量识别大客户，按收入贡献识别重点客户，两者未必重合。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>声明划分依据，同时评估定制成本和收入集中风险。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="market" data-search="腰部 介于头部与大量长尾之间的中等规模参与者，通常需求稳定且有成长空间。 中型 Agent 创业公司、成熟 SaaS 团队可能属于腰部客户；它们常适合标准化方案复制。">
+    <article class="term-card" data-cat="market" data-search="腰部 在某个明确分布中处于中间规模的客户群，常用于分析标准化方案的覆盖机会。 一批中型 SaaS 团队有持续执行需求，若接入方式相似，就可能适合模板化交付。 用实际规模和需求验证分群，不把公司类型直接当成客户等级。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>腰部</h3>
         <span class="micro">MID · 中等规模</span>
       </div>
-      <div class="def"><b>元定义</b><p>介于头部与大量长尾之间的中等规模参与者，通常需求稳定且有成长空间。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>中型 Agent 创业公司、成熟 SaaS 团队可能属于腰部客户；它们常适合标准化方案复制。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>在某个明确分布中处于中间规模的客户群，常用于分析标准化方案的覆盖机会。</p></div>
+      <div class="example"><b>场景示例</b><p>一批中型 SaaS 团队有持续执行需求，若接入方式相似，就可能适合模板化交付。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>用实际规模和需求验证分群，不把公司类型直接当成客户等级。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="market" data-search="长尾 单体规模较小，但数量巨大的用户、需求或场景集合。 独立开发者、小团队、低频但类型众多的 Agent 场景，单个规模不大，合在一起形成长尾。">
+    <article class="term-card" data-cat="market" data-search="长尾 单体需求较小或低频、种类多且分散的用户与场景集合。 独立开发者的任务量不大，但环境、依赖和使用时间可能差异很大。 评估总需求与自助服务成本；用户数量多不保证收入足以覆盖支持费用。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>长尾</h3>
         <span class="micro">TAIL · 多而小</span>
       </div>
-      <div class="def"><b>元定义</b><p>单体规模较小，但数量巨大的用户、需求或场景集合。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>独立开发者、小团队、低频但类型众多的 Agent 场景，单个规模不大，合在一起形成长尾。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>单体需求较小或低频、种类多且分散的用户与场景集合。</p></div>
+      <div class="example"><b>场景示例</b><p>独立开发者的任务量不大，但环境、依赖和使用时间可能差异很大。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>评估总需求与自助服务成本；用户数量多不保证收入足以覆盖支持费用。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="market" data-search="垂直 集中解决一个具体行业、场景或用户群的问题，而不是横向覆盖所有市场。 可以把 Agent Sandbox 进一步按 Coding Agent、Browser Agent、RL、办公 Agent 等垂直场景研究。">
+    <article class="term-card" data-cat="market" data-search="垂直 聚焦某一行业、任务或用户群，围绕其数据、规则和验收标准深度设计。 财务分析 Agent 要适配科目、口径和复核流程，不能只把通用助手换成财务提示词。 验证专用数据、流程集成和结果标准是否形成优势。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>垂直</h3>
         <span class="micro">VERTICAL · 深耕一个场景</span>
       </div>
-      <div class="def"><b>元定义</b><p>集中解决一个具体行业、场景或用户群的问题，而不是横向覆盖所有市场。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>可以把 Agent Sandbox 进一步按 Coding Agent、Browser Agent、RL、办公 Agent 等垂直场景研究。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>聚焦某一行业、任务或用户群，围绕其数据、规则和验收标准深度设计。</p></div>
+      <div class="example"><b>场景示例</b><p>财务分析 Agent 要适配科目、口径和复核流程，不能只把通用助手换成财务提示词。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>验证专用数据、流程集成和结果标准是否形成优势。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="market" data-search="生态 多类参与者相互依赖、相互连接并共同创造价值形成的网络。 云平台、Agent 框架、模型厂商、Sandbox 协议、镜像/Skill 开发者、Agent 应用与企业客户共同构成 Agent Runtime 生态。">
+    <article class="term-card" data-cat="market" data-search="生态 多类参与者通过稳定接口、规则与利益关系，共同交付用户价值的网络。 模型、工具、执行平台、工作流作者和客户围绕任务协作，各自提供能力并承担责任。 看真实互操作、贡献、使用与收益分配，不把合作伙伴名单当成生态。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>生态</h3>
         <span class="micro">ECOSYSTEM · 多方价值网络</span>
       </div>
-      <div class="def"><b>元定义</b><p>多类参与者相互依赖、相互连接并共同创造价值形成的网络。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>云平台、Agent 框架、模型厂商、Sandbox 协议、镜像/Skill 开发者、Agent 应用与企业客户共同构成 Agent Runtime 生态。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>多类参与者通过稳定接口、规则与利益关系，共同交付用户价值的网络。</p></div>
+      <div class="example"><b>场景示例</b><p>模型、工具、执行平台、工作流作者和客户围绕任务协作，各自提供能力并承担责任。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>看真实互操作、贡献、使用与收益分配，不把合作伙伴名单当成生态。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="market" data-search="商业模式（“一砣商业模式”） 企业如何创造价值、交付价值并从中获取收益；“一砣商业模式”是非正式调侃表达，正式文档建议使用“商业模式”。 分析 Agent Sandbox 商业模式要同时看客户是谁、价值主张、交付渠道、资源成本、计费单位、毛利结构、规模效应和生态关系，而不只是“怎么收费”。">
+    <article class="term-card" data-cat="market" data-search="商业模式（“一砣商业模式”） 围绕为谁创造价值、如何交付与收费、成本由谁承担形成的可持续经营结构；正式表达使用“商业模式”。 执行平台可讨论资源时长计费或套餐，但还需计入预热、重试、存储、支持和获客成本。 核算每个成功任务的成本与毛利，说明失败和重试由谁付费。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>商业模式（“一砣商业模式”）</h3>
         <span class="micro">BUSINESS · 如何赚钱并持续</span>
       </div>
-      <div class="def"><b>元定义</b><p>企业如何创造价值、交付价值并从中获取收益；“一砣商业模式”是非正式调侃表达，正式文档建议使用“商业模式”。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>分析 Agent Sandbox 商业模式要同时看客户是谁、价值主张、交付渠道、资源成本、计费单位、毛利结构、规模效应和生态关系，而不只是“怎么收费”。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>围绕为谁创造价值、如何交付与收费、成本由谁承担形成的可持续经营结构；正式表达使用“商业模式”。</p></div>
+      <div class="example"><b>场景示例</b><p>执行平台可讨论资源时长计费或套餐，但还需计入预热、重试、存储、支持和获客成本。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>核算每个成功任务的成本与毛利，说明失败和重试由谁付费。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="market" data-search="沉浸 用户持续处在连贯任务环境中，很少因工具切换或上下文中断而退出任务状态。 在一个 All-In-One 或连续会话型环境里，Agent 可连续运行代码、操作浏览器、读取文件、打开终端并继续执行，体验上更“沉浸”。">
+    <article class="term-card" data-cat="market" data-search="沉浸 用户在连续任务中保持专注、少被切换和上下文中断打断的体验状态。 分析文件、核对图表和修改结论在同一任务空间衔接，用户无需反复复制背景。 对效率型 AI 产品看任务连续性与中断成本；使用时间更长未必更好。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>沉浸</h3>
         <span class="micro">IMMERSION · 连续任务体验</span>
       </div>
-      <div class="def"><b>元定义</b><p>用户持续处在连贯任务环境中，很少因工具切换或上下文中断而退出任务状态。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>在一个 All-In-One 或连续会话型环境里，Agent 可连续运行代码、操作浏览器、读取文件、打开终端并继续执行，体验上更“沉浸”。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>用户在连续任务中保持专注、少被切换和上下文中断打断的体验状态。</p></div>
+      <div class="example"><b>场景示例</b><p>分析文件、核对图表和修改结论在同一任务空间衔接，用户无需反复复制背景。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>对效率型 AI 产品看任务连续性与中断成本；使用时间更长未必更好。</p></div>
     </article>
     </div>
     </section>
@@ -1010,58 +1071,63 @@ a{color:inherit}
         <span class="scribble">撬动 / 盘活 / 整合 / 操盘 / 干货</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="resource" data-search="撬动 用较少新增投入激活更多已有资源，从而产生更大的结果。 一个 Agent Sandbox 产品可以撬动既有计算、VPC、CFS/COS、CAM、日志与网关能力，组合成更完整的 Agent 执行平台。">
+    <article class="term-card" data-cat="resource" data-search="撬动 用较少新增投入带动已有资源或关系，产生更大结果的经营表达。 复用现有企业身份与网络接入，可能减少执行平台的客户部署工作。 比较实际节省与新增适配成本，不能把所有已有资源都计为收益。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>撬动</h3>
         <span class="micro">LEVERAGE · 小投入带大资源</span>
       </div>
-      <div class="def"><b>元定义</b><p>用较少新增投入激活更多已有资源，从而产生更大的结果。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>一个 Agent Sandbox 产品可以撬动既有计算、VPC、CFS/COS、CAM、日志与网关能力，组合成更完整的 Agent 执行平台。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>用较少新增投入带动已有资源或关系，产生更大结果的经营表达。</p></div>
+      <div class="example"><b>场景示例</b><p>复用现有企业身份与网络接入，可能减少执行平台的客户部署工作。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>比较实际节省与新增适配成本，不能把所有已有资源都计为收益。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="resource" data-search="盘活 使原本已经存在但利用不足的存量资源重新产生价值。 如果通过弹性调度把部分闲置算力用于短时 Agent Sandbox 任务，可以理解为“盘活存量算力”的一种方式。">
+    <article class="term-card" data-cat="resource" data-search="盘活 让闲置或利用不足的存量资源重新产生有效价值。 将经授权的已有知识整理为可检索材料，供 Agent 支持业务任务，并持续检查时效性。 验证资源适用性、使用权和维护成本；数据量大不等于可用知识多。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>盘活</h3>
         <span class="micro">ACTIVATE · 存量再利用</span>
       </div>
-      <div class="def"><b>元定义</b><p>使原本已经存在但利用不足的存量资源重新产生价值。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>如果通过弹性调度把部分闲置算力用于短时 Agent Sandbox 任务，可以理解为“盘活存量算力”的一种方式。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>让闲置或利用不足的存量资源重新产生有效价值。</p></div>
+      <div class="example"><b>场景示例</b><p>将经授权的已有知识整理为可检索材料，供 Agent 支持业务任务，并持续检查时效性。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>验证资源适用性、使用权和维护成本；数据量大不等于可用知识多。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="resource" data-search="整合 把原本分散的能力、资源或团队组合成一个统一解决方案。 计算 + 网络 + 存储 + 身份 + 日志 + Sandbox 通过统一产品体验被组织起来，就是能力整合。">
+    <article class="term-card" data-cat="resource" data-search="整合 把分散能力组织成用户可连续使用的方案，同时统一接口、状态、权限和异常处理。 模型、文件、执行环境和报告交付组合后，用户能看到统一进度并恢复失败任务。 检查交接损耗是否减少；接了更多工具不等于用户获得完整能力。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>整合</h3>
         <span class="micro">INTEGRATE · 分散变统一</span>
       </div>
-      <div class="def"><b>元定义</b><p>把原本分散的能力、资源或团队组合成一个统一解决方案。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>计算 + 网络 + 存储 + 身份 + 日志 + Sandbox 通过统一产品体验被组织起来，就是能力整合。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>把分散能力组织成用户可连续使用的方案，同时统一接口、状态、权限和异常处理。</p></div>
+      <div class="example"><b>场景示例</b><p>模型、文件、执行环境和报告交付组合后，用户能看到统一进度并恢复失败任务。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>检查交接损耗是否减少；接了更多工具不等于用户获得完整能力。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="resource" data-search="操盘 围绕整体业务目标，持续协调产品、资源、团队、客户、市场和节奏。 操盘 Agent Sandbox 不只是写 PRD，而是定位场景 → 排路线 → 协调研发 → 找标杆客户 → 灰度 → 看数据 → 调产品/价格 → 扩规模。">
+    <article class="term-card" data-cat="resource" data-search="操盘 对整体业务目标负责，持续协调定位、资源、产品、交付、渠道和经营节奏的非正式表达。 围绕有效付费任务增长，安排试点、路线、评估、定价和支持，并按证据调整投入。 明确决策权、责任边界与阶段目标，避免以协调活动替代业务结果。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>操盘</h3>
         <span class="micro">OPERATE · 全局经营</span>
       </div>
-      <div class="def"><b>元定义</b><p>围绕整体业务目标，持续协调产品、资源、团队、客户、市场和节奏。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>操盘 Agent Sandbox 不只是写 PRD，而是定位场景 → 排路线 → 协调研发 → 找标杆客户 → 灰度 → 看数据 → 调产品/价格 → 扩规模。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>对整体业务目标负责，持续协调定位、资源、产品、交付、渠道和经营节奏的非正式表达。</p></div>
+      <div class="example"><b>场景示例</b><p>围绕有效付费任务增长，安排试点、路线、评估、定价和支持，并按证据调整投入。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>明确决策权、责任边界与阶段目标，避免以协调活动替代业务结果。</p></div>
     </article>
     
 
-    <article class="term-card" data-cat="resource" data-search="干货 能够直接帮助理解、决策或操作的高信息密度内容，是互联网语境中的非正式说法。 “Agent Sandbox 很强”不是干货；把 PUBLIC/VPC/SANDBOX 的差异、限制、选择条件和错误案例讲清楚，才更接近干货。">
+    <article class="term-card" data-cat="resource" data-search="干货 能直接帮助理解、判断或操作的信息，是非正式的内容评价。 说明某类任务为何失败、适用方案、配置步骤和验证口径，比“Agent 很强”更有用。 让读者能据此作出下一步行动，同时给出前提和限制。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>干货</h3>
         <span class="micro">SIGNAL · 高信息密度</span>
       </div>
-      <div class="def"><b>元定义</b><p>能够直接帮助理解、决策或操作的高信息密度内容，是互联网语境中的非正式说法。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>“Agent Sandbox 很强”不是干货；把 PUBLIC/VPC/SANDBOX 的差异、限制、选择条件和错误案例讲清楚，才更接近干货。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>能直接帮助理解、判断或操作的信息，是非正式的内容评价。</p></div>
+      <div class="example"><b>场景示例</b><p>说明某类任务为何失败、适用方案、配置步骤和验证口径，比“Agent 很强”更有用。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>让读者能据此作出下一步行动，同时给出前提和限制。</p></div>
     </article>
     </div>
     </section>
@@ -1073,47 +1139,46 @@ a{color:inherit}
         <span class="scribble">审计</span>
       </div>
       <div class="card-grid">
-    <article class="term-card" data-cat="audit" data-search="审计 依据标准与证据检查过程和结果是否真实、完整、合规、可靠，并形成可追溯判断。 可以用调用身份、RequestId、ToolId、InstanceId、镜像/配置、网络策略、状态、时间戳、日志和产物等证据，检查一次 Agent 执行是否按授权发生、是否越权、结果是否可追踪。">
+    <article class="term-card" data-cat="audit" data-search="审计 依据明确标准和可追溯证据，检查动作是否按授权发生、过程是否符合要求及责任是否可还原。 为一次 Agent 写入保留必要的身份、授权范围、工具参数、执行时间、版本和结果证据。 明确留存与访问规则；日志存在不等于审计完整，审计可追溯也不等于输出正确。">
       <div class="tape"></div>
       <div class="term-head">
         <h3>审计</h3>
         <span class="micro">TRUST · 证据链</span>
       </div>
-      <div class="def"><b>元定义</b><p>依据标准与证据检查过程和结果是否真实、完整、合规、可靠，并形成可追溯判断。</p></div>
-      <div class="example"><b>腾讯云 Agent 沙箱例子</b><p>可以用调用身份、RequestId、ToolId、InstanceId、镜像/配置、网络策略、状态、时间戳、日志和产物等证据，检查一次 Agent 执行是否按授权发生、是否越权、结果是否可追踪。</p></div>
+      <div class="def"><b>AI 产品语境</b><p>依据明确标准和可追溯证据，检查动作是否按授权发生、过程是否符合要求及责任是否可还原。</p></div>
+      <div class="example"><b>场景示例</b><p>为一次 Agent 写入保留必要的身份、授权范围、工具参数、执行时间、版本和结果证据。</p></div>
+      <div class="judgment"><b>PM 判断</b><p>明确留存与访问规则；日志存在不等于审计完整，审计可追溯也不等于输出正确。</p></div>
     </article>
     </div>
     </section>
     
 
     <section class="flow-summary">
-      <h2>最终总链路：一个产品问题是怎么从“想法”走到“价值”的？</h2>
-      <div class="flow-line">
-        <span class="flow-chip">痛点</span><span class="arrow">→</span><span class="flow-chip">目的</span><span class="arrow">→</span><span class="flow-chip">目标</span><span class="arrow">→</span><span class="flow-chip">范式</span><span class="arrow">→</span><span class="flow-chip">逻辑</span><span class="arrow">→</span><span class="flow-chip">策略</span><span class="arrow">→</span><span class="flow-chip">方法</span><span class="arrow">→</span><span class="flow-chip">方式</span><span class="arrow">→</span><span class="flow-chip">模块/功能</span><span class="arrow">→</span><span class="flow-chip">机制/流程</span><span class="arrow">→</span><span class="flow-chip">状态/数据</span><span class="arrow">→</span><span class="flow-chip">结果</span><span class="arrow">→</span><span class="flow-chip">效果</span><span class="arrow">→</span><span class="flow-chip">作用</span><span class="arrow">→</span><span class="flow-chip">价值</span><span class="arrow">→</span><span class="flow-chip">影响</span><span class="arrow">→</span><span class="flow-chip">意义</span>
-      </div>
+      <h2>产品判断链路：从用户任务到可验证价值</h2>
+      <div class="flow-line"><span class="flow-chip">用户任务 / 痛点</span><span class="arrow">→</span><span class="flow-chip">目的 / 目标</span><span class="arrow">→</span><span class="flow-chip">策略 / 取舍</span><span class="arrow">→</span><span class="flow-chip">模型 + 工具 + 执行</span><span class="arrow">→</span><span class="flow-chip">功能组成任务能力</span><span class="arrow">→</span><span class="flow-chip">结果验证 / 用户验收</span><span class="arrow">→</span><span class="flow-chip">效果 / 净价值</span><span class="arrow">→</span><span class="flow-chip">反馈 / 下一轮迭代</span></div>
       <div class="note-grid">
         <div class="note-card">
-          <h3>腾讯云 Agent 沙箱的一句话范式</h3>
-          <p>不要把 Agent 的不确定执行直接放在长期业务主机里；把每个任务看成“需要独立执行环境的任务”，再通过 Tool 模板化、Instance 实例化、网络/存储/权限策略和生命周期治理来承载。</p>
+          <h3>区分三类责任</h3>
+          <p>模型负责理解与生成，工具与运行环境负责访问和执行，产品负责把授权、状态、恢复与验收组织起来。沙箱承载受控执行，最终任务是否正确仍需验证。</p>
         </div>
         <div class="note-card">
           <h3>产品经理使用这套词典的方法</h3>
-          <p>写 PRD、竞品分析或问题复盘时，先标注句子属于“目的 / 目标 / 策略 / 机制 / 结果 / 效果 / 价值”中的哪一层。只要层级错了，讨论很容易把功能当能力、把结果当效果、把打法当范式。</p>
+          <p>写 PRD 或分析竞品时，每个判断补上用户任务、支持范围、证据与验收口径。看结果是否可用、端到端耗时、成功任务成本和人工介入，再决定继续投入、调整方案还是收缩范围。</p>
         </div>
       </div>
     </section>
 
     <section class="sources">
-      <h2>官方事实锚点 · 便于继续深挖</h2>
+      <h2>官方参考资料 · 核对具体产品能力</h2>
       <ul>
-        <li><a href="https://cloud.tencent.com/document/product/1814" target="_blank" rel="noreferrer">腾讯云 Agent Runtime 文档总览</a>：官方称其围绕 Agent 原生执行范式构建。</li>
-        <li><a href="https://cloud.tencent.com/document/product/1814/123814" target="_blank" rel="noreferrer">基本概念</a>：Sandbox Tool、Sandbox Instance、Sandbox Snapshot 等核心对象。</li>
-        <li><a href="https://cloud.tencent.com/document/product/1814/129423" target="_blank" rel="noreferrer">Agent Runtime 概述</a>：接入、运行、治理、智能四层能力框架。</li>
-        <li><a href="https://cloud.tencent.com/document/product/1814/132209" target="_blank" rel="noreferrer">工具类型说明</a>：browser、code-interpreter、mobile、osworld、custom 等。</li>
-        <li><a href="https://cloud.tencent.com/document/product/1814/132216" target="_blank" rel="noreferrer">网络模式</a>：PUBLIC、SANDBOX、VPC。</li>
-        <li><a href="https://cloud.tencent.com/document/product/1814/123824" target="_blank" rel="noreferrer">管理沙箱实例</a>：实例创建与控制台观测边界。</li>
+        <li><a href="https://cloud.tencent.com/document/product/1814" target="_blank" rel="noreferrer">腾讯云 Agent Runtime 文档总览</a></li>
+        <li><a href="https://cloud.tencent.com/document/product/1814/123814" target="_blank" rel="noreferrer">基本概念</a></li>
+        <li><a href="https://cloud.tencent.com/document/product/1814/129423" target="_blank" rel="noreferrer">Agent Runtime 概述</a></li>
+        <li><a href="https://cloud.tencent.com/document/product/1814/132209" target="_blank" rel="noreferrer">工具类型说明</a></li>
+        <li><a href="https://cloud.tencent.com/document/product/1814/132216" target="_blank" rel="noreferrer">网络模式</a></li>
+        <li><a href="https://cloud.tencent.com/document/product/1814/123824" target="_blank" rel="noreferrer">管理沙箱实例</a></li>
       </ul>
-      <p class="disclaimer">说明：页面中的“打法、玩法、降维打法、发力、干货、操盘”等属于互联网/产品经营语境的分析词，不是腾讯云官方 API 字段；部分示例是为了帮助理解概念而进行的产品分析抽象。</p>
+      <p class="disclaimer">说明：本页释义是 AI 产品管理中的工作定义，不是统一行业标准。“打法、玩法、降维打法、发力、干货、操盘”等为非正式用语。场景示例用于解释概念，不表示腾讯云当前提供对应功能；数值是示意目标，不是性能承诺。具体功能、接口和限制请以使用时的官方文档为准。</p>
     </section>
   </main>
 </div>

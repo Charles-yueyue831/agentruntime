@@ -32,7 +32,7 @@
 | 1 | `README.md` | 项目总览与学习资料索引 | https://charles-yueyue831.github.io/agentruntime/ |
 | 2 | `Agent 沙箱/计算与执行/envd 使用指南.html` | envd · 沙箱内管理守护进程（Guest Management Agent，把 SDK / 云侧管理请求转换为 Guest Linux 中真实的命令、进程、文件与健康检查操作；管理端口 49983 与业务端口分离） | https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%A7%E8%A1%8C/envd%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html |
 | 3 | `Agent 沙箱/存储/挂载路径覆盖.html` | 图解「为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控」（MountPath 是位置，StorageSource / ReadOnly 上限 / 路径规则才是边界） | https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html |
-| 4 | `产品经理/产品经理黑话.html` | 腾讯云 Agent 沙箱 · 产品经理元概念词典（从「为什么做」到「怎么证明可信」共 11 章 + 总链路 + 官方事实锚点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html |
+| 4 | `产品经理/产品经理黑话.html` | AI 产品经理 · 产品概念词典（67 词条：AI 产品语境、场景示例、PM 判断；11 章 + 产品判断链路 + 官方参考资料） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html |
 | 5 | `产品经理/用户旅程图.html` | 姿势 · 流程 · 旅程图：三个观察高度（手绘笔记：三层观察台可下钻、三者对比速查、为四问归类法供证据、实操顺序与误区便签） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html |
 | 6 | `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html |
 
@@ -79,7 +79,7 @@
 - **管控边界**：MountPath 只是容器内「位置」；StorageSource 不可换、ReadOnly 只能收紧、路径合法性由平台统一校验
 
 **产品向（产品思维与元概念）**
-- **产品经理元概念词典**：从「为什么做 / 怎么看问题 / 怎么解决」到「怎么增长 / 怎么经营市场 / 怎么组织资源 / 怎么证明可信」的产品思维抽象层级梯子
+- **AI 产品经理概念词典**：67 个常用词按「AI 产品语境 / 场景示例 / PM 判断」解释，覆盖用户任务、模型与产品能力边界、验收、成本、人工介入、增长与经营
 - **用户旅程观察**：使用姿势 · 使用流程 · 用户旅程图三个观察高度，可下钻的「三层观察台」，为问题定性提供证据
 - **问题性质判断 · 四问归类法**：四闸口 · 八出口，快速判断问题性质（需求类 / 实现类 / 认知类等），配合 Agent 沙箱八场景演练
 
