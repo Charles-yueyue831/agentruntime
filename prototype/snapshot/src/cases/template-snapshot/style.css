@@ -1,0 +1,509 @@
+._snap-page{min-height:calc(100vh - 48px);font-size:13px;color:var(--tea-color-text-primary)}
+._snap-page .tea-layout__header{background:var(--tea-color-bg-container-default);border-bottom:1px solid var(--tea-color-border-primary-default)}
+._snap-topline{display:flex;justify-content:space-between;margin-bottom:18px;font-size:13px}
+._snap-muted{color:var(--tea-color-text-secondary);font-weight:400;font-size:12px;line-height:1.7}
+._snap-page .console-list-body{background:var(--tea-color-bg-container-default);padding:24px;min-height:550px}
+._snap-inline{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+._snap-inline .tea-search{width:240px}
+._snap-inline .tea-dropdown{max-width:180px}
+._snap-page .tea-table__action-panel .tea-justify-grid__col--right{display:flex;justify-content:flex-end}
+._snap-page .console-list-body .tea-table td{padding-top:12px;padding-bottom:12px;vertical-align:middle}
+._snap-page .console-list-body .tea-table th{background:var(--tea-color-bg-primary-hover);color:var(--tea-color-text-secondary);font-weight:400}
+._snap-id{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+._snap-id .tea-btn{font-size:12px}
+._snap-actions{display:flex;gap:14px;flex-wrap:wrap}
+._snap-actions .tea-btn{padding:0;font-size:12px}
+._snap-status{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12px}
+._snap-status i{width:6px;height:6px;background:var(--tea-color-bg-tertiary-active);border-radius:50%}
+._snap-status small{display:block;flex-basis:100%;color:var(--tea-color-text-tertiary);padding-left:13px;font-size:11px;line-height:15px}
+._snap-status.Building i{background:var(--tea-color-bg-brand-default)}._snap-status.Failed i{background:var(--tea-color-bg-error-default)}._snap-status.Success i,._snap-status.Ready i{background:var(--tea-color-bg-success-default)}._snap-status.Deleting i{background:var(--tea-color-bg-warning-default)}
+._snap-bottom-note{font-size:12px;color:var(--tea-color-text-tertiary);padding:24px 0 0;border-top:1px solid var(--tea-color-border-secondary-default);margin-top:12px}
+._snap-tag-list{display:flex;gap:5px;flex-wrap:wrap}._snap-tag-list .tea-btn{font-size:12px;padding:2px 7px;background:var(--tea-color-bg-brand-lighten-default);line-height:20px}
+._snap-tag-name{font-size:13px;font-weight:500}
+._snap-form-body{display:flex;flex-direction:column;gap:16px;padding-bottom:90px}
+._snap-form-body .tea-card{border:1px solid var(--tea-color-border-primary-default);border-radius:0;box-shadow:none}
+._snap-form-body .tea-card__body{padding:26px 24px}
+._snap-section{display:grid;grid-template-columns:180px minmax(0,1fr);gap:14px}
+._snap-section h3{font-size:16px;font-weight:600;margin:4px 0}
+._snap-section .tea-form{width:100%}
+._snap-section .tea-form__controls{padding-bottom:18px}
+._snap-choice-row{display:flex;gap:10px;margin-bottom:12px;max-width:840px}
+._snap-choice{flex:1;min-height:78px;padding:16px;text-align:left;border:1px solid var(--tea-color-border-primary-default);background:var(--tea-color-bg-container-default);cursor:pointer;font:inherit}
+._snap-choice.active{border-color:var(--tea-color-border-brand-default);background:var(--tea-color-bg-brand-lighten-default)}._snap-choice.active b{color:var(--tea-color-text-link-default)}
+._snap-choice b{font-size:14px;display:block;margin-bottom:8px}._snap-choice span{font-size:12px;color:var(--tea-color-text-tertiary)}
+._snap-form-body ._snap-highlight-card{border-color:var(--tea-color-border-brand-disabled);background:var(--tea-color-bg-container-default)}
+._snap-flow{display:flex;align-items:center;gap:18px;font-size:12px;margin:16px 0;color:var(--tea-color-text-secondary)}._snap-flow span{color:var(--tea-color-text-tertiary)}
+._snap-hint{margin-top:10px}
+._snap-form-footer{position:fixed;bottom:0;left:200px;right:0;background:var(--tea-color-bg-container-default);padding:18px 30px;display:flex;align-items:center;gap:12px;border-top:1px solid var(--tea-color-border-primary-default);z-index:30}
+._snap-form-footer ._snap-muted{margin-left:auto}
+._snap-drawer{padding:24px}._snap-drawer h3{font-size:16px}
+._snap-drawer .tea-form{margin:20px 0}
+._snap-drawer h3{margin:24px 0 12px;font-size:15px}
+._snap-timeline{padding:0;list-style:none;margin:22px 0}
+._snap-timeline li{position:relative;display:flex;align-items:flex-start;gap:14px;padding-bottom:20px;color:var(--tea-color-text-tertiary)}
+._snap-timeline li:not(:last-child):before{content:'';position:absolute;left:12px;top:25px;width:1px;height:calc(100% - 24px);background:var(--tea-color-bg-tertiary-default)}
+._snap-step{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border:1px solid var(--tea-color-border-tertiary-default);border-radius:50%;background:var(--tea-color-bg-container-default);z-index:1}
+._snap-timeline li.done{color:var(--tea-color-text-success-default)}._snap-timeline li.done ._snap-step{background:var(--tea-color-bg-success-lighten-default);border-color:var(--tea-color-border-success-disabled)}
+._snap-timeline li.current{color:var(--tea-color-text-link-default)}._snap-timeline li.current ._snap-step{background:var(--tea-color-bg-brand-default);color:var(--tea-color-text-on-bg-brand-default);border-color:var(--tea-color-border-brand-default)}
+._snap-timeline p{font-size:12px;margin:4px 0 0;color:var(--tea-color-text-tertiary)}
+._snap-logs{background:var(--tea-color-bg-primary-hover);border:1px solid var(--tea-color-border-primary-default);padding:18px;color:var(--tea-color-text-secondary);font:12px/1.9 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+._source-code-fab{display:none!important}
+@media(max-width:1250px){._snap-section{grid-template-columns:135px minmax(0,1fr)}._snap-inline .tea-search{width:175px}._snap-page .console-list-body{padding:18px}}
+body:has(._snap-tabbed,._snap-form-body) .sdk-nav-v2-nav-app-text{font-size:0}body:has(._snap-tabbed,._snap-form-body) .sdk-nav-v2-nav-app-text:after{content:'我的收藏';font-size:12px}
+._snap-inline{font-size:12px;line-height:20px}._snap-inline b,._snap-inline>span{font-size:12px}
+body:has(._snap-tabbed,._snap-form-body) .sdk-nav-v2-nav-app-text{transition:none}
+
+._snap-header-line{display:inline-flex;align-items:center;gap:40px;min-height:40px;vertical-align:middle}
+._snap-region{display:inline-flex;align-items:center;gap:16px;font-size:14px;font-weight:400;line-height:1;color:var(--tea-color-text-secondary)}
+._snap-region .tea-dropdown{margin-left:0}
+
+._snap-detail-card{background:var(--tea-color-bg-container-default);padding:0 24px 24px;min-height:500px}
+._snap-detail-card>._snap-inline{padding:0 24px}
+
+/* Tea controls retain their native focus, disabled, and validation states. */
+._snap-resource-status{display:inline-flex;flex-direction:column;gap:4px;white-space:nowrap}
+._snap-resource-status small{color:var(--tea-color-text-secondary);font-size:12px;padding-left:16px}
+._snap-page .tea-card{border-radius:0;box-shadow:none}
+._snap-page .tea-table__action-panel .tea-justify-grid{flex-wrap:wrap;row-gap:12px}
+._snap-page .tea-table__action-panel .tea-justify-grid__col{min-width:0}
+._snap-page ._snap-actions{flex-wrap:nowrap;gap:12px;white-space:nowrap}
+._snap-page .tea-table td ._snap-muted{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+._snap-build-detail .tea-card__body{padding:24px}
+._snap-build-detail .tea-card__body+.tea-card__body{border-top:1px solid var(--tea-color-border-primary-default)}
+._snap-build-detail .tea-form{margin-top:16px}
+._snap-build-detail .tea-step{margin-top:20px;max-width:720px}
+._snap-build-detail .tea-card__footer{padding:16px 24px;border-top:1px solid var(--tea-color-border-primary-default)}
+._snap-modal .tea-alert{margin-bottom:20px}
+._snap-modal .tea-form{width:100%}
+._snap-modal .tea-input{max-width:100%}
+._snap-modal .tea-form__text{overflow-wrap:anywhere}
+._snap-detail-card .tea-form__text{overflow-wrap:anywhere}
+
+/* ===================== PRD 一期改版新增样式 ===================== */
+
+._snap-code{font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--tea-color-bg-secondary-default);border:1px solid var(--tea-color-border-primary-default);border-radius:2px;padding:1px 6px;color:var(--tea-color-text-primary);margin-left:6px;display:inline-block;overflow-wrap:anywhere}
+._snap-bubble{max-width:320px}
+._snap-bubble p{margin:0 0 4px}
+._snap-bubble p:last-child{margin-bottom:0}
+._snap-bubble-list{margin:0;padding-left:16px;max-width:360px}
+._snap-bubble-list li{margin-bottom:6px;line-height:1.7}
+._snap-bubble-list li b{display:inline-block;margin-right:6px}
+._snap-bubble-list li span{color:var(--tea-color-text-on-bg-inverse-default)}
+
+
+._snap-tool-cell{line-height:1.6}
+._snap-tool-cell b{font-size:13px;margin-right:6px}
+._snap-tool-cell p{margin:2px 0 0}
+._snap-stage-cell{display:inline-flex;flex-direction:column;line-height:1.5;cursor:default}
+._snap-stage-cell b{font-size:13px;font-weight:500}
+._snap-stage-cell small{color:var(--tea-color-text-tertiary);font-size:11px}
+._snap-policy{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+._snap-policy small{color:var(--tea-color-text-tertiary);font-size:12px}
+
+/* ---- 制作进度（两级 Stage） ---- */
+._snap-progress{margin-top:12px;max-width:940px}
+._snap-progress-hint{color:var(--tea-color-text-tertiary);font-size:12px;margin:0 0 14px}
+._snap-phase{border:1px solid var(--tea-color-border-primary-default);border-radius:2px;margin-bottom:12px;background:var(--tea-color-bg-container-default)}
+._snap-phase>header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--tea-color-bg-primary-hover);border-bottom:1px solid var(--tea-color-border-secondary-default);flex-wrap:wrap}
+._snap-phase>header b{font-size:14px}
+._snap-phase>header code{font:11px ui-monospace,Menlo,monospace;color:var(--tea-color-text-tertiary)}
+._snap-phase>header ._snap-muted{flex-basis:100%;margin:0}
+._snap-phase-dot{width:8px;height:8px;border-radius:50%;background:var(--tea-color-bg-tertiary-active);flex:none}
+._snap-phase.is-done ._snap-phase-dot{background:var(--tea-color-bg-success-default)}
+._snap-phase.is-current ._snap-phase-dot{background:var(--tea-color-bg-brand-default)}
+._snap-phase.is-failed ._snap-phase-dot{background:var(--tea-color-bg-error-default)}
+._snap-phase.is-done{border-color:var(--tea-color-border-success-disabled)}
+._snap-phase.is-current{border-color:var(--tea-color-border-brand-disabled)}
+._snap-phase.is-failed{border-color:var(--tea-color-border-error-disabled)}
+._snap-leaves{list-style:none;margin:0;padding:8px 16px 14px}
+._snap-leaves li{display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--tea-color-border-secondary-default)}
+._snap-leaves li:last-child{border-bottom:0}
+._snap-leaf-icon{width:18px;flex:none;display:flex;justify-content:center;padding-top:2px}
+._snap-leaf-icon i{width:8px;height:8px;border-radius:50%;border:1px solid var(--tea-color-border-tertiary-default);display:block;margin-top:5px}
+._snap-leaf-body{flex:1;min-width:0}
+._snap-leaf-title{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+._snap-leaf-title b{font-size:13px;font-weight:500}
+._snap-leaf-title code{font:11px ui-monospace,Menlo,monospace;color:var(--tea-color-text-tertiary)}
+._snap-leaf-title em{font-style:normal;font-size:12px;color:var(--tea-color-text-tertiary)}
+._snap-leaves li.is-done ._snap-leaf-title em{color:var(--tea-color-text-success-default)}
+._snap-leaves li.is-current ._snap-leaf-title em{color:var(--tea-color-text-link-default)}
+._snap-leaves li.is-failed ._snap-leaf-title em{color:var(--tea-color-text-error-default)}
+._snap-leaves li.is-todo ._snap-leaf-title b{color:var(--tea-color-text-tertiary)}
+._snap-leaf-body ._snap-muted{margin:4px 0 0}
+._snap-leaf-more{color:var(--tea-color-text-link-default);font-size:12px;cursor:pointer;text-decoration:none}
+._snap-leaf-error{margin:8px 0 0;font-size:12px;color:var(--tea-color-text-error-default);background:var(--tea-color-bg-error-lighten-default);border:1px solid var(--tea-color-border-error-disabled);padding:8px 10px;line-height:1.7}
+._snap-leaf-error b{display:block;font-family:ui-monospace,Menlo,monospace;margin-bottom:2px}
+._snap-progress-foot{padding-top:6px;font-size:12px}
+._snap-ok{color:var(--tea-color-text-success-default)}
+._snap-bad{color:var(--tea-color-text-error-default)}
+
+/* ---- 事件 ---- */
+._snap-events{margin-top:6px}
+._snap-events .tea-table__action-panel{padding-left:0;padding-right:0}
+._snap-event-name{display:inline-flex;flex-direction:column;line-height:1.5}
+._snap-event-name small{color:var(--tea-color-text-tertiary);font-size:11px}
+._snap-event-detail{color:var(--tea-color-text-secondary);line-height:1.7;display:inline-block;padding:2px 0}
+
+._snap-error-box p{margin:0 0 6px;line-height:1.8}
+._snap-error-box p:last-child{margin-bottom:0}
+._snap-error-box ._snap-code{margin-left:0;margin-right:8px}
+
+._snap-check-list{margin:6px 0 0;padding-left:18px;line-height:1.9;color:var(--tea-color-text-secondary);font-size:12px}
+._snap-help-h{font-size:14px;margin:18px 0 6px}
+._snap-help-h:first-child{margin-top:0}
+._snap-modal p{line-height:1.8;margin:0 0 6px}
+
+._snap-tag-quick{display:flex;gap:8px;margin-top:8px}
+._snap-tag-quick .tea-btn{font-size:12px;padding:0 10px;height:24px;line-height:22px}
+
+._snap-flow{align-items:stretch;flex-wrap:wrap}
+._snap-flow-node{display:flex;flex-direction:column;gap:4px;border:1px solid var(--tea-color-border-tertiary-default);background:var(--tea-color-bg-primary-hover);padding:8px 12px;min-width:120px;font-size:12px;color:var(--tea-color-text-primary)}
+._snap-flow-node small{color:var(--tea-color-text-tertiary);font-size:11px;line-height:1.5}
+._snap-flow-node.is-ok{border-color:var(--tea-color-border-success-disabled);background:var(--tea-color-bg-success-lighten-default);color:var(--tea-color-text-success-default)}
+
+/* ---- 监控 ---- */
+._snap-monitor .tea-table__action-panel{padding-left:0;padding-right:0}
+._snap-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin-bottom:22px}
+._snap-metrics .tea-metrics-board{border:1px solid var(--tea-color-border-primary-default);background:var(--tea-color-bg-container-default);padding:16px 18px}
+._snap-chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px}
+._snap-chart-card{border:1px solid var(--tea-color-border-primary-default);padding:14px 16px 6px;background:var(--tea-color-bg-container-default)}
+._snap-chart-title{margin:0 0 6px;font-size:13px;font-weight:500;display:flex;align-items:baseline;gap:10px}
+._snap-chart-title ._snap-muted{font-weight:400}
+._snap-chart{width:100%;height:auto;display:block}
+._snap-bars{display:flex;flex-direction:column;gap:16px;padding:4px 0}
+._snap-bar-row{display:flex;align-items:center;gap:14px}
+._snap-bar-label{width:112px;flex:none;font-size:12px;color:var(--tea-color-text-secondary)}
+._snap-bar-track{flex:1;height:14px;background:var(--tea-color-bg-secondary-default);border-radius:2px;overflow:hidden}
+._snap-bar-track i{display:block;height:100%;border-radius:2px}
+._snap-bar-value{width:44px;text-align:right;font-size:13px}
+._snap-result-grid{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px;align-items:center}
+._snap-result-side{border-left:1px solid var(--tea-color-border-secondary-default);padding-left:24px}
+._snap-result-side ._snap-muted{margin:4px 0 8px}
+._snap-big{font-size:30px;font-weight:600;color:var(--tea-color-text-success-default);line-height:1.3;display:block}
+
+._snap-build-detail .tea-tabs__tabbar{padding:0 24px;background:var(--tea-color-bg-container-default)}
+._snap-build-detail .tea-tabs__tabpanel{padding:0}
+._snap-build-detail .tea-card__body .tea-alert{margin-top:16px}
+
+@media(max-width:1100px){
+  ._snap-result-grid{grid-template-columns:minmax(0,1fr)}
+  ._snap-result-side{border-left:0;border-top:1px solid var(--tea-color-border-secondary-default);padding:16px 0 0}
+}
+
+/* ---- 表单控件修正 ----
+   Tea 对 size="l" 控件硬编码 420px 宽度，放进 Modal（560px）会撑破弹窗；
+   同时 console-pack 覆盖掉了 .tea-dropdown__header 的边框，表单里的下拉框失去可点击感知。
+   这里只在弹窗与创建表单内做修正，列表筛选栏保持原有轻量样式。 */
+._snap-modal .tea-form{width:100%;min-width:0}
+._snap-modal .tea-form__controls{width:auto!important;max-width:100%;min-width:0}
+._snap-modal .tea-dropdown,
+._snap-modal .tea-dropdown__header,
+._snap-modal .tea-input{width:100%!important;max-width:100%}
+._snap-modal .tea-dropdown__header,
+._snap-form-body .tea-dropdown__header{border:1px solid var(--tea-color-border-primary-default);height:var(--tea-form-height-default,32px);border-left:1px solid var(--tea-color-border-primary-default);border-right:1px solid var(--tea-color-border-primary-default)}
+._snap-modal .tea-dropdown__value,
+._snap-form-body .tea-dropdown__value{line-height:30px}
+._snap-modal .tea-dropdown__header .ruyi-icon,
+._snap-form-body .tea-dropdown__header .ruyi-icon{top:8px}
+._snap-form-body .tea-dropdown.size-l,
+._snap-form-body .tea-dropdown.size-l .tea-dropdown__header{max-width:100%}
+._snap-check-list li{overflow-wrap:anywhere}
+._snap-leaf-more{margin-left:8px}
+._snap-inline-gap{display:inline-block;width:10px}
+
+/* ---- 镜像信息单元格（镜像地址:镜像版本 ／ 镜像 Digest） ---- */
+._snap-image-cell{display:flex;flex-direction:column;gap:3px;line-height:1.6;min-width:0}
+._snap-image-ref{display:flex;align-items:center;gap:4px;min-width:0}
+._snap-image-ref>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tea-color-text-primary)}
+._snap-image-digest{display:flex;align-items:center;gap:4px;min-width:0;font:11px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--tea-color-text-tertiary)}
+._snap-image-digest>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+._snap-image-digest.is-empty{font-family:inherit;font-size:12px}
+._snap-image-cell .tea-copy{margin-left:0}
+._snap-image-ref>span{min-width:0}
+/* 镜像引用用略小字号，让「镜像地址:镜像版本」在常见桌面宽度下完整可见 */
+._snap-image-ref>span{font-size:12px}
+
+._snap-stage-tooltip{max-width:320px;line-height:1.6}
+._snap-stage-tooltip p{margin:8px 0 0}
+
+._snap-tabbed>.tea-layout__content-body>.tea-layout__content-body-inner{padding-top:0}
+._snap-tabbed .console-list-body{padding-top:0}
+
+/* Content.Header operation：仅放帮助 / 文档链接，多元素用 inline-flex（控制台规范） */
+._snap-header-ops{display:inline-flex;align-items:center;gap:16px}
+._snap-header-ops .tea-btn{font-size:12px}
+
+/* Tea 原生 ceiling 页签：页签条自带底边，内容区不再重复留白 */
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tabpanel{padding:0}
+
+/* 两行操作栏（列表规范 §1.9）：Row1 动词行 / Row2 TagSearchBox + 工具按钮 */
+._snap-page .tea-table__action-panel+.tea-table__action-panel .tea-justify-grid__col--left{flex:1;min-width:0}
+._snap-page .tea-table__action-panel+.tea-table__action-panel .tea-justify-grid__col--right{flex:0 0 auto;padding-left:12px}
+._snap-page .tea-table__action-panel+.tea-table__action-panel .tea-search--tags{max-width:min(560px,100%)}
+._snap-tools{display:inline-flex;align-items:center;gap:8px}
+
+/* Scoped console refinements: leave shared shell and other acceleration pages intact. */
+._snap-page .console-list-body .tea-table tbody ._snap-copy-control{opacity:0;transition:opacity .15s}
+._snap-page .console-list-body .tea-table tbody tr:hover ._snap-copy-control,
+._snap-page .console-list-body .tea-table tbody tr:focus-within ._snap-copy-control{opacity:1}
+@media(hover:none){._snap-page .console-list-body .tea-table tbody ._snap-copy-control{opacity:1}}
+._snap-page .tea-table__action-panel+.tea-table__action-panel .tea-search--tags{width:560px;max-width:100%;min-width:0}
+._snap-modal .tea-dropdown__header:focus-within,
+._snap-form-body .tea-dropdown__header:focus-within{border-color:var(--tea-color-border-brand-default)}
+._snap-modal .tea-radio-group{display:flex;gap:16px;flex-wrap:wrap}
+._snap-modal .tea-radio{margin-right:0}
+._snap-page .tea-btn:focus-visible{outline:2px solid var(--tea-color-border-brand-default);outline-offset:2px}
+._snap-build-detail .tea-form__label{min-width:120px}
+._snap-build-detail .tea-form__text{overflow-wrap:anywhere}
+._snap-page .tea-table__action-panel .tea-justify-grid__col--left>.tea-btn+.tea-btn{margin-left:8px}
+@media(max-width:1100px){
+ ._snap-page .tea-table__action-panel+.tea-table__action-panel .tea-search--tags{width:100%}
+ ._snap-header-line{gap:24px}
+ ._snap-modal .tea-form__label{max-width:130px}
+}
+
+._snap-task-id{justify-content:flex-start;text-align:left}
+._snap-task-id>.tea-btn{order:-1;padding-left:0;padding-right:0;text-align:left}
+
+._snap-build-snapshot-field .tea-form__label,._snap-build-snapshot-field .tea-form__controls{padding-bottom:0}
+._snap-build-snapshot-field .tea-btn{padding-left:0;padding-right:0}
+
+._snap-build-basic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+._snap-build-basic-grid>.tea-form{width:100%;min-width:0}
+._snap-build-basic-grid .tea-form__text{overflow-wrap:anywhere;word-break:break-word}
+@media(max-width:1100px){._snap-build-basic-grid{grid-template-columns:minmax(0,1fr);gap:0}}
+
+._snap-build-basic-grid .tea-form__item{display:flex;align-items:flex-start}
+._snap-build-basic-grid .tea-form__label{flex:0 0 140px;box-sizing:border-box;padding-right:16px}
+._snap-build-basic-grid .tea-form__controls{flex:1 1 0;min-width:0;width:auto}
+._snap-build-basic-grid .tea-form__label label{white-space:normal;overflow-wrap:anywhere}
+._snap-build-basic-grid .tea-form__text{max-width:100%;white-space:normal}
+
+._snap-idle-input{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+._snap-idle-input>.tea-input{flex:1;min-width:0}
+._snap-idle-input>span{flex:none}
+
+._snap-tool-version-input.tea-input{width:720px;max-width:100%}
+
+/* 监控图表配色：只用 Tea Design Token，系列色经 currentColor 下传，避免硬编码与内联 style */
+._snap-tone-brand{color:var(--tea-color-bg-brand-default)}
+._snap-tone-success{color:var(--tea-color-text-success-default)}
+._snap-tone-error{color:var(--tea-color-text-error-default)}
+._snap-tone-warning{color:var(--tea-color-text-warning-default)}
+._snap-tone-neutral{color:var(--tea-color-text-tertiary)}
+._snap-chart-gridline{stroke:var(--tea-color-border-primary-default)}
+._snap-chart-axis{fill:var(--tea-color-text-tertiary)}
+._snap-chart-area{fill:currentColor;opacity:.1}
+._snap-chart-line{fill:none;stroke:currentColor}
+._snap-chart-dot{fill:var(--tea-color-bg-container-default);stroke:currentColor}
+._snap-bar-fill{display:block;height:100%;border-radius:2px;background:currentColor}
+/* Grouped, top-label forms adapted from platform Reservation.vue. */
+._platform-create{max-width:1280px;margin:0 auto;gap:24px}
+._platform-create ._snap-section{display:block;scroll-margin-top:24px}
+._platform-create ._snap-section h3{font-size:17px;color:#1f2937;margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid #ebeef5}
+._platform-create .tea-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 28px}
+._platform-create .tea-form__item{display:block;padding:0;min-width:0}
+._platform-create .tea-form__item._platform-wide{grid-column:1/-1}
+._platform-create .tea-form.tea-form--fixed-layout .tea-form__item .tea-form__label{display:block;width:auto!important;padding:0 0 8px;min-width:0}
+._platform-create .tea-form__label label{width:auto!important;white-space:normal;color:#4b5563}
+._platform-create .tea-form.tea-form--fixed-layout .tea-form__item .tea-form__controls{display:block;padding:0;min-width:0;width:100%}
+._platform-create .tea-input,._platform-create .tea-textarea{max-width:100%}
+._platform-create .tea-form__help-text{font-size:12px;line-height:1.7;color:#909399;margin-top:8px}
+._platform-create .tea-input._snap-tool-version-input{width:100%;max-width:850px}
+._platform-form-nav{display:flex;flex-wrap:wrap;gap:24px;padding:16px 24px;background:#fff;border:1px solid #e5e7eb}
+._platform-form-nav .tea-btn{padding-left:0;padding-right:0}
+@media(max-width:900px){._platform-create .tea-form{grid-template-columns:minmax(0,1fr)}._platform-create ._snap-form-footer{flex-wrap:wrap}._platform-form-nav{gap:12px}}
+
+/* 规格行内的子标签：与 Tea 表单标签同字号同色，不自造视觉 */
+._snap-sub-label{font-size:12px;color:var(--tea-color-text-secondary);flex:0 0 auto}
+
+/* Keep the remake notice outside Tea Form's label/control table layout. */
+._snap-create-build-modal .tea-form__item{display:flex;align-items:flex-start;padding-bottom:0}
+._snap-create-build-modal .tea-form__label{display:block;flex:0 0 120px;box-sizing:border-box;line-height:30px}
+._snap-create-build-modal .tea-form__controls{display:block;flex:1;min-width:0}
+._snap-create-build-modal .tea-alert._snap-existing-snapshot{display:block;box-sizing:border-box;width:100%;margin:20px 0 0;padding:12px 16px 12px 42px;font-size:12px;line-height:22px}
+._snap-create-build-modal ._snap-existing-snapshot p{margin:0;line-height:22px;overflow-wrap:anywhere}
+._snap-create-build-modal ._snap-existing-snapshot p+p{margin-top:4px}
+._snap-create-build-modal ._snap-existing-snapshot strong{font-weight:500}
+._snap-create-build-modal .tea-alert._snap-existing-snapshot{display:flex;align-items:flex-start;gap:10px;padding:12px 16px}
+._snap-create-build-modal ._snap-existing-snapshot .tea-alert__decoration{position:static;display:flex;flex:0 0 16px;margin:3px 0 0;padding:0}
+._snap-create-build-modal ._snap-existing-snapshot .tea-alert__info{flex:1;min-width:0;width:auto;margin:0;padding:0}
+._snap-create-build-modal ._snap-existing-snapshot .tea-alert__operational:empty{display:none}
+
+/* 制作任务：Tea 列表容器、工具栏与表格的层级 */
+._snap-page ._snap-build-list{background:var(--tea-color-bg-page);padding:20px 24px;min-height:calc(100vh - 190px)}
+._snap-build-list>.tea-card{border-radius:0;box-shadow:none}
+._snap-build-list .tea-table__action-panel{margin-bottom:16px}
+._snap-build-list .tea-table__action-panel+.tea-table__action-panel{margin-bottom:12px}
+._snap-page ._snap-build-list .tea-search--tags{width:100%!important;max-width:560px;min-width:0!important}
+._snap-build-list .tea-table th{text-align:left;background:var(--tea-color-bg-container-secondary);font-weight:500}
+._snap-build-list .tea-table td{text-align:left}
+._snap-build-list ._snap-id{gap:6px}
+._snap-build-list ._snap-actions{flex-wrap:nowrap;gap:16px}
+._snap-build-list ._snap-image-ref>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+._snap-build-list ._snap-image-cell{min-width:0}
+@media(max-width:1100px){._snap-page ._snap-build-list{padding:16px}._snap-build-list .tea-search--tags{width:100%}}
+
+._snap-page ._snap-monitor-body{background:var(--tea-color-bg-page);padding:20px 24px}
+._snap-monitor-filters{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+._snap-monitor-filters>span{color:var(--tea-color-text-secondary);font-size:12px}
+._snap-monitor-filters .tea-dropdown{min-width:140px}
+._snap-monitor>.tea-alert{margin-bottom:16px}
+._snap-monitor>.tea-card{border-radius:0;box-shadow:none}
+._snap-monitor ._snap-chart-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+._snap-monitor ._snap-metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+._snap-result-progress{flex:1;min-width:0;height:12px;appearance:none;border:0;background:var(--tea-color-bg-secondary-default)}
+._snap-result-progress::-webkit-progress-bar{background:var(--tea-color-bg-secondary-default)}
+._snap-result-progress::-webkit-progress-value{background:currentColor}
+._snap-result-progress::-moz-progress-bar{background:currentColor}
+@media(max-width:1150px){._snap-monitor ._snap-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}._snap-monitor ._snap-chart-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* 一级页标题与页签：参考控制台一级页 tabs 版式。 */
+._snap-tabbed>.tea-layout__content-header{box-sizing:border-box;min-height:44px;padding:12px 20px 0;background:#fff;border:0}
+._snap-tabbed ._snap-header-line{min-height:30px;gap:32px}
+._snap-tabbed .tea-layout__header-title{font-size:16px;line-height:24px;font-weight:600}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tabbar{padding:0 20px;background:#fff;border-bottom:1px solid #ddd;box-shadow:none}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tablist{gap:0;margin:0;padding:0}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tabitem{margin:0 20px 0 0;padding:0}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tab{box-sizing:border-box;min-height:32px;height:32px;padding:0 20px;line-height:32px;font-size:12px;font-weight:400;color:#333;border-radius:0}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tabitem:first-child .tea-tabs__tab{padding-left:0}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tab.is-active{color:#006eff;font-weight:400;border-bottom:2px solid #006eff}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tab:hover{color:#006eff}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tab.is-active:after{background:#006eff;height:2px}
+
+/* 制作弹窗：下拉浮层随触发器同宽，长工具名称完整换行。 */
+._snap-create-build-modal .tea-dialog__inner{width:600px;max-width:calc(100vw - 40px)}
+._snap-create-build-modal .tea-dialog__headertitle{display:block;width:100%;box-sizing:border-box;text-align:center;padding:0 32px}
+._snap-create-build-modal .tea-dropdown__header{padding:0 12px;min-height:32px;box-sizing:border-box}
+._snap-create-build-modal .tea-dropdown__value{padding-right:12px}
+._snap-create-build-modal .tea-dialog__body{padding:12px 0 20px}
+._snap-create-build-modal .tea-form__label{flex-basis:112px;line-height:32px}
+._snap-create-build-modal .tea-dropdown{width:100%;max-width:none}
+._snap-create-build-modal .tea-dialog__footer{padding:8px 0 0}
+._snap-build-version-options .tea-list__item{white-space:normal;overflow-wrap:anywhere;line-height:22px}
+._snap-build-version-options .tea-list__item a{white-space:normal;overflow-wrap:anywhere;line-height:22px;padding-top:8px;padding-bottom:8px}
+._snap-build-version-options .tea-search{width:100%}
+
+/* Match image-preheat's outer 20px/24px inset plus its 20px toolbar/table inset. */
+._snap-page .console-list-body._snap-build-list,
+._snap-page .console-list-body._snap-monitor-body{padding:40px 44px 20px}
+._snap-page ._snap-build-list>.tea-table__action-panel{padding:0;margin:0 0 12px}
+._snap-page ._snap-build-list>.tea-table__action-panel:has(+.tea-card){margin-bottom:24px}
+._snap-page ._snap-build-list>.tea-card{margin:0}
+._snap-page ._snap-build-list .tea-pagination{padding:16px}
+._snap-template-overview>.tea-card{margin:0 0 20px}
+._snap-template-overview>.tea-card:last-child{margin-bottom:0}
+._snap-template-overview .tea-card__body{padding:20px}
+._snap-template-guide{margin:0 0 20px}
+._snap-template-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+._snap-template-guide-grid>div{display:flex;flex-direction:column;gap:4px}
+._snap-template-guide-grid strong{font-size:13px;color:#1f2329}
+._snap-template-guide-grid span{font-size:12px;line-height:20px;color:#5c6670}
+@media(max-width:900px){._snap-template-guide-grid{grid-template-columns:minmax(0,1fr)}}
+._snap-empty-tab{padding:40px 44px 20px}
+
+/* Keep the tabbed page flush with the workspace; list spacing is owned by its body. */
+._snap-tabbed>.tea-layout__content-inner>.tea-layout__content-body{padding:0}
+._snap-tabbed .tea-tabs{margin:0}
+:is(._snap-tabbed,._snap-task-detail) .tea-tabs__tabpanel{padding:0}
+
+/* Monitoring controls and chart cards follow the usage/quota dashboard. */
+._snap-monitor-update{display:flex;align-items:center;gap:12px;color:#888;font-size:12px}
+._snap-monitor ._snap-chart-card{padding:20px;border:1px solid #e7e9ed;border-radius:0}
+._snap-monitor ._snap-chart-title{font-size:14px;font-weight:600;align-items:center;margin:0 0 16px}
+._snap-monitor ._snap-chart-title ._snap-muted{font-size:12px;color:#888}
+._snap-monitor ._snap-chart-title .tea-btn{margin-left:auto}
+._snap-monitor ._snap-monitor-filters{gap:12px}
+._snap-monitor .tea-table__action-panel{margin-bottom:20px}
+
+._snap-monitor-filters>.tea-search--tags{flex:1;min-width:200px!important;max-width:460px}
+
+._monitor-range-panel{display:flex;width:540px;background:#fff;border:1px solid #ddd;box-shadow:0 4px 12px #0002}
+._monitor-range-presets{width:150px;flex-shrink:0;border-right:1px solid #ddd;display:flex;flex-direction:column;padding:8px 0}
+._monitor-range-presets .tea-btn{text-align:left;justify-content:flex-start;margin:0;height:40px;padding:0 16px}
+._monitor-range-presets .is-active{background:#0052d9;color:#fff}
+._monitor-range-custom{padding:20px;flex:1;min-width:0}._monitor-range-custom h3{margin-bottom:16px}
+._monitor-range-custom .tea-input{width:100%}._monitor-range-arrow{text-align:center;color:#888}._monitor-range-footer{text-align:right;margin-top:16px}
+
+/* Monitoring filters expand between the left edge and the fixed time controls. */
+._snap-monitor>.tea-table__action-panel>.tea-justify-grid{display:flex;align-items:center;gap:20px}
+._snap-monitor>.tea-table__action-panel .tea-justify-grid__col--left{flex:1;min-width:0}
+._snap-monitor>.tea-table__action-panel .tea-justify-grid__col--right{flex:0 0 auto}
+._snap-monitor ._snap-monitor-filters{display:flex;flex-wrap:nowrap;width:100%;gap:12px}
+._snap-monitor ._snap-monitor-filters>.tea-search--tags{flex:1 1 0;width:100%!important;min-width:0!important;max-width:none!important}
+._snap-monitor ._monitor-time-range{flex:0 0 auto;min-width:126px}
+._snap-monitor ._monitor-granularity{flex:0 0 164px;min-width:164px}
+._monitor-time-range>.tea-dropdown__header{padding:0 10px;background:#fff;border:1px solid #ddd;height:30px;box-sizing:border-box}
+._monitor-time-range>.tea-dropdown__header>svg{display:none}
+._monitor-time-value{display:flex;align-items:center;justify-content:space-between;gap:10px;white-space:nowrap;font-size:14px}
+._monitor-granularity .tea-dropdown__header{background:#fff;padding:0 10px;height:30px;box-sizing:border-box}
+._monitor-granularity .tea-dropdown__value{font-size:14px}._monitor-granularity ._snap-muted{color:#888}
+._snap-monitor-update{white-space:nowrap}
+
+._monitor-metric-label{display:inline-flex;align-items:center;gap:6px}._monitor-metric-label .tea-btn{min-width:16px;width:16px;height:20px;padding:0;margin:0!important;color:#888}._snap-monitor ._snap-bar-label{width:154px;flex-shrink:0}._snap-monitor ._snap-bar-value{min-width:60px}._snap-monitor ._snap-bar-value small{color:#888;font-weight:400}
+
+/* Task detail uses the same full-width Tea tab strip as the snapshot list pages. */
+._snap-page>.tea-layout__content-inner>.tea-layout__content-body:has(._snap-task-detail){padding:0}
+._snap-task-detail.tea-card{margin:0;border-radius:0;box-shadow:none;background:#f3f4f7}
+._snap-task-detail>.tea-tabs{margin:0}
+._snap-task-detail .tea-tabs__tabpanel>.tea-card__body{margin:20px;background:#fff}
+._snap-task-detail>.tea-card__footer{margin:0 20px 20px;background:#fff}
+._snap-snapshot-basic-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto;column-gap:40px;row-gap:28px;align-items:start}
+._snap-build-detail ._snap-snapshot-basic-grid>.tea-form{margin:0;min-width:0}
+._snap-snapshot-basic-grid .tea-form__label{flex:0 0 140px}
+._snap-snapshot-basic-grid .tea-form__controls{min-width:0;overflow-wrap:anywhere}
+@media(max-width:760px){._snap-snapshot-basic-grid{column-gap:20px}._snap-snapshot-basic-grid .tea-form__label{flex-basis:110px;min-width:110px}}
+
+/* Snapshot detail: related build and template share the fourth information row. */
+._snap-build-detail ._snap-snapshot-basic-grid{grid-template-rows:repeat(5,auto);row-gap:18px}
+._snap-build-detail ._snap-snapshot-basic-grid>.tea-form{display:contents}
+._snap-build-detail ._snap-snapshot-basic-grid>.tea-form>.tea-form__item{margin:0;min-width:0;align-self:start}
+._snap-snapshot-basic-grid>.tea-form:nth-child(1)>.tea-form__item{grid-column:1}
+._snap-snapshot-basic-grid>.tea-form:nth-child(1)>.tea-form__item:nth-child(1){grid-row:1}
+._snap-snapshot-basic-grid>.tea-form:nth-child(1)>.tea-form__item:nth-child(2){grid-row:2}
+._snap-snapshot-basic-grid>.tea-form:nth-child(1)>.tea-form__item:nth-child(3){grid-row:3}
+._snap-snapshot-basic-grid>.tea-form:nth-child(2)>.tea-form__item{grid-column:2}
+._snap-snapshot-basic-grid>.tea-form:nth-child(2)>.tea-form__item:nth-child(1){grid-row:1}
+._snap-snapshot-basic-grid>.tea-form:nth-child(2)>.tea-form__item:nth-child(2){grid-row:2}
+._snap-snapshot-basic-grid>.tea-form:nth-child(3)>.tea-form__item:nth-child(1){grid-column:1;grid-row:4}
+._snap-snapshot-basic-grid>.tea-form:nth-child(3)>.tea-form__item:nth-child(2){grid-column:2;grid-row:4}
+._snap-snapshot-basic-grid>.tea-form:nth-child(3)>.tea-form__item:nth-child(3){grid-column:1;grid-row:5}
+._snap-snapshot-basic-grid>.tea-form:nth-child(4)>.tea-form__item{grid-column:2;grid-row:3}
+
+._snap-create-build-modal .tea-dialog__inner{width:820px;max-width:calc(100vw - 40px)}
+._snap-create-build-modal .tea-dialog__body{max-height:calc(100vh - 210px);overflow-y:auto;padding-right:16px}
+._snap-create-build-modal .tea-dialog__body section h3{margin:20px 0 16px}
+._snap-create-build-modal .tea-form__label{flex-basis:160px}
+
+._snap-config-value{white-space:pre-wrap;overflow-wrap:anywhere}
+
+._snap-task-detail .tea-card__body{padding:20px}
+._snap-task-detail .tea-card__body .tea-alert{margin:0 0 16px}
+._snap-task-detail ._snap-progress{max-width:none;width:100%;margin-top:0}
+._snap-task-detail ._snap-phase{display:grid;grid-template-columns:240px minmax(0,1fr);margin:0 0 16px;border:1px solid #e5e8ed;border-radius:0;background:#fff}
+._snap-task-detail ._snap-phase>header{align-content:start;align-items:center;gap:8px;padding:20px;background:#f7f8fa;border-bottom:0;border-right:1px solid #e5e8ed}
+._snap-task-detail ._snap-phase>header code{order:3;flex-basis:100%;padding-left:16px}
+._snap-task-detail ._snap-phase>header .tea-tag{margin-left:auto}
+._snap-task-detail ._snap-phase>header ._snap-muted{order:4;line-height:22px;margin-top:4px}
+._snap-task-detail ._snap-leaves{padding:4px 20px;margin:0}
+._snap-task-detail ._snap-leaves li{padding:16px 0;border-bottom:1px solid #edf0f5}
+._snap-task-detail ._snap-leaves li:last-child{border-bottom:0}
+._snap-task-detail ._snap-leaf-title{gap:8px;line-height:22px}
+._snap-task-detail ._snap-leaf-body ._snap-muted{line-height:22px;margin-top:4px}
+._snap-task-detail ._snap-phase.is-current{border-color:#006eff}
+._snap-task-detail ._snap-phase.is-failed{border-color:#e54545}
+._snap-task-detail ._snap-progress-foot{padding:0;color:#666}
+@media(max-width:1050px){._snap-task-detail ._snap-phase{grid-template-columns:1fr}._snap-task-detail ._snap-phase>header{border-right:0;border-bottom:1px solid #e5e8ed}._snap-task-detail ._snap-phase>header code{order:0;flex-basis:auto;padding:0}}
+
+._snap-config-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px}
+._snap-build-detail ._snap-config-columns .tea-form{margin-top:0;min-width:0}
+._snap-policy-help{margin:8px 0 0;line-height:22px}
+._snap-idle-input{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+._snap-idle-input>.tea-input{flex:1;min-width:0;width:auto}
+._snap-idle-input>span{flex:none;white-space:nowrap;color:#000}
+._snap-bubble-list,._snap-bubble-list li,._snap-bubble-list li b,._snap-bubble-list li span{color:#000}
+@media(max-width:900px){._snap-config-columns{grid-template-columns:1fr}}
+
+._snap-idle-input>span{font-size:12px;line-height:32px;min-width:12px}
+
+._snap-task-detail .tea-card__body._snap-production-config{background:#fff;border:1px solid #e5e8ed;border-radius:6px;margin:0 20px 20px;padding:20px}

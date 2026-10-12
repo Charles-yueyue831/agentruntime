@@ -1,0 +1,2221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>镜像预热</title>
+  <style>
+/* Tea Design Token light-theme fallbacks (from @tencent/tea-component console-pack.css).
+   The iframe (srcDoc) cannot inherit parent CSS variables, so tokens are redefined here. */
+:root {
+  --tea-color-text-brand: #0052d9;
+  --tea-color-text-link-default: #0052d9;
+  --tea-color-text-link-hover: #266fe8;
+  --tea-color-text-link-active: #0034b5;
+  --tea-color-text-primary: rgba(0, 0, 0, 0.9);
+  --tea-color-text-secondary: rgba(0, 0, 0, 0.7);
+  --tea-color-text-tertiary: rgba(0, 0, 0, 0.5);
+  --tea-color-text-success-default: #0cbf5b;
+  --tea-color-text-warning-default: #ff7800;
+  --tea-color-text-error-default: #f64041;
+  --tea-color-bg-secondary-default: #f2f4f8;
+  --tea-color-bg-primary-hover: #f7f8fb;
+  --tea-color-bg-container-default: #fff;
+  --tea-color-bg-brand-default: #0052d9;
+  --tea-color-bg-brand-lighten-default: #e3ecff;
+  --tea-color-border-primary-default: #e6e9ef;
+  --tea-color-border-secondary-default: #e9ecf1;
+  --tea-color-border-brand-default: #0052d9;
+  --tea-color-fill-secondary-default: #f2f4f8;
+  --tea-color-fill-gray-light: #f7f8fb;
+}
+:root {
+  --brand: var(--tea-color-text-brand); --brand-hover: var(--tea-color-text-link-hover); --brand-soft: var(--tea-color-bg-brand-lighten-default);
+  --text: var(--tea-color-text-primary); --text-secondary: var(--tea-color-text-secondary); --text-muted: var(--tea-color-text-tertiary);
+  --line: var(--tea-color-border-primary-default); --line-soft: var(--tea-color-border-secondary-default); --canvas: var(--tea-color-bg-secondary-default); --surface: var(--tea-color-bg-container-default);
+  --success: var(--tea-color-text-success-default); --warning: var(--tea-color-text-warning-default); --danger: var(--tea-color-text-error-default);
+  --shadow: 0 6px 24px rgba(0, 21, 41, .16); --topbar: 48px; --sider: 208px;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { min-width: 1180px; background: var(--canvas); }
+body { margin: 0; color: var(--text); background: var(--canvas); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+button, input, select { font: inherit; }
+button { color: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid rgba(0, 110, 255, .35); outline-offset: 1px; }
+body.layer-open { overflow: hidden; }
+
+.topbar { position: fixed; z-index: 50; inset: 0 0 auto; height: var(--topbar); display: flex; align-items: center; color: #fff; background: #303030; }
+.topbar-brand { width: var(--sider); height: 100%; display: flex; align-items: center; gap: 8px; padding: 0 20px; border-right: 1px solid rgba(255,255,255,.1); }
+.topbar-brand b { font-size: 16px; }
+.topbar-brand > span:last-child { color: rgba(0,0,0,0.5); font-size: 12px; }
+.cloud-mark { width: 26px; height: 18px; position: relative; border: 2px solid #fff; border-radius: 9px; border-left-color: transparent; transform: skewX(-9deg); }
+.topbar-nav, .topbar-actions { display: flex; align-items: center; height: 100%; }
+.topbar button { height: 100%; padding: 0 14px; color: rgba(0,0,0,0.7); border: 0; background: transparent; cursor: pointer; }
+.topbar button:hover { color: #fff; background: rgba(255,255,255,.08); }
+.topbar-search { width: 300px; height: 30px; margin-left: auto; display: flex; align-items: center; padding: 0 10px; border: 1px solid #a5a5a5; background: rgba(255,255,255,.08); }
+.topbar-search span, .search-icon { width: 13px; height: 13px; margin-right: 8px; border: 1.5px solid currentColor; border-radius: 50%; position: relative; color: #a5a5a5; }
+.topbar-search span::after, .search-icon::after { content: ""; position: absolute; width: 5px; height: 1px; right: -4px; bottom: -2px; background: currentColor; transform: rotate(45deg); }
+.topbar-search input { width: 100%; color: #fff; border: 0; outline: 0; background: transparent; }
+.topbar-search input::placeholder { color: #a5a5a5; }
+
+.sider { position: fixed; z-index: 40; inset: var(--topbar) auto 0 0; width: var(--sider); color: rgba(0,0,0,0.9); background: #f7f8fb; border-right: 1px solid #e6e9ef; }
+.product-name { height: 72px; display: flex; align-items: center; gap: 10px; padding: 0 18px; background: #fff; border-bottom: 1px solid var(--line-soft); }
+.product-icon { width: 32px; height: 32px; display: block; position: relative; background: var(--brand); }
+.product-icon::before, .product-icon::after { content: ""; position: absolute; background: #fff; }
+.product-icon::before { inset: 8px 7px 15px; }
+.product-icon::after { inset: 18px 7px 7px; }
+.product-name b, .product-name small { display: block; }
+.product-name small { color: var(--text-muted); font-size: 11px; }
+.sider-nav { padding: 10px 0; }
+.sider-nav a, .nav-group > b { display: block; height: 40px; padding: 10px 20px; color: rgba(0,0,0,0.7); text-decoration: none; font-weight: 400; }
+.sider-nav a:hover { color: var(--brand); background: #e3ecff; }
+.nav-group > b { color: rgba(0,0,0,0.5); font-size: 12px; }
+.nav-group a { padding-left: 34px; }
+.sider-nav a.active { color: var(--brand); background: var(--brand-soft); border-right: 3px solid var(--brand); font-weight: 600; }
+
+.content { min-height: 100vh; padding-top: var(--topbar); margin-left: var(--sider); }
+.content-header { min-height: 82px; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px 10px; background: #fff; border-bottom: 1px solid var(--line-soft); }
+.breadcrumb { margin-bottom: 4px; color: var(--text-muted); font-size: 12px; }
+h1 { margin: 0; font-size: 20px; line-height: 30px; font-weight: 600; }
+.header-actions { display: flex; align-items: center; gap: 4px; }
+.header-actions button { min-height: 32px; padding: 0 12px; border: 0; background: transparent; cursor: pointer; }
+.region-button { border: 1px solid var(--line) !important; background: #fff !important; }
+.link-button { color: var(--brand); }
+.page-tabs { height: 49px; padding-left: 24px; background: #fff; border-bottom: 1px solid var(--line); }
+.page-tabs button { height: 49px; padding: 0 18px; border: 0; background: transparent; cursor: pointer; }
+.page-tabs button.active { color: var(--brand); border-bottom: 3px solid var(--brand); font-weight: 600; }
+.content-body { padding: 20px 24px 36px; }
+.page-tab-panel { min-height: 420px; }
+.tab-placeholder { display: grid; place-items: center; align-content: center; padding: 72px 24px; color: var(--text-secondary); text-align: center; background: #fff; border: 1px solid var(--line); }
+.tab-placeholder h2, .tab-placeholder p { margin: 0; }
+.tab-placeholder h2 { margin-top: 14px; color: var(--text); font-size: 18px; }
+.tab-placeholder p { margin: 6px 0 18px; }
+.placeholder-symbol { width: 48px; height: 42px; position: relative; border: 2px solid #a5a5a5; }
+.placeholder-symbol::before, .placeholder-symbol::after { content: ""; position: absolute; left: 7px; right: 7px; height: 6px; border: 1px solid #a5a5a5; background: #f7f8fb; }
+.placeholder-symbol::before { top: 8px; }
+.placeholder-symbol::after { bottom: 8px; }
+
+.alert { display: flex; gap: 10px; padding: 12px 16px; margin-bottom: 16px; border: 1px solid; }
+.alert b, .alert p { margin: 0; }
+.alert p { margin-top: 2px; color: var(--text-secondary); }
+.alert-icon { flex: 0 0 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; font-weight: 700; }
+.info-alert { background: #e3ecff; border-color: #b8ccf4; }
+.info-alert .alert-icon { color: #fff; background: var(--brand); }
+.warning-alert { background: #ffe8d9; border-color: #ffcb8e; }
+.warning-alert .alert-icon { color: #fff; background: var(--warning); }
+.danger-alert { background: #fde9e9; border-color: #f7b8bc; }
+.danger-alert .alert-icon { color: #fff; background: var(--danger); }
+.alert.compact { padding: 10px 12px; }
+
+.console-list-body, .table-card { background: #fff; }
+.console-list-body { border: 1px solid var(--line); }
+.action-panel { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
+.primary-actions { border-bottom: 1px solid var(--line-soft); }
+.primary-action-group { display: flex; align-items: center; gap: 8px; }
+.filter-actions { gap: 16px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters label { display: flex; align-items: center; }
+.filters label > span:first-child:not(.search-icon) { min-height: 32px; display: flex; align-items: center; padding: 0 8px 0 10px; background: #f7f8fb; border: 1px solid var(--line); border-right: 0; color: var(--text-secondary); }
+select, input { height: 32px; border: 1px solid #a5a5a5; background: #fff; }
+select { min-width: 116px; padding: 0 28px 0 10px; }
+input { padding: 0 10px; }
+.search-box { width: 300px; height: 32px; padding: 0 9px; border: 1px solid #a5a5a5; background: #fff; }
+.search-box input { flex: 1; min-width: 0; border: 0; outline: 0; }
+.tool-buttons { margin-left: auto; }
+.icon-btn { width: 32px; height: 32px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+.tea-btn { min-width: 72px; height: 32px; padding: 0 15px; color: rgba(0,0,0,0.9); background: #fff; border: 1px solid #a5a5a5; cursor: pointer; }
+.tea-btn:hover { color: var(--brand); border-color: var(--brand); }
+.tea-btn-primary { color: #fff; background: var(--brand); border-color: var(--brand); }
+.tea-btn-primary:hover { color: #fff; background: var(--brand-hover); border-color: var(--brand-hover); }
+.tea-btn-danger { color: #fff; background: var(--danger); border-color: var(--danger); }
+.tea-btn:disabled, .tea-btn[disabled] { color: #a5a5a5; background: #f7f8fb; border-color: #e6e9ef; cursor: not-allowed; }
+
+.table-card { overflow-x: auto; border-top: 1px solid var(--line-soft); }
+.tea-table { min-width: 1420px; }
+.tea-table-row { display: grid; grid-template-columns: minmax(300px, 2.1fr) 150px 130px minmax(320px, 1.8fr) 240px 150px; align-items: stretch; }
+.tea-table-row > div { min-width: 0; min-height: 64px; display: flex; flex-direction: column; justify-content: center; padding: 10px 12px; border-bottom: 1px solid var(--line-soft); }
+.tea-table-head > div { min-height: 42px; color: rgba(0,0,0,0.7); background: var(--tea-color-bg-secondary-default); font-weight: 600; }
+.resource-row:hover > div { background: #f7f8fb; }
+.image-cell small, [role="cell"] small { display: block; margin-top: 3px; color: var(--text-muted); font-size: 12px; }
+.resource-link, .row-actions button { width: fit-content; padding: 0; color: var(--brand); text-align: left; border: 0; background: transparent; cursor: pointer; }
+.resource-link { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-actions { flex-direction: row !important; align-items: center; justify-content: flex-start !important; gap: 12px; }
+.message-cell { color: var(--text-secondary); }
+.error-message { color: var(--danger); }
+.status-text { display: inline-flex; width: fit-content; padding: 1px 7px; font-size: 12px; border: 1px solid; }
+.status-text.success { color: #0cbf5b; background: #e3ecff; border-color: #a9dfc4; }
+.status-text.processing { color: #0052d9; background: #e3ecff; border-color: #b9ccf6; }
+.status-text.pending { color: #d95c00; background: #ffe8d9; border-color: #ffcb8e; }
+.status-text.failed { color: #f64041; background: #fde9e9; border-color: #f7b8bc; }
+.pagination { width: 100%; min-width: 0; position: sticky; left: 0; display: flex; align-items: center; justify-content: flex-end; gap: 8px; box-sizing: border-box; padding: 12px 16px; color: var(--text-secondary); background: #fff; border-top: 1px solid var(--line-soft); }
+.pagination select { min-width: 96px; }
+.pagination button { min-width: 30px; height: 30px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+.pagination button.current { color: #fff; background: var(--brand); border-color: var(--brand); }
+.pagination button:disabled { color: #a5a5a5; background: #f7f8fb; cursor: not-allowed; }
+.page-numbers { display: inline-flex; gap: 4px; }
+.table-state { min-width: 1420px; padding: 72px 24px; color: var(--text-secondary); text-align: center; border-bottom: 1px solid var(--line-soft); }
+.table-state b, .table-state p { display: block; margin: 0; }
+.table-state p { margin: 6px 0 16px; }
+
+.overlay { position: fixed; z-index: 100; inset: 0; background: rgba(48,48,48,.45); }
+.drawer { position: fixed; z-index: 110; top: 0; right: 0; bottom: 0; width: min(760px, calc(100vw - 240px)); display: flex; flex-direction: column; background: #fff; box-shadow: var(--shadow); transform: translateX(104%); transition: transform .22s ease; }
+.drawer.detail-drawer { width: min(900px, calc(100vw - 240px)); }
+.drawer.open { transform: translateX(0); }
+.drawer-header { min-height: 76px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.drawer-header h2, .drawer-header p, .modal h2, .modal p { margin: 0; }
+.drawer-header h2, .modal h2 { font-size: 18px; }
+.drawer-header p, .modal header p { margin-top: 3px; color: var(--text-secondary); }
+.close-button { width: 32px; height: 32px; padding: 0; color: #a5a5a5; border: 0; background: transparent; font-size: 24px; line-height: 1; cursor: pointer; }
+.drawer-body { flex: 1; min-height: 0; overflow-y: auto; padding: 22px 24px; }
+.drawer-footer { min-height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-top: 1px solid var(--line); background: #fff; }
+.drawer-footer > span { color: var(--text-muted); font-size: 12px; }
+.drawer-footer > div { display: flex; gap: 8px; }
+.wizard-panel { display: block; }
+.detail-panel { display: none; }
+.detail-panel.active { display: block; }
+.create-form-section + .create-form-section { padding-top: 24px; margin-top: 24px; border-top: 1px solid var(--line); }
+.panel-lead { padding-bottom: 16px; margin-bottom: 18px; border-bottom: 1px solid var(--line-soft); }
+.panel-lead h3, .panel-lead p, .detail-panel h3 { margin: 0; }
+.panel-lead p { margin-top: 4px; color: var(--text-secondary); }
+.form-grid { display: grid; gap: 18px; max-width: 650px; }
+.image-form { display: grid; gap: 26px; }
+.image-form-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px; align-items: start; }
+.image-form-label { min-height: 32px; display: flex; align-items: center; gap: 7px; color: var(--text-secondary); }
+.image-form-label em { margin-left: auto; color: var(--danger); font-style: normal; }
+.info-dot { width: 16px; height: 16px; display: inline-grid; place-items: center; color: #a5a5a5; border: 1px solid #a5a5a5; border-radius: 50%; font-size: 11px; font-style: normal; }
+.image-form-control { display: grid; gap: 7px; }
+.image-form-control small { color: var(--text-muted); }
+.input-action { display: flex; align-items: center; gap: 12px; }
+.input-action input { flex: 1; min-width: 0; }
+.input-action button { flex: 0 0 auto; padding: 0; color: var(--brand); border: 0; background: transparent; cursor: pointer; }
+.input-action button:disabled { color: #b9ccf6; cursor: not-allowed; }
+.field { display: grid; gap: 7px; }
+.field > span { font-weight: 600; }
+.field em { color: var(--danger); font-style: normal; }
+.field > input, .field > select { width: 100%; }
+.field small { color: var(--text-muted); }
+.field-error { color: var(--danger) !important; }
+.radio-stack { display: grid; gap: 8px; }
+.radio-stack label { display: flex; gap: 9px; padding: 10px 12px; border: 1px solid var(--line); cursor: pointer; }
+.radio-stack label:has(input:checked) { background: #e3ecff; border-color: var(--brand); }
+.radio-stack input { width: 14px; height: 14px; margin: 4px 0 0; }
+.radio-stack b, .radio-stack small { display: block; }
+.access-summary, .empty-error { display: flex; gap: 10px; padding: 12px; background: #e3ecff; border: 1px solid #a9dfc4; }
+.access-summary p, .empty-error p { margin: 2px 0 0; color: var(--text-secondary); }
+.precheck-result { display: flex; gap: 10px; padding: 12px; margin-top: 16px; background: #e3ecff; border: 1px solid #a9dfc4; }
+.precheck-result p { margin: 2px 0 0; color: var(--text-secondary); }
+.check-mark { flex: 0 0 22px; height: 22px; display: grid; place-items: center; color: #fff; background: var(--success); border-radius: 50%; font-weight: 700; }
+.unit-input { display: flex; }
+.unit-input input { flex: 1; }
+.unit-input i { width: 40px; display: grid; place-items: center; background: #f7f8fb; border: 1px solid #a5a5a5; border-left: 0; font-style: normal; }
+.checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.checkbox-grid label, .confirm-check { display: flex; align-items: center; gap: 7px; }
+.checkbox-grid input, .confirm-check input { width: 14px; height: 14px; }
+.review-list, .info-list, .compact-facts { display: grid; grid-template-columns: 150px 1fr; margin: 0; border-top: 1px solid var(--line); }
+#create-review { grid-template-columns: 220px minmax(0, 1fr); }
+.detail-panel .info-list { grid-template-columns: 220px minmax(0, 1fr); }
+.review-list dt, .review-list dd, .info-list dt, .info-list dd, .compact-facts dt, .compact-facts dd { margin: 0; padding: 10px 12px; border-bottom: 1px solid var(--line-soft); }
+.review-list dt, .info-list dt, .compact-facts dt { color: var(--text-secondary); background: #f7f8fb; }
+.review-list dd, .info-list dd, .compact-facts dd { overflow-wrap: anywhere; }
+
+.detail-hero { min-height: 116px; display: flex; justify-content: space-between; gap: 20px; padding: 18px 24px; background: #f7f8fb; border-bottom: 1px solid var(--line); }
+.detail-hero h3, .detail-hero p { margin: 8px 0 0; }
+.detail-hero p { color: var(--text-muted); }
+.detail-statuses, .detail-actions { display: flex; align-items: center; gap: 9px; }
+.usable { padding: 2px 7px; color: #fff; background: var(--success); font-size: 12px; }
+.usable.no { background: rgba(0,0,0,0.5); }
+.detail-tabs { display: flex; height: 48px; padding-left: 16px; border-bottom: 1px solid var(--line); }
+.detail-tabs button { padding: 0 16px; border: 0; background: transparent; cursor: pointer; }
+.detail-tabs button.active { color: var(--brand); border-bottom: 3px solid var(--brand); font-weight: 600; }
+.detail-panel h3 { margin-bottom: 14px; }
+.state-path { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr 34px 1fr; align-items: center; margin: 26px 0; }
+.state-path > div { text-align: center; color: var(--text-muted); }
+.state-path > div i { width: 30px; height: 30px; display: grid; place-items: center; margin: 0 auto 7px; color: #fff; background: #a5a5a5; border-radius: 50%; font-style: normal; }
+.state-path > div.done, .state-path > div.current { color: var(--text); }
+.state-path > div.done i { background: var(--success); }
+.state-path > div.current i { background: var(--brand); }
+.state-path > b { border-top: 1px solid var(--line); }
+.event-list { border-top: 1px solid var(--line-soft); }
+.event-list article { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; padding: 13px 4px; border-bottom: 1px solid var(--line-soft); }
+.event-list i { width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: var(--brand); }
+.event-list p { margin: 2px 0 0; color: var(--text-secondary); }
+.event-list time { color: var(--text-muted); font-size: 12px; }
+
+.modal { position: fixed; z-index: 120; top: 50%; left: 50%; width: 520px; max-height: calc(100vh - 80px); display: none; flex-direction: column; background: #fff; box-shadow: var(--shadow); transform: translate(-50%, -50%); }
+.modal.open { display: flex; }
+.modal header { display: flex; justify-content: space-between; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.modal-body { overflow-y: auto; padding: 18px 20px; }
+.modal-body > * + * { margin-top: 16px; }
+.modal footer { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--line); }
+.image-selector-inline, .image-version-selector { display: none; }
+.create-drawer.image-select-mode .wizard-panel,
+.create-drawer.image-select-mode > .drawer-footer,
+.create-drawer.version-select-mode .wizard-panel,
+.create-drawer.version-select-mode > .drawer-footer { display: none; }
+.create-drawer.image-select-mode .image-selector-inline { display: block; }
+.create-drawer.version-select-mode .image-version-selector { display: block; }
+.inline-selector-heading { display: flex; align-items: flex-start; gap: 14px; padding-bottom: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--line-soft); }
+.inline-selector-heading button { min-width: 76px; height: 38px; padding: 0 10px; color: var(--brand); border: 0; background: transparent; cursor: pointer; font-size: 16px; font-weight: 500; }
+.inline-selector-heading button:hover { background: var(--brand-soft); }
+.inline-selector-heading button:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.inline-selector-heading h3, .inline-selector-heading p { margin: 0; }
+.inline-selector-heading h3 { font-size: 16px; }
+.inline-selector-heading p { margin-top: 3px; color: var(--text-secondary); }
+.inline-selector-actions { position: sticky; bottom: -22px; display: flex; justify-content: flex-end; gap: 8px; padding: 14px 0 0; margin-top: 18px; background: #fff; border-top: 1px solid var(--line); }
+.selector-row { display: grid; grid-template-columns: 1fr; gap: 10px; align-items: start; }
+.selector-label { color: var(--text-secondary); }
+.image-type-tabs { display: inline-flex; align-items: stretch; width: fit-content; }
+.image-type-tabs button { min-width: 180px; height: 44px; position: relative; padding: 0 16px; border: 1px solid var(--line); background: #fff; font-size: 15px; cursor: pointer; }
+.image-type-tabs button + button { margin-left: -1px; }
+.image-type-tabs button.active { z-index: 1; color: var(--brand); border-color: var(--brand); }
+.image-type-tabs button i { position: absolute; top: -13px; right: -1px; padding: 2px 7px; color: #fff; background: #ff7800; border-radius: 10px; font-size: 11px; font-style: normal; }
+.selector-content-row { margin-top: 24px; }
+.selector-content { min-width: 0; padding: 18px; background: #f2f4f8; }
+.third-party-selector { display: grid; gap: 16px; }
+.third-party-selector[hidden] { display: none; }
+.third-party-notice { min-height: 58px; display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; color: rgba(0,0,0,0.9); background: #e3ecff; }
+.third-party-notice > span { width: 16px; height: 16px; flex: 0 0 auto; display: grid; place-items: center; margin-top: 2px; color: var(--brand); border: 1px solid var(--brand); border-radius: 50%; font-size: 11px; font-weight: 600; }
+.third-party-notice p { margin: 0; line-height: 22px; }
+.third-party-field { display: grid; grid-template-columns: 150px minmax(0, 420px); align-items: start; gap: 14px; }
+.third-party-field > span { min-height: 36px; display: flex; align-items: center; gap: 5px; color: var(--text-secondary); }
+.third-party-field > span em { color: var(--danger); font-style: normal; }
+.third-party-field > input, .third-party-field > select { width: 100%; height: 36px; box-sizing: border-box; padding: 0 12px; border: 1px solid var(--line); background: #fff; }
+.third-party-field > input:focus, .third-party-field > select:focus { border-color: var(--brand); outline: 0; box-shadow: 0 0 0 2px rgba(0,82,217,.1); }
+.third-party-field > small.field-error { grid-column: 2; margin-top: -10px; }
+.third-party-network > div { display: grid; gap: 8px; }
+.third-party-network label { display: flex; align-items: center; gap: 6px; }
+.third-party-network input { width: 16px; height: 16px; }
+.third-party-network small { color: var(--text-muted); }
+.selector-config > label { display: grid; grid-template-columns: 180px minmax(220px, 1fr) minmax(220px, 1fr); gap: 12px; align-items: center; max-width: 860px; margin-bottom: 14px; }
+.selector-config > label > span { color: var(--text-secondary); }
+.selector-config select { width: 100%; }
+.selector-config p { margin: 6px 0 16px; color: var(--text-secondary); }
+.selector-search { width: 100%; height: 38px; display: flex !important; grid-template-columns: none !important; gap: 8px !important; padding: 0 12px; margin-bottom: 16px !important; background: #fff; border: 1px solid var(--line); }
+.selector-search input { flex: 1; height: 36px; border: 0; outline: 0; }
+.selector-table { padding: 14px 18px 0; background: #fff; border: 1px solid var(--line-soft); box-shadow: 0 1px 4px rgba(31,45,61,.06); }
+.selector-table-row { min-height: 52px; display: grid; grid-template-columns: 44px 1fr 1fr 2.5fr; align-items: center; gap: 12px; border-bottom: 1px solid var(--line-soft); }
+.selector-table-head { min-height: 46px; }
+.selector-image-row { cursor: pointer; }
+.selector-image-row:hover { background: #f7f8fb; }
+.selector-image-row input { width: 16px; height: 16px; justify-self: center; }
+.selector-image-row span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.selector-table-empty { padding: 42px; color: var(--text-muted); text-align: center; }
+.selector-pagination { min-height: 50px; display: flex !important; align-items: center; justify-content: space-between !important; padding: 0 4px !important; color: var(--text-secondary); border-top: 0 !important; }
+
+.version-selector-heading p { max-width: 560px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.version-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 14px; }
+.version-search { width: 360px; height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid var(--line); background: #fff; }
+.version-search input { flex: 1; height: 36px; border: 0; outline: 0; }
+.version-toolbar .icon-btn { width: 38px; height: 38px; border: 1px solid var(--line); }
+.version-table { max-height: 500px; overflow: auto; border: 1px solid var(--line); background: #fff; }
+.version-table-row { min-height: 68px; display: grid; grid-template-columns: 44px minmax(120px, 1fr) minmax(320px, 2.4fr); align-items: center; gap: 14px; padding: 0 14px; border-bottom: 1px solid var(--line-soft); }
+.version-table-head { min-height: 46px; position: sticky; top: 0; z-index: 1; background: #fff; }
+.version-option { cursor: pointer; }
+.version-option:hover { background: #f7f8fb; }
+.version-option:has(input:checked) { background: #e3ecff; }
+.version-option input { width: 16px; height: 16px; justify-self: center; }
+.version-option span:last-child { overflow-wrap: anywhere; }
+.version-table-empty { padding: 48px 16px; color: var(--text-muted); text-align: center; }
+.version-pagination { min-height: 54px; display: flex; align-items: center; justify-content: space-between; color: var(--text-secondary); }
+.version-pagination > span:last-child { display: flex; align-items: center; gap: 0; }
+.version-pagination select { min-width: 96px; margin-right: 12px; }
+.version-pagination button, .version-pagination b, .version-pagination > span:last-child > span { min-width: 42px; height: 30px; display: grid; place-items: center; margin-left: -1px; border: 1px solid var(--line); background: #fff; color: var(--text-secondary); font-weight: 400; }
+.version-pagination button:not(:disabled) { color: var(--text); cursor: pointer; }
+.version-pagination button:not(:disabled):hover { color: var(--brand); background: #f7f8fb; }
+.version-pagination button:disabled { color: #a5a5a5; }
+.create-drawer > .drawer-footer { justify-content: flex-end; }
+
+@media (max-width: 880px) {
+  .selector-row { grid-template-columns: 1fr; }
+  .selector-label { padding-top: 0; }
+  .image-type-tabs { width: 100%; }
+  .image-type-tabs button { flex: 1; min-width: 0; }
+  .selector-config > label { grid-template-columns: 1fr; }
+  .selector-table-row { grid-template-columns: 36px 1fr 1fr; }
+  .selector-table-row > :last-child { grid-column: 2 / -1; }
+}
+
+.toast { position: fixed; z-index: 150; top: 66px; left: 50%; min-width: 260px; max-width: 560px; padding: 10px 16px; color: #fff; background: rgba(48,48,48,.94); text-align: center; box-shadow: var(--shadow); transform: translate(-50%, -18px); opacity: 0; pointer-events: none; transition: .2s ease; }
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+body.compact .tea-table-row > div { min-height: 48px; padding-top: 6px; padding-bottom: 6px; }
+@media (max-width: 1320px) {
+  .topbar-nav { display: none; }
+  .topbar-search { width: 240px; }
+}
+
+/* V9 · 以现网 Agent Runtime 镜像管理页为视觉基线 */
+:root {
+  --brand: var(--tea-color-text-brand);
+  --brand-hover: var(--tea-color-text-link-active);
+  --brand-soft: var(--tea-color-bg-brand-lighten-default);
+  --text: var(--tea-color-text-primary);
+  --text-secondary: var(--tea-color-text-secondary);
+  --text-muted: var(--tea-color-text-tertiary);
+  --line: var(--tea-color-border-primary-default);
+  --line-soft: var(--tea-color-border-secondary-default);
+  --canvas: var(--tea-color-bg-secondary-default);
+  --surface: var(--tea-color-bg-container-default);
+  --success: var(--tea-color-text-success-default);
+  --warning: var(--tea-color-text-warning-default);
+  --danger: var(--tea-color-text-error-default);
+  --shadow: 0 8px 32px rgba(0, 0, 0, .18);
+  --topbar: 50px;
+  --sider: 200px;
+}
+
+html { min-width: 1180px; }
+body { font: 12px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+button, input, select { font-size: 12px; }
+
+.topbar { color: var(--text); background: #fff; border-bottom: 1px solid #e6e9ef; box-shadow: none; }
+.global-menu { width: 48px; padding: 0 !important; display: grid; place-content: center; gap: 3px; }
+.global-menu span { width: 18px; height: 1.5px; display: block; background: var(--tea-color-text-primary); }
+.topbar-brand { width: 104px; height: 100%; display: flex; align-items: center; padding: 0 12px 0 0; border-right: 0; }
+.topbar-brand img { width: 80px; height: 24px; display: block; }
+.topbar-nav { gap: 0; }
+.topbar button { min-width: auto; padding: 0 12px; color: var(--tea-color-text-primary); background: transparent; }
+.topbar button:hover { color: #0052d9; background: #f7f8fb; }
+.topbar-nav button { display: inline-flex; align-items: center; gap: 5px; }
+.topbar-nav svg { width: 16px; height: 16px; }
+.topbar-search { width: 400px; height: 34px; margin-left: auto; padding: 0 10px; color: var(--tea-color-text-tertiary); background: #fff; border: 1px solid #e6e9ef; }
+.topbar-search > svg { width: 16px; height: 16px; flex: 0 0 16px; margin-right: 8px; }
+.topbar-search input { color: var(--text); }
+.topbar-search input::placeholder { color: var(--tea-color-text-tertiary); }
+.topbar-search kbd { min-width: 20px; height: 20px; display: grid; place-items: center; color: var(--tea-color-text-tertiary); background: #f7f8fb; border: 1px solid #e6e9ef; font: 11px/1 inherit; }
+.topbar-actions { margin-left: 10px; white-space: nowrap; }
+.topbar-actions button { position: relative; padding: 0 10px; }
+.notify-dot { width: 5px; height: 5px; position: absolute; top: 13px; right: 4px; background: #f64041; border-radius: 50%; }
+.topbar-actions .icon-action { width: 42px; display: grid; place-items: center; line-height: 10px; }
+.topbar-actions .icon-action svg { width: 16px; height: 16px; }
+.topbar-actions .icon-action small { font-size: 8px; }
+.topbar-actions .account { display: grid; align-content: center; justify-items: end; max-width: 118px; overflow: hidden; text-overflow: ellipsis; }
+.topbar-actions .account small { display: block; color: var(--text-secondary); }
+.avatar { width: 32px; height: 32px; margin: 0 8px 0 2px; display: grid; place-items: center; color: #fff; background: #f64041; border-radius: 50%; font-size: 16px; font-weight: 500; }
+
+.sider { color: var(--text); background: #fff; border-right: 1px solid #e6e9ef; }
+.product-name { height: 50px; padding: 0 18px; background: #fff; border: 0; }
+.product-name b { font-size: 16px; line-height: 24px; }
+.sider-nav { padding: 0 0 54px; }
+.sider-nav a { height: 36px; display: flex; align-items: center; gap: 10px; padding: 0 18px; color: var(--tea-color-text-primary); }
+.sider-nav a img { width: 16px; height: 16px; flex: 0 0 16px; opacity: .7; }
+.sider-nav a svg { width: 16px; height: 16px; margin-left: auto; }
+.sider-nav a:hover { color: var(--text); background: #f7f8fb; }
+.sider-nav a.active { color: var(--text); background: #e3ecff; border-right: 0; font-weight: 400; }
+.sider-nav a.active img { opacity: .82; }
+.nav-parent { margin-bottom: 1px; }
+.collapse-sider { width: 100%; height: 48px; position: absolute; left: 0; bottom: 0; display: flex; align-items: center; gap: 8px; padding: 0 18px; color: var(--tea-color-text-secondary); background: #fff; border: 0; border-top: 1px solid #e9ecf1; cursor: pointer; }
+.collapse-sider:hover { background: #f7f8fb; }
+.collapse-sider svg { width: 18px; height: 18px; }
+
+.content { padding-top: var(--topbar); }
+.content-header { min-height: 50px; height: 50px; justify-content: flex-start; gap: 18px; padding: 0 20px; border-bottom: 0; }
+.content-header h1 { font-size: 18px; line-height: 26px; font-weight: 600; }
+.region-button { height: 32px; display: inline-flex; align-items: center; gap: 8px; padding: 0 10px; color: var(--tea-color-text-primary); border-color: #e6e9ef !important; }
+.region-button svg { width: 16px; height: 16px; }
+.page-tabs { height: 31px; padding-left: 20px; border-bottom: 1px solid #e6e9ef; }
+.page-tabs button { height: 31px; margin-right: 36px; padding: 0; font-size: 14px; }
+.page-tabs button.active { color: var(--text); border-bottom: 3px solid #0052d9; font-weight: 600; }
+.content-body { padding: 20px; }
+.tab-placeholder { border: 0; min-height: 200px; }
+
+.monitor-overview { margin-bottom: 16px; background: #fff; border: 0; }
+.monitor-head { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 10px 16px; border-bottom: 1px solid var(--line-soft); }
+.monitor-head h2, .monitor-head p { margin: 0; }
+.monitor-head h2 { font-size: 14px; line-height: 22px; }
+.monitor-head p { color: var(--text-muted); }
+.monitor-filters { display: flex; align-items: center; gap: 12px; }
+.monitor-filters label { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); }
+.monitor-filters select { min-width: 110px; height: 30px; }
+.metric-groups { display: grid; grid-template-columns: 1.2fr 1.45fr .8fr; }
+.metric-group { min-width: 0; min-height: 250px; padding: 14px 16px; border-right: 1px solid var(--line-soft); }
+.metric-group:last-child { border-right: 0; }
+.metric-group header { display: flex; justify-content: space-between; color: var(--text-muted); }
+.metric-group header b { color: var(--text); font-size: 13px; }
+.metric-danger, .metric-danger b { color: #f64041 !important; }
+.outcome-chart-layout { min-height: 202px; display: grid; grid-template-columns: 150px minmax(120px, 1fr); align-items: center; gap: 22px; padding-top: 12px; }
+.donut-center { width: 86px; height: 86px; display: grid; place-items: center; align-content: center; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.03); }
+.donut-center strong { font-size: 28px; line-height: 34px; font-weight: 500; }
+.donut-center span { color: var(--text-muted); font-size: 12px; }
+.legend-creating { background: #0052d9; }
+.legend-updated { background: #0cbf5b; }
+.legend-deleted { background: #a5a5a5; }
+.quality-chart { min-height: 202px; display: grid; grid-template-columns: 34px 1fr; gap: 8px; margin-top: 12px; padding-top: 5px; }
+.quality-axis { height: 154px; display: flex; flex-direction: column; justify-content: space-between; padding-bottom: 20px; color: var(--text-muted); font-size: 11px; text-align: right; }
+.quality-bars { height: 174px; display: grid; grid-template-columns: repeat(4, minmax(54px, 1fr)); gap: 16px; align-items: end; padding: 0 8px; background: repeating-linear-gradient(to bottom, var(--line-soft) 0 1px, transparent 1px 67px); border-bottom: 1px solid var(--line); }
+.quality-bar-item { height: 174px; display: grid; grid-template-rows: 20px 134px 20px; justify-items: center; align-items: end; }
+.quality-bar-item > b { color: var(--text-secondary); font-size: 11px; font-weight: 500; }
+.quality-bar-item > span { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
+.bar-track { width: 26px; height: 126px; display: flex; align-items: flex-end; background: #f2f4f8; }
+.bar-track i { width: 100%; min-height: 2px; transition: height .25s ease; }
+.bar-success { height: 80%; background: #0cbf5b; }
+.bar-failure { height: 20%; background: #f64041; }
+.bar-timeout { height: 4%; background: #ff7800; }
+.bar-retry { height: 8%; background: #0052d9; }
+.governance-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 26px; }
+.governance-grid div { min-width: 0; }
+.governance-grid strong { display: block; font-size: 16px; line-height: 25px; font-weight: 500; }
+.governance-grid span { color: var(--text-muted); white-space: nowrap; }
+
+.console-list-body { border: 0; }
+.action-panel { min-height: 48px; padding: 8px 12px; }
+.primary-actions { border-bottom: 1px solid var(--line-soft); }
+.filters { gap: 8px; }
+.filters label > span:first-child:not(.search-icon) { min-height: 30px; height: 30px; background: #f7f8fb; }
+select, input { height: 30px; border-color: #a5a5a5; }
+.search-box { width: 270px; height: 30px; }
+.tea-btn { min-width: 64px; height: 30px; padding: 0 14px; }
+.tool-buttons { display: flex; align-items: center; gap: 2px; }
+.icon-btn { width: 30px; height: 30px; display: grid; place-items: center; border: 0; }
+.icon-btn:hover { color: #0052d9; background: #f7f8fb; }
+.icon-btn svg { width: 16px; height: 16px; }
+.table-card { border-top: 1px solid var(--line-soft); }
+.tea-table-row > div { min-height: 54px; padding: 8px 10px; }
+.tea-table-head > div { min-height: 44px; color: var(--tea-color-text-secondary); background: #fff; }
+.resource-row:hover > div { background: #f7f8fb; }
+.status-text { border: 0; }
+.pagination { padding: 10px 12px; }
+
+.drawer { top: 50px; width: min(760px, calc(100vw - 200px)); box-shadow: -6px 0 24px rgba(0,0,0,.16); }
+.drawer.detail-drawer { width: min(900px, calc(100vw - 200px)); }
+.drawer-header { min-height: 64px; padding: 13px 20px; }
+.drawer-header h2, .modal h2 { font-size: 16px; }
+.detail-tabs { height: 42px; }
+.detail-tabs button { padding: 0 14px; }
+.detail-hero { min-height: 102px; }
+.resource-metrics { display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); }
+.resource-metrics article { min-height: 96px; padding: 14px; border-right: 1px solid var(--line); }
+.resource-metrics article:last-child { border-right: 0; }
+.resource-metrics span, .resource-metrics small { display: block; color: var(--text-muted); }
+.resource-metrics strong { display: block; margin: 7px 0 3px; font-size: 20px; font-weight: 500; }
+.precache-view-tabs { height: 45px; display: flex; align-items: flex-end; gap: 26px; padding: 0 16px; background: #fff; border: 1px solid var(--line); border-bottom: 0; }
+.precache-view-tabs button { height: 45px; padding: 0 2px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--text-secondary); cursor: pointer; }
+.precache-view-tabs button:hover { color: var(--brand); }
+.precache-view-tabs button.active { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
+.precache-monitor-panel { min-height: calc(100vh - 247px); border-top: 1px solid var(--line); background: #f7f8fb; }
+.monitor-toolbar { min-height: 48px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 8px 20px; color: var(--text-muted); border-bottom: 1px solid var(--line-soft); background: #f7f8fb; }
+.monitor-toolbar b { color: var(--text-secondary); font-weight: 400; }
+.monitor-panel-body { padding: 20px; background: #f7f8fb; }
+.monitor-section { margin-bottom: 20px; padding: 18px; background: #fff; border: 1px solid var(--line); }
+.monitor-section:last-child { margin-bottom: 0; }
+.monitor-section-heading { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.monitor-section-heading h3, .monitor-section-heading p { margin: 0; }
+.monitor-section-heading h3 { font-size: 15px; }
+.monitor-section-heading p { margin-top: 3px; color: var(--text-muted); font-size: 12px; }
+.monitor-time-filter { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 12px; }
+.monitor-time-filter select { min-width: 112px; height: 32px; padding: 0 28px 0 10px; border: 1px solid var(--line); background: #fff; color: var(--text-secondary); }
+.monitor-overview-layout { display: grid; grid-template-columns: minmax(560px, 1.15fr) minmax(420px, .85fr); align-items: stretch; gap: 16px; }
+.monitor-metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.monitor-metric-grid-six { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.monitor-metric-grid-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.monitor-metric-grid-life { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.monitor-metric-card { min-width: 0; min-height: 108px; padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #fff; }
+.monitor-metric-primary { background: #e3ecff; }
+.monitor-metric-title { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+.monitor-metric-card strong { display: inline-block; margin-top: 12px; color: rgba(0,0,0,0.9); font-size: 25px; line-height: 32px; font-weight: 500; }
+.monitor-metric-card > small, .monitor-metric-value small { margin-left: 5px; color: var(--text-muted); }
+.monitor-metric-card .help-tip::after { width: 320px; right: auto; left: -8px; }
+.monitor-metric-grid-six .monitor-metric-card:nth-child(3n) .help-tip::after,
+.monitor-metric-grid:not(.monitor-metric-grid-six):not(.monitor-metric-grid-life) .monitor-metric-card:nth-child(4n) .help-tip::after,
+.monitor-metric-grid-life .monitor-metric-card:last-child .help-tip::after { right: -8px; left: auto; }
+.monitor-metric-grid-six .monitor-metric-card:nth-child(3n + 1) .help-tip::after { right: auto; left: -8px; }
+.monitor-lifecycle-card { min-height: 154px; }
+.monitor-lifecycle-card label { display: flex; align-items: center; gap: 10px; margin-top: 14px; color: var(--text-muted); }
+.monitor-lifecycle-card select { min-width: 118px; }
+.monitor-chart-card { min-width: 0; padding: 16px 18px; border: 1px solid var(--line); background: #fff; }
+.monitor-chart-heading { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
+.monitor-chart-heading h4, .monitor-chart-heading p { margin: 0; }
+.monitor-chart-heading h4 { font-size: 14px; font-weight: 600; }
+.monitor-chart-heading p, .monitor-chart-heading > span { margin-top: 4px; color: var(--text-muted); font-size: 12px; }
+.status-chart-layout { min-height: 220px; display: grid; grid-template-columns: 180px minmax(180px, 1fr); align-items: center; gap: 24px; }
+.status-pie { position: relative; width: 176px; height: 176px; margin: 0 auto; border-radius: 50%; background: conic-gradient(#0052d9 0 20%, #0cbf5b 20% 40%, #ff7800 40% 60%, rgba(0,0,0,0.4) 60% 80%, #f64041 80% 100%); }
+.status-pie::after { content: ""; position: absolute; inset: 28px; border-radius: 50%; background: #fff; }
+.status-pie > div { position: absolute; z-index: 1; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.status-pie strong { color: rgba(0,0,0,0.9); font-size: 30px; line-height: 36px; font-weight: 500; }
+.status-pie span { margin-top: 2px; color: var(--text-muted); font-size: 12px; }
+.monitor-chart-legend { margin: 0; padding: 0; list-style: none; }
+.monitor-chart-legend li { min-height: 38px; display: grid; grid-template-columns: 10px 1fr 42px; align-items: center; gap: 10px; border-bottom: 1px solid var(--line-soft); }
+.monitor-chart-legend li:last-child { border-bottom: 0; }
+.monitor-chart-legend i { width: 8px; height: 8px; border-radius: 1px; }
+.monitor-chart-legend span { color: var(--text-secondary); }
+.monitor-chart-legend b { text-align: right; font-weight: 500; }
+.legend-creating { background: #0052d9; }
+.legend-updated { background: #0cbf5b; }
+.legend-deleted { background: rgba(0,0,0,0.4); }
+.monitor-bar-chart { height: 230px; display: grid; grid-template-columns: repeat(4, minmax(64px, 1fr)); justify-content: space-around; gap: 16px; padding: 16px 20px 0; border-bottom: 1px solid var(--line); background: repeating-linear-gradient(to top, transparent 0 45px, #f2f4f8 46px); }
+.monitor-bar-column { min-width: 0; display: grid; grid-template-rows: 24px 1fr 36px; align-items: end; text-align: center; }
+.monitor-bar-column > b { color: var(--text-secondary); font-size: 13px; font-weight: 500; }
+.monitor-bar-column > div { height: 150px; display: flex; align-items: flex-end; justify-content: center; }
+.monitor-bar-column i { display: block; width: min(64px, 68%); min-height: 0; background: #0052d9; transition: height .2s ease; }
+.monitor-bar-column span { align-self: center; color: var(--text-secondary); font-size: 12px; }
+.monitor-bar-column:nth-child(2) i { background: #a5a5a5; }
+.monitor-bar-column:nth-child(3) i { background: #0cbf5b; }
+.monitor-bar-column:nth-child(4) i { background: #f64041; }
+.quality-bar-chart .monitor-bar-column:nth-child(2) i { background: #f64041; }
+.quality-bar-chart .monitor-bar-column:nth-child(3) i { background: #ff7800; }
+.quality-bar-chart .monitor-bar-column:nth-child(4) i { background: rgba(0,0,0,0.4); }
+
+@media (max-width: 1100px) {
+  .monitor-metric-grid, .monitor-metric-grid-six { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .monitor-metric-card:nth-child(odd) .help-tip::after { right: auto; left: -8px; }
+  .monitor-metric-card:nth-child(even) .help-tip::after { right: -8px; left: auto; }
+  .monitor-overview-layout { grid-template-columns: 1fr; }
+  .status-chart-layout { grid-template-columns: 200px 1fr; gap: 24px; }
+  .monitor-bar-chart { gap: 16px; padding-right: 20px; padding-left: 20px; }
+}
+.mini-chart { margin-top: 20px; padding: 14px; border: 1px solid var(--line); }
+.chart-heading { display: flex; justify-content: space-between; }
+.chart-heading span { color: var(--text-muted); }
+.chart-bars { height: 150px; display: flex; align-items: flex-end; gap: 9px; padding: 20px 10px 0; border-bottom: 1px solid var(--line); background: repeating-linear-gradient(to top, transparent 0 36px, #f2f4f8 37px); }
+.chart-bars i { flex: 1; max-width: 32px; background: #0052d9; }
+.chart-bars .bar-28 { height: 28%; }
+.chart-bars .bar-36 { height: 36%; }
+.chart-bars .bar-40 { height: 40%; }
+.chart-bars .bar-48 { height: 48%; }
+.chart-bars .bar-58 { height: 58%; }
+.chart-bars .bar-62 { height: 62%; }
+.chart-bars .bar-66 { height: 66%; }
+.chart-bars .bar-72 { height: 72%; }
+.chart-bars .bar-75 { height: 75%; }
+.chart-bars .bar-80 { height: 80%; }
+.chart-bars .bar-88 { height: 88%; }
+.chart-bars .bar-93 { height: 93%; }
+
+.modal { border: 1px solid #e6e9ef; }
+
+@media (max-width: 1500px) {
+  .topbar-actions button:nth-child(-n+5) { display: none; }
+  .metric-groups { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 1180px) {
+  .topbar-search { width: 260px; }
+  .monitor-head { align-items: flex-start; flex-direction: column; }
+  .metric-groups { grid-template-columns: 1fr; }
+  .metric-group { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+  .metric-group:last-child { border-bottom: 0; }
+  .outcome-chart-layout { grid-template-columns: 150px 1fr; justify-content: start; }
+}
+
+@media (max-width: 620px) {
+  .outcome-chart-layout { grid-template-columns: 1fr; justify-items: center; }
+  .quality-bars { gap: 8px; padding: 0 2px; }
+}
+
+/* V14: list-first resource management */
+.content-body { padding-top: 16px; }
+.console-list-body { border: 1px solid #e6e9ef; border-top: 0; box-shadow: none; }
+.action-panel { padding-right: 12px; padding-left: 12px; }
+.primary-actions { min-height: 47px; }
+.primary-action-group { display: flex; align-items: center; gap: 8px; }
+.filter-actions { min-height: 46px; border-bottom: 1px solid #e9ecf1; }
+.filters label > span:first-child:not(.search-icon) { color: rgba(0,0,0,0.7); background: #f7f8fb; }
+.table-card { border-top: 0; box-shadow: none; }
+.tea-table { min-width: 1400px; }
+.tea-table-row { grid-template-columns: 160px minmax(280px, 2.15fr) 132px 112px minmax(260px, 1.7fr) 220px 150px; }
+.tea-table-row > div { min-height: 50px; padding: 8px 10px; }
+.tea-table-head > div { min-height: 42px; color: var(--tea-color-text-secondary); background: #f7f8fb; }
+.resource-row:hover > div { background: #f7f8fb; }
+.column-title { width: fit-content; display: flex; align-items: center; gap: 5px; }
+
+.help-tip { width: 14px; height: 14px; min-width: 14px; position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: rgba(0,0,0,0.5); border: 1px solid #a5a5a5; border-radius: 50%; background: #fff; font-size: 10px; line-height: 12px; font-weight: 600; cursor: help; }
+.help-tip::after { content: attr(data-tooltip); width: 250px; position: absolute; z-index: 180; top: 22px; left: -10px; display: none; padding: 8px 10px; color: #fff; background: #303030; box-shadow: 0 2px 8px rgba(0,0,0,.16); font-size: 12px; line-height: 18px; font-weight: 400; text-align: left; white-space: normal; }
+.help-tip:hover::after, .help-tip:focus-visible::after { display: block; }
+.tea-table-head { position: relative; z-index: 40; }
+.tea-table-head > div { position: relative; overflow: visible; }
+.retention-help-tip::after { width: 440px; right: -12px; left: auto; z-index: 240; box-sizing: border-box; }
+.tea-table-head > div:nth-child(6) { z-index: 50; }
+
+/* V14: image cache monitoring */
+.precache-monitor-panel { border-top: 1px solid #e6e9ef; }
+.monitor-toolbar { justify-content: flex-start; padding: 10px 18px; }
+.monitor-toolbar-title { min-width: 0; display: flex; align-items: baseline; gap: 12px; margin-right: auto; }
+.monitor-toolbar-title b { color: rgba(0,0,0,0.9); font-size: 14px; font-weight: 600; }
+.monitor-toolbar-title span { overflow: hidden; color: rgba(0,0,0,0.5); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.monitor-panel-body { padding: 16px; }
+.monitor-section { margin-bottom: 16px; padding: 16px; box-shadow: none; }
+.monitor-section-heading { margin-bottom: 12px; }
+.monitor-overview-layout { grid-template-columns: minmax(480px, 1fr) minmax(430px, .9fr); }
+.monitor-primary-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.monitor-quality-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.monitor-quality-metrics .monitor-metric-card { min-height: 110px; }
+.monitor-quality-metrics .monitor-metric-card:nth-child(3) { border-top: 0; }
+.creation-status-pie { background: conic-gradient(#ff7800 0 35.3%, #0052d9 35.3% 86.3%, #f64041 86.3% 100%); }
+.legend-pending { background: #ff7800; }
+.legend-queuing { background: #ff9540; }
+.legend-processing { background: #0052d9; }
+.legend-failed { background: #f64041; }
+.quality-monitor-bars { grid-template-columns: repeat(5, minmax(54px, 1fr)); }
+.quality-monitor-bars .monitor-bar-column:nth-child(1) i { background: #ff7800; }
+.quality-monitor-bars .monitor-bar-column:nth-child(2) i { background: #f64041; }
+.quality-monitor-bars .monitor-bar-column:nth-child(3) i { background: #0052d9; }
+.quality-monitor-bars .monitor-bar-column:nth-child(4) i { background: #f64041; }
+.quality-monitor-bars .monitor-bar-column:nth-child(5) i { background: rgba(0,0,0,0.4); }
+.monitor-trend-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.trend-chart-card .monitor-chart-heading { align-items: center; margin-bottom: 10px; }
+.trend-chart-card .monitor-chart-heading h4 { display: flex; align-items: center; gap: 6px; }
+.trend-chart-card .monitor-chart-heading > strong { color: rgba(0,0,0,0.9); font-size: 24px; font-weight: 500; }
+.trend-chart { width: 100%; height: 220px; }
+.trend-chart svg { width: 100%; height: 100%; overflow: visible; }
+.trend-grid-lines path { fill: none; stroke: #e9ecf1; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.trend-area { fill: rgba(0,82,217,.10); stroke: none; }
+.trend-concurrency-area { fill: rgba(12,191,91,.10); }
+.trend-line { fill: none; stroke: #0052d9; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.trend-concurrency-line { stroke: #0cbf5b; }
+.trend-axis-labels, .trend-time-labels { fill: rgba(0,0,0,0.5); font-size: 11px; }
+.trend-data-point { fill: #fff; stroke: #0052d9; stroke-width: 2; vector-effect: non-scaling-stroke; cursor: crosshair; transition: r .12s ease, fill .12s ease; }
+.trend-data-point:hover, .trend-data-point:focus { r: 5.5px; fill: #0052d9; outline: none; }
+#concurrency-trend-points .trend-data-point { stroke: #0cbf5b; }
+#concurrency-trend-points .trend-data-point:hover, #concurrency-trend-points .trend-data-point:focus { fill: #0cbf5b; }
+.monitor-help-tip::after { display: none !important; }
+.viewport-tooltip { width: max-content; max-width: min(380px, calc(100vw - 32px)); position: fixed; z-index: 9999; padding: 9px 11px; color: #fff; background: #303030; box-shadow: 0 3px 12px rgba(0,0,0,.2); font-size: 12px; line-height: 18px; text-align: left; white-space: normal; pointer-events: none; }
+
+@media (max-width: 1280px) {
+  .monitor-overview-layout { grid-template-columns: 1fr; }
+  .monitor-quality-metrics { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .monitor-toolbar { align-items: flex-start; flex-wrap: wrap; }
+  .monitor-toolbar-title { width: 100%; }
+  .monitor-trend-grid { grid-template-columns: 1fr; }
+  .monitor-quality-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.status-text { padding: 0; background: transparent !important; border: 0 !important; font-size: 13px; }
+.status-text.success { color: #0cbf5b; }
+.status-text.processing { color: rgba(0,0,0,0.7); }
+.status-text.pending { color: #d95c00; }
+.status-text.queuing { color: #d95c00; }
+.status-text.failed { color: #f64041; }
+
+.drawer, .modal { border-radius: 0; }
+.drawer { box-shadow: -4px 0 16px rgba(0,0,0,.14); }
+
+@media (max-width: 1180px) {
+  .filter-actions { align-items: flex-start; }
+  .filters { flex: 1; }
+  .search-box { width: 240px; }
+}
+
+/* Image cache resource fields */
+.tea-table { min-width: 1900px; }
+.tea-table-row { grid-template-columns: 160px minmax(380px, 2fr) 120px 140px 140px minmax(280px, 1.5fr) 180px 180px 150px; }
+.image-address-line { display: flex; align-items: baseline; min-width: 0; }
+.image-address-line > span { flex-shrink: 0; }
+.image-address-line .resource-link { min-width: 0; }
+.create-time-cell, .last-matched-time-cell { white-space: nowrap; }
+
+/* Fit all resource columns within the available page width. */
+html { min-width: 0; }
+#precache-list-view, #precache-list-content, #precache-resource-panel { min-width: 0; max-width: 100%; }
+#precache-resource-panel .table-card { overflow: visible; }
+#precache-resource-panel .tea-table, #precache-resource-panel .table-state { min-width: 0; width: 100%; }
+#precache-resource-panel .tea-table-row { grid-template-columns: minmax(0, 1.05fr) minmax(0, 2.25fr) minmax(0, .9fr) minmax(0, .8fr) minmax(0, .9fr) minmax(0, 1fr) minmax(0, .65fr); }
+#precache-resource-panel .tea-table-row > div { padding: 10px 7px; overflow-wrap: anywhere; white-space: normal; }
+#precache-resource-panel .resource-link { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+#precache-resource-panel .image-address-line { display: block; }
+#precache-resource-panel .image-address-line .resource-link { display: inline; }
+#precache-resource-panel .row-actions { flex-wrap: wrap; gap: 6px 10px; align-content: center; }
+#precache-resource-panel .row-actions button { white-space: nowrap; }
+#precache-resource-panel .pagination, #precache-resource-panel .filter-actions, #precache-resource-panel .filters { flex-wrap: wrap; }
+
+/* Column filters: label followed by an outlined funnel. */
+.filter-column-title { display: flex; align-items: center; gap: 6px; }
+.column-filter { position: relative; flex-shrink: 0; font-weight: normal; }
+.column-filter summary { display: flex; align-items: center; justify-content: center; width: 22px; height: 24px; color: rgba(0,0,0,0.5); cursor: pointer; list-style: none; }
+.column-filter summary::-webkit-details-marker { display: none; }
+.column-filter summary svg { width: 20px; height: 20px; }
+.column-filter summary:hover, .column-filter[open] summary, .column-filter.is-filtered summary { color: #0052d9; }
+.column-filter summary:focus-visible { outline: 2px solid #0052d9; outline-offset: 2px; }
+.column-filter-panel { position: absolute; top: 29px; left: 0; z-index: 200; width: 184px; padding: 6px; background: white; border: 1px solid #e6e9ef; box-shadow: 0 4px 12px rgba(0,0,0,.14); }
+.column-filter-panel select { display: block; width: 100%; height: auto; min-width: 0; padding: 0; border: 0; background: white; color: rgba(0,0,0,0.9); font: inherit; outline-offset: 0; }
+.column-filter-panel option { padding: 8px 10px; cursor: pointer; }
+
+.table-state .empty-region-message { margin: 0; text-align: center; line-height: 24px; }
+.empty-create-link { color: #0052d9; text-decoration: none; cursor: pointer; }
+.empty-create-link:hover { text-decoration: underline; }
+.empty-create-link:focus-visible { outline: 2px solid #0052d9; outline-offset: 2px; }
+
+/* Stop image acceleration dialog, aligned with the supplied reference. */
+#delete-modal { width: 640px; max-width: calc(100vw - 40px); border: 0; box-shadow: 0 6px 24px rgba(0,0,0,.2); }
+#delete-modal header { align-items: center; padding: 28px 28px 24px; border: 0; }
+#delete-modal h2 { font-size: 22px; line-height: 30px; font-weight: 600; color: rgba(0,0,0,0.9); }
+#delete-modal .close-button { color: rgba(0,0,0,0.7); font-size: 22px; }
+#delete-modal .modal-body { padding: 4px 28px 12px; }
+.stop-image-notice { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 12px 20px; background: #fde9e9; color: rgba(0,0,0,0.9); font-size: 13px; line-height: 22px; }
+.stop-notice-icon { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 16px; width: 16px; height: 16px; border: 1.5px solid #f64041; border-radius: 50%; color: #f64041; font-size: 12px; font-weight: 600; line-height: 1; }
+#delete-modal .compact-facts { grid-template-columns: 130px minmax(0, 1fr); margin-top: 18px; }
+#delete-modal .compact-facts dt, #delete-modal .compact-facts dd { padding: 14px 18px; font-size: 14px; line-height: 22px; }
+#delete-modal .compact-facts dt { background: #f7f8fb; color: rgba(0,0,0,0.5); }
+#delete-modal .confirm-check { margin-top: 24px; gap: 6px; font-size: 14px; color: rgba(0,0,0,0.9); }
+#delete-modal .confirm-check input { width: 18px; height: 18px; margin: 0; accent-color: #0052d9; }
+#delete-modal footer { justify-content: center; padding: 24px 28px 28px; border: 0; gap: 12px; }
+#delete-modal footer .tea-btn { min-width: 78px; height: 36px; padding: 0 20px; }
+#delete-modal #confirm-delete { min-width: 106px; }
+#delete-modal #confirm-delete:disabled { color: #fff; background: #c7d9ff; border-color: #c7d9ff; }
+
+/* Full-page prewarm task details. */
+.task-page-header { display: flex; align-items: center; gap: 24px; min-height: 60px; padding: 0 24px; background: #fff; border-bottom: 1px solid #e6e9ef; }
+.task-page-header h1 { margin: 0; font-size: 18px; font-weight: 600; outline: none; }
+.task-back { padding: 4px 0; border: 0; background: none; color: #0052d9; font-size: 26px; cursor: pointer; }
+.task-page-body { padding: 24px; }
+.task-info-card { padding: 28px 36px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+.task-info-card h2 { margin: 0 0 26px; font-size: 18px; font-weight: 600; }
+.task-info-columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
+.task-info-list { display: grid; grid-template-columns: 124px minmax(0, 1fr); align-content: start; gap: 24px 16px; margin: 0; font-size: 14px; line-height: 24px; }
+.task-info-list dt { color: rgba(0,0,0,0.5); }
+.task-info-list dd { margin: 0; color: rgba(0,0,0,0.9); overflow-wrap: anywhere; }
+.task-copy { display: inline-flex; vertical-align: middle; padding: 0; margin-left: 6px; background: none; border: 0; color: rgba(0,0,0,0.7); cursor: pointer; }
+.task-copy svg { width: 16px; height: 16px; }
+.task-copy:hover { color: #0052d9; }
+.task-status { display: inline-block; padding: 1px 10px; font-size: 13px; line-height: 22px; background: #f2f4f8; color: rgba(0,0,0,0.7); }
+.task-status.success { background: #e3ecff; color: #0cbf5b; }
+.task-status.failed { background: #fde9e9; color: #f64041; }
+.task-status.processing, .task-status.pending { background: #ffe8d9; color: #d95c00; }
+@media (max-width: 1100px) { .task-info-columns { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
+
+/* Full-page creation layout using the reference's sectioned form. */
+.create-task-page { background: #fff; }
+.create-task-body { width: min(1440px, calc(100% - 80px)); margin: 32px auto; padding-bottom: 90px; }
+.create-task-notice { display: flex; gap: 12px; align-items: center; padding: 16px 20px; margin-bottom: 20px; background: #e3ecff; color: rgba(0,0,0,0.9); }
+.create-task-notice > span { color: #0052d9; font-size: 22px; }
+.create-task-section { display: grid; grid-template-columns: 150px minmax(0, 1fr); padding: 28px; border: 1px solid #e6e9ef; margin-bottom: 20px; background: #fff; }
+.create-task-section h2 { margin: 0; font-size: 16px; font-weight: 600; }
+.create-task-fields { max-width: 1000px; }
+.create-task-field { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: start; gap: 18px; margin-bottom: 24px; }
+.create-task-field:last-child { margin-bottom: 0; }
+.create-task-field > span { line-height: 34px; color: rgba(0,0,0,0.5); font-size: 13px; }
+.create-task-field em { color: #f64041; font-style: normal; }
+.create-task-field input:not([type="checkbox"]), .create-task-field select { width: 100%; height: 34px; padding: 0 12px; border: 1px solid #e6e9ef; background: white; }
+.create-task-field small { display: block; margin-top: 8px; color: rgba(0,0,0,0.5); font-size: 12px; line-height: 20px; }
+.create-task-field .field-error { color: #f64041; }
+.create-task-field .field-error[hidden] { display: none; }
+.create-vpc-check { display: flex; align-items: center; gap: 8px; min-height: 34px; }
+.create-vpc-check input { width: 16px; height: 16px; }
+#create-vpc-fields label { display: block; margin-top: 14px; font-size: 13px; color: rgba(0,0,0,0.5); }
+#create-vpc-fields select { margin-top: 6px; }
+.create-timeout-control { display: flex; width: 240px; }
+.create-timeout-control button { width: 36px; flex-shrink: 0; border: 1px solid #e6e9ef; background: #fff; font-size: 20px; cursor: pointer; }
+.create-timeout-control input { min-width: 0; text-align: center; }
+.create-task-footer { position: fixed; left: var(--sider); right: 0; bottom: 0; z-index: 50; background: #fff; border-top: 1px solid #e6e9ef; padding: 16px 40px; }
+.create-task-footer > div { max-width: 1440px; margin: auto; display: flex; gap: 12px; }
+@media(max-width: 1150px) { .create-task-body { width: calc(100% - 40px); } .create-task-section { grid-template-columns: 110px minmax(0, 1fr); padding: 20px; } .create-task-field { grid-template-columns: 130px minmax(0, 1fr); } }
+
+#create-credential-field[hidden] { display: none; }
+
+/* Reference-style task table with separate image address and digest columns. */
+#precache-resource-panel .primary-actions { display: flex; justify-content: space-between; gap: 24px; padding: 22px 18px; }
+.task-list-search { display: flex; align-items: center; gap: 10px; width: min(52%, 780px); border: 1px solid #e6e9ef; padding: 0 12px; height: 34px; }
+.task-list-search > span { color: rgba(0,0,0,0.5); font-size: 24px; }
+.task-list-search input { width: 100%; min-width: 0; border: 0; outline: 0; background: none; }
+#precache-resource-panel .tea-table-row { grid-template-columns: minmax(0, 1.05fr) minmax(0, 2fr) minmax(0, 1.6fr) minmax(0, 1.1fr) minmax(0, .85fr) minmax(0, .8fr) minmax(0, .75fr) minmax(0, 1fr) minmax(0, .7fr); }
+#precache-resource-panel .tea-table-row > div { padding: 24px 12px; min-height: 104px; font-size: 13px; line-height: 22px; }
+#precache-resource-panel .tea-table-head > div { min-height: 62px; padding: 16px 12px; background: #fff; font-weight: 600; }
+#precache-resource-panel .resource-row:hover > div { background: #f7f8fb; }
+#precache-resource-panel .resource-id-cell .resource-link, #precache-resource-panel .image-cell .resource-link { color: rgba(0,0,0,0.9); }
+.list-copy-value { display: block; overflow-wrap: anywhere; }
+.list-copy { display: inline-flex; vertical-align: middle; margin-left: 5px; padding: 0; border: 0; background: none; color: rgba(0,0,0,0.7); cursor: pointer; }
+.list-copy svg { width: 15px; height: 15px; }
+.list-copy:hover { color: #0052d9; }
+#precache-resource-panel .status-text { display: inline-block; width: fit-content; padding: 1px 8px; background: #f2f4f8; }
+#precache-resource-panel .status-text::before { display: none; }
+#precache-resource-panel .status-text.success { background: #e3ecff; color: #0cbf5b; }
+#precache-resource-panel .status-text.failed { background: #fde9e9; color: #f64041; }
+#precache-resource-panel .status-text.pending, #precache-resource-panel .status-text.processing { background: #ffe8d9; color: #d95c00; }
+/* September reference: compact task list and image selection flow. */
+#caches .precache-tabs{display:none}
+#caches .primary-actions{background:#f2f4f8;padding:16px 0;gap:10px}
+#caches .task-list-search{margin-left:auto;width:56%;background:white;min-width:0}
+#search-property{border:0;border-right:1px solid #e6e9ef;width:130px;background:white;color:rgba(0,0,0,0.5);padding:0 8px;height:30px}
+#caches .icon-action{min-width:32px;padding:0;font-size:23px}
+#caches .tea-table-row{grid-template-columns:1.05fr 1.85fr 1.35fr .8fr .85fr 1.2fr .75fr 1.05fr 1.05fr .45fr;min-height:52px}
+#caches .tea-table-row>[role=cell]{padding:14px 10px;font-size:12px;line-height:20px;min-width:0}
+#caches .tea-table-head{min-height:56px}
+#caches .tea-table-head>div{padding:16px 10px;font-size:12px}
+#caches .resource-link{color:#0052d9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;max-width:100%;text-align:left}
+#caches .resource-row[data-registry=custom] .image-cell .resource-link{color:rgba(0,0,0,0.9)}
+#caches .list-copy-value{display:flex;align-items:center;min-width:0;width:100%}
+#caches .list-copy-value>:first-child{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#caches .list-copy{display:none}
+#caches .resource-row:hover .list-copy{display:inline-flex;flex-shrink:0}
+#caches .digest-cell{word-break:normal}
+#caches .status-text,.create-task-page .status-text{background:none;padding:0;color:rgba(0,0,0,0.7);white-space:nowrap;font-size:12px}
+#caches .status-text:before,.create-task-page .status-text:before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:#a5a5a5;margin-right:7px}
+#caches .status-text.success:before,.create-task-page .status-text.success:before{background:#0cbf5b}
+#caches .status-text.pending:before{background:#ff7800}
+#caches .status-text.processing:before{background:#0052d9}
+#caches .status-text.failed:before{background:#f64041}
+#caches .row-actions button{font-size:12px}
+#caches .row-actions button:disabled{color:#b9ccf6;cursor:not-allowed}
+#caches .column-filter-panel{z-index:30;min-width:165px}
+#create-drawer .create-task-body{max-width:1440px;width:calc(100% - 100px);margin:28px auto;padding-bottom:24px}
+#create-drawer .create-task-notice{margin:0 0 20px;padding:12px 18px;font-size:12px}
+#create-drawer .create-task-section{grid-template-columns:160px minmax(0,1fr);padding:24px;border:1px solid #e6e9ef;border-radius:6px;gap:20px}
+#create-drawer .create-task-fields{display:block;min-width:0}
+#create-drawer .create-task-field{display:block;margin-bottom:20px;font-size:12px}
+#create-drawer .create-task-field>span:first-child{display:block;margin-bottom:10px;color:rgba(0,0,0,0.9)}
+#create-drawer .create-task-field input:not([type=checkbox]){max-width:440px;width:70%;height:32px}
+#create-drawer .create-task-field small{font-size:12px;margin-top:8px}
+#create-drawer .create-task-field:has(#create-registry),#create-drawer #create-credential-field,#create-drawer .create-task-section:has(#create-vpc){display:none!important}
+#create-drawer .create-timeout-control{width:160px;height:32px}
+#create-drawer .create-timeout-control input{width:96px!important;height:30px!important}
+#create-drawer .create-task-footer{position:static;padding:20px 0;background:white;border-top:1px solid #e6e9ef}
+#create-drawer .create-task-footer>div{width:calc(100% - 100px);max-width:1440px;margin:auto}
+#create-drawer #open-image-selector,#create-drawer #choose-image-version{border:0;background:none;color:#0052d9;margin-left:8px;font-size:12px;cursor:pointer}
+#create-drawer #choose-image-version:disabled{color:#b9ccf6;cursor:not-allowed}
+#create-drawer [hidden]{display:none!important}
+#create-drawer #digest-choice label{display:flex;align-items:center;gap:4px;overflow-wrap:anywhere}
+.picker-modal{width:850px;max-width:calc(100vw - 80px);max-height:86vh;overflow:auto;padding:26px;z-index:1100;background:white}
+.picker-modal:not(.open){display:none!important}
+.picker-modal.open{display:block!important;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%)}
+.picker-modal .inline-selector-heading{display:flex;flex-direction:row-reverse;justify-content:space-between;margin-bottom:26px}
+.picker-modal .inline-selector-heading h3{font-size:16px;margin:0}
+.picker-modal .inline-selector-heading p{display:none}
+.picker-modal .inline-selector-heading button{border:0;background:none;color:rgba(0,0,0,0.7)}
+.picker-modal .selector-content{min-width:0}
+.picker-modal .selector-table-row{font-size:12px}
+.picker-modal .selector-config{padding:16px;background:#f2f4f8}
+.picker-modal .selector-table{background:white}
+.picker-modal .inline-selector-actions{display:flex;gap:10px;justify-content:center;margin-top:28px}
+.picker-modal .version-table-row{overflow-wrap:anywhere}
+#delete-modal .stop-image-notice{line-height:24px;font-size:13px;align-items:flex-start}
+@media(max-width:1350px){#caches .tea-table-row>[role=cell]{padding:12px 6px;font-size:11px}#caches .tea-table-head>div{padding:14px 6px}#caches .resource-link{font-size:11px}#caches .create-time-cell,#caches .last-use-cell{overflow-wrap:anywhere}#create-drawer .create-task-section{grid-template-columns:110px minmax(0,1fr)}}
+#caches .precache-view-tabs{display:none}
+#caches #precache-resource-panel .tea-table-row>div{min-height:52px;padding:12px 8px;font-size:12px;line-height:20px}
+#caches #precache-resource-panel .tea-table-head>div{min-height:52px;padding:14px 8px}
+#caches #precache-resource-panel .resource-id-cell .resource-link,#caches #precache-resource-panel .image-cell .resource-link{color:#0052d9}
+#caches #precache-resource-panel [data-registry=custom] .image-cell .resource-link{color:rgba(0,0,0,0.9)}
+#caches #precache-resource-panel .status-text{color:rgba(0,0,0,0.7)}
+#caches .filter-column-title{gap:4px;white-space:nowrap}
+#caches .column-filter summary svg{width:13px;height:13px}
+.picker-modal .selector-row{grid-template-columns:70px minmax(0,1fr);gap:10px;margin-bottom:20px}
+.picker-modal .image-type-tabs button{font-size:12px;padding:8px 12px;min-width:0;height:34px}
+.picker-modal .inline-selector-heading{padding:0 0 14px;margin-bottom:20px}
+.picker-modal .selector-config>label{margin-bottom:10px;grid-template-columns:85px 1fr 1fr}
+.picker-modal .selector-table-row{min-height:45px;padding:10px 8px}
+.picker-modal .selector-table{padding:10px}
+.picker-modal .inline-selector-actions{position:sticky;bottom:-26px;background:white;padding:16px;margin:16px -26px -26px}
+.picker-modal .version-pagination,.picker-modal .selector-pagination{font-size:12px}
+#create-drawer .create-task-field{margin-bottom:16px}
+#create-drawer .create-task-field>span:first-child{margin-bottom:8px}
+@media(max-width:1350px){#caches #precache-resource-panel .tea-table-row>div{font-size:11px;padding:10px 5px}#caches #precache-resource-panel .tea-table-head>div{font-size:11px;padding:12px 5px}}
+/* Unified property search, matching the reference dropdown. */
+#caches .task-list-search{position:relative;overflow:visible;gap:10px;padding:0 12px;border:1px solid #e6e9ef;height:36px}
+#caches .task-list-search:focus-within{border-color:#0052d9;box-shadow:0 0 0 1px #0052d9}
+#caches #search-property{display:none}
+#caches .task-list-search>span[aria-hidden]{display:flex;flex:0 0 22px;color:rgba(0,0,0,0.4)}
+#caches .task-list-search>span[aria-hidden] svg{width:22px;height:22px}
+#caches .task-list-search input{flex:1;min-width:0;border:0;outline:0;box-shadow:none;height:32px}
+#caches .search-property-menu{position:absolute;top:calc(100% + 1px);left:42px;width:210px;background:white;border:1px solid #e6e9ef;box-shadow:0 5px 16px #3030301a;z-index:50;padding:10px 0;text-align:left}
+#caches .search-property-hint{color:rgba(0,0,0,0.4);font-size:13px;padding:10px 14px;white-space:nowrap}
+#caches .search-property-menu button{display:block;border:0;background:white;color:rgba(0,0,0,0.9);width:100%;font-size:14px;line-height:22px;text-align:left;padding:10px 14px;cursor:pointer}
+#caches .search-property-menu button:hover,#caches .search-property-menu button:focus-visible{background:#e3ecff;color:#0052d9;outline:none}
+#caches .search-property-chip{display:flex;align-items:center;flex-shrink:0;gap:4px;font-size:12px;color:rgba(0,0,0,0.7);background:#f2f4f8;padding:2px 6px}
+#caches .search-property-chip button{border:0;background:transparent;color:rgba(0,0,0,0.5);cursor:pointer}
+#caches .search-property-menu[hidden],#caches .search-property-chip[hidden]{display:none}
+
+/* Compact outlined toolbar buttons. */
+#caches .icon-action{display:inline-flex;align-items:center;justify-content:center;flex:0 0 30px;width:30px;min-width:30px;height:30px;padding:0;border:1px solid #e6e9ef;border-radius:0;background:#fff;color:rgba(0,0,0,0.9);box-shadow:none}
+#caches .icon-action svg{display:block;width:16px;height:16px}
+#caches .icon-action:hover{border-color:#a5a5a5;background:#f7f8fb}
+#caches .icon-action:focus-visible{outline:2px solid #0052d9;outline-offset:2px}
+/* Embedded preheat: retain the complete V14 interactions under the new navigation. */
+.topbar,.sider,.content-header,.page-tabs{display:none!important}.content{margin:0!important;padding:0!important;min-width:0!important}.content-body{padding:0!important}.support-tools{display:none!important}body{min-width:0!important;background:#f2f4f8!important}.drawer{top:0!important;height:100vh!important}
+/* Unified left alignment for embedded image-preheat lists. */
+.tea-table-row > div, .selector-table th, .selector-table td, .version-table th, .version-table td { text-align: left; }
+
+/* Tea toolbar and console surfaces, scoped to the embedded preheat page. */
+#tea-preheat-toolbar .preheat-tea-tools .tea-btn{border:1px solid #ddd;background:#fff;min-width:30px;height:30px;padding:0}
+body:has(#tea-preheat-toolbar) .tea-dialog__close{border:0;background:transparent}
+
+body:has(#tea-preheat-toolbar) .primary-actions{display:none!important}
+body:has(#tea-preheat-toolbar) .column-filter{display:none}
+#tea-preheat-toolbar{padding:20px 20px 12px;background:#f3f4f7}
+#tea-preheat-toolbar .tea-table__action-panel{padding:0;margin:0 0 12px}
+#tea-preheat-toolbar .tea-justify-grid__col--left{flex:1;min-width:0}
+#tea-preheat-toolbar .tea-justify-grid__col--right{display:flex;justify-content:flex-end}
+#tea-preheat-toolbar .tea-search--tags{width:100%!important;max-width:none;min-width:0!important}
+.preheat-tea-tools{display:flex;gap:8px}
+.preheat-filter-summary{display:flex;align-items:center;gap:12px;color:#666;font-size:12px}
+body:has(#tea-preheat-toolbar) .table-card{margin:0 20px;border:0}
+body:has(#tea-preheat-toolbar) .pagination{margin:0 20px;padding:16px;background:#fff}
+body:has(#tea-preheat-toolbar) .tea-table-head,
+body:has(#tea-preheat-toolbar) .tea-table-head>div{background:var(--tea-color-bg-container-default,#fff)}
+body:has(#tea-preheat-toolbar) .tea-table-head>div{font-weight:400;color:var(--tea-color-text-secondary,rgba(0,0,0,.7))}
+body:has(#tea-preheat-toolbar) .resource-row:hover>div{background:#f2f7ff}
+body:has(#tea-preheat-toolbar) .resource-row .list-copy{opacity:0}
+body:has(#tea-preheat-toolbar) .resource-row:hover .list-copy,body:has(#tea-preheat-toolbar) .resource-row:focus-within .list-copy{opacity:1}
+body:has(#tea-preheat-toolbar) .precache-view-tabs button.active{font-weight:400;border-bottom-width:2px}
+body:has(#tea-preheat-toolbar) .modal{border-radius:0}
+body:has(#tea-preheat-toolbar) input:focus,body:has(#tea-preheat-toolbar) select:focus{border-color:#006eff}
+
+#precache-list-view{border-left:0;border-right:0}
+#tea-preheat-toolbar .tea-justify-grid__col--right{padding-left:12px}
+
+body:has(#tea-preheat-toolbar) .tea-table-head{height:48px;min-height:48px}
+body:has(#tea-preheat-toolbar) .resource-row{min-height:64px}
+
+#tea-preheat-toolbar{padding:20px!important}
+#tea-preheat-toolbar .preheat-tea-toolbar{display:flex;align-items:flex-start;flex-wrap:wrap;gap:0 24px;min-width:0}
+#tea-preheat-toolbar .tea-table__action-panel{flex:0 0 auto;margin:0!important;padding:0;min-width:0}
+#tea-preheat-toolbar .tea-table__action-panel:nth-child(2){flex:1 1 0}
+#tea-preheat-toolbar .preheat-filter-summary{flex-basis:100%;margin-top:12px}
+
+#tea-preheat-toolbar .tea-justify-grid{display:flex;width:100%;min-width:0}
+#tea-preheat-toolbar .tea-justify-grid__col--left{flex:1 1 0;min-width:0}
+#tea-preheat-toolbar .tea-justify-grid__col--right{flex:0 0 auto}
+#tea-preheat-toolbar .tea-search{width:100%!important;max-width:none!important;min-width:0!important}
+#tea-preheat-toolbar .preheat-tea-tools>.tea-btn:first-child{order:2}
+
+/* Keep the visible white table surface inset, not just the cell content. */
+body:has(#tea-preheat-toolbar),
+body:has(#tea-preheat-toolbar) #precache-list-view,
+body:has(#tea-preheat-toolbar) #precache-list-content{background:#f3f4f7!important}
+body:has(#tea-preheat-toolbar) #precache-list-view{border:0}
+body:has(#tea-preheat-toolbar) .table-card{background:#fff;margin-left:20px;margin-right:20px}
+</style>
+<script type="application/json" id="preheat-demo-records">[{"image": "tcr-test-jx.tencentcloudcr.com/jx/nginx:v1", "dataset": {"id": "pcimg-demo001", "sourceType": "TCR自动预热", "status": "unloaded", "createTime": "2026-09-16T16:39:42+08:00", "registry": "enterprise"}}, {"image": "ccr.ccs.tencentyun.com/ags/runner:v3", "dataset": {"id": "pcimg-demo002", "sourceType": "自动创建", "status": "unloaded", "createTime": "2026-09-16T15:39:42+08:00", "registry": "personal"}}, {"image": "ccr.ccs.tencentyun.com/ags/worker:v12", "dataset": {"id": "pcimg-demo003", "sourceType": "手动创建", "status": "unloaded", "createTime": "2026-09-16T14:39:42+08:00", "registry": "personal"}}, {"image": "tcr-test-jx.tencentcloudcr.com/jx/sandbox:v2", "dataset": {"id": "pcimg-demo004", "sourceType": "TCR自动预热", "status": "cancelled", "createTime": "2026-09-16T13:39:42+08:00", "registry": "enterprise"}}, {"image": "ccr.ccs.tencentyun.com/ags/nginx:v1", "dataset": {"id": "pcimg-demo005", "sourceType": "手动创建", "status": "success", "createTime": "2026-09-16T12:39:42+08:00", "registry": "personal"}}, {"image": "ccr.ccs.tencentyun.com/ags/runner:v3", "dataset": {"id": "pcimg-demo006", "sourceType": "自动创建", "status": "success", "createTime": "2026-09-16T11:39:42+08:00", "registry": "personal"}}, {"image": "tcr-test-jx.tencentcloudcr.com/jx/worker:v12", "dataset": {"id": "pcimg-demo007", "sourceType": "TCR自动预热", "status": "success", "createTime": "2026-09-16T10:39:42+08:00", "registry": "enterprise"}}, {"image": "ccr.ccs.tencentyun.com/ags/sandbox:v2", "dataset": {"id": "pcimg-demo008", "sourceType": "自动创建", "status": "success", "createTime": "2026-09-16T09:39:42+08:00", "registry": "personal"}}, {"image": "ccr.ccs.tencentyun.com/ags/nginx:v1", "dataset": {"id": "pcimg-demo009", "sourceType": "手动创建", "status": "success", "createTime": "2026-09-16T08:39:42+08:00", "registry": "personal"}}, {"image": "tcr-test-jx.tencentcloudcr.com/jx/runner:v3", "dataset": {"id": "pcimg-demo010", "sourceType": "TCR自动预热", "status": "success", "createTime": "2026-09-16T07:39:42+08:00", "registry": "enterprise"}}]</script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="global-menu" aria-label="展开全局导航"><span></span><span></span><span></span></button>
+    <a class="topbar-brand" href="#" aria-label="腾讯云"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA4MCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTQxLjE1NDQgNC4yNTc4MUg0Mi4zODFDNDIuNDQ0IDQuMjU3ODEgNDIuNDk1IDQuMjc2NTUgNDIuNDgxOCA0LjM3MDkzQzQyLjM5MTkgNS4wMjI0NCA0Mi4yOTQ2IDUuNjE3MyA0Mi4xODY2IDYuMTY0NzNMNDIuMTAzNiA2LjU2NjU1SDQzLjYyNjVMNDQuMTI2MSA0Ljg3NTZINDUuMjAzNkM0NS4yNTgxIDQuODc1NiA0NS4zMDI1IDQuOTA4MDMgNDUuMjc3NiA0Ljk5MTgxTDQ0LjgxMzMgNi41NjY1NUg0Ni4wNTM3VjcuNzAwMDJINDEuODE5NEM0MS43Mjc2IDguMDE1NjggNDEuNjI5IDguMzEyOTkgNDEuNTIyNCA4LjU5NDcyTDQxLjQxMzEgOC44NzEzN0g0Ni4zNjQyVjEwLjAwNDlINDQuNjY1QzQ1LjM3NDMgMTEuMDA2NCA0Ni4xMjYgMTEuNTM0NSA0Ni41MzE2IDExLjc5MDNMNDYuNjc5MSAxMS44ODE0VjEzLjE3ODFDNDYuNjc5MSAxMy4yNDM0IDQ2LjYyNzMgMTMuMzEyNyA0Ni40MjEzIDEzLjE5NjRDNDUuOTU2NCAxMi45MzM4IDQ1LjQ1MTggMTIuNTk5MSA0NC45NDcgMTIuMTY2Mkw0NC42OTQ4IDExLjk0MTVMNDQuNjQzIDE0LjE0NTZINDYuMjE0OVYxOS42MDM0SDQyLjE5OTRMNDEuODUyNCAxOC40NzA5QzQxLjgyNjUgMTguNDAxMSA0MS44NTE3IDE4LjM2MTggNDEuODk0MiAxOC4zNDg4TDQxLjkyODggMTguMzQ0SDQ0LjgyMjdWMTUuMjc5MUgzOC40MDE5QzM4LjM2NzkgMTUuMjc5MSAzOC4zNDE0IDE1LjI2MDYgMzguMzMwNCAxNS4yMzI5TDM4LjMyNDcgMTUuMjAyNUwzOC40NDQ1IDEzLjA1NDFIMzkuNjM0NkMzOS42Njg1IDEzLjA1NDEgMzkuNjk1MSAxMy4wNzI1IDM5LjcwNjIgMTMuMTAwMkwzOS43MTE5IDEzLjEzMDZMMzkuNjU1MyAxNC4xNDU2SDQzLjM3NjlMNDMuNDE2NyAxMi40NDgxSDM4LjcwMjlDMzguMjk3OSAxMi43NDU5IDM3Ljg5ODEgMTIuOTg1IDM3LjUyMzUgMTMuMTk2NEMzNy4zNDMzIDEzLjI5ODIgMzcuMjgxIDEzLjI1NzggMzcuMjY4MyAxMy4yMDI0TDM3LjI2NTYgMTMuMTc4MVYxMS44ODE0TDM3LjQ5MzQgMTEuNzM5MUMzNy44ODMyIDExLjQ4NjQgMzguNTE3MyAxMS4wMTgyIDM5LjEzODcgMTAuMkwzOS4yODE3IDEwLjAwNDlIMzcuMjc3OFY4Ljg3MTM3SDM5Ljk0NTdDNDAuMDgwOSA4LjU3NzU1IDQwLjIwOTUgOC4yNjcwNiA0MC4zMTM3IDcuOTc5MDdMNDAuNDA5MiA3LjcwMDAySDM3LjU4ODFWNi41NjY1NUgzOC43OTYxTDM4LjMzMTcgNC45OTE4MUMzOC4zMTIgNC45MjQ3OCAzOC4zMzYzIDQuODkwNjMgMzguMzc0OSA0Ljg3OTY0TDM4LjQwNTkgNC44NzU2SDM5LjQ4MzRMMzkuOTgyOCA2LjU2NjU1SDQwLjczQzQwLjg2OTkgNS45ODU0MiA0MC45ODQzIDUuMzcwNjIgNDEuMDkxMSA0LjY4MDk0TDQxLjE1NDQgNC4yNTc4MVpNNjEuNTI5NSA0Ljg2NzE5VjE4LjI1NjZINjIuNzY2NFYxOS41MTY2SDYwLjEzNzVWMTEuOTc3N0g1Ni44MDg1VjE5LjY3ODJINTUuNDE2MVYxMS45Nzc3SDUyLjM5ODRWMTAuNzE4M0g1NS40MTYxVjYuMTI2NjVINTIuNzgyOVY0Ljg2NzE5SDYxLjUyOTVaTTUxLjMyMyA4Ljg2MzI4VjE3LjA1MDdMNTMuNjcwNCAxNS4yODA3QzUzLjcxMDIgMTUuMjUwNiA1My43NjY3IDE1LjI2MjkgNTMuNzg3NyAxNS4zMDM5TDUzLjc5NTkgMTUuMzM5OVYxNi43NjY0TDQ5Ljk1NjUgMTkuNjYxM0w0OS4xOTI2IDE4LjY1N0w0OS45NDAxIDE4LjA5MzNWMTAuMjQ4N0g0OC4wNzAzVjguODYzMjhINTEuMzIzWk0zNi44NzAzIDE5LjYwNjVWNC45MDAzOUgzMi41Njg5VjEzLjgyNjhMMzIuNTY2NCAxNC4yNzc2QzMyLjU0MzIgMTYuMzQ4IDMyLjM1NzIgMTcuOTU4MSAzMS45OTk4IDE5LjM5NTlDMzEuOTU5NCAxOS41Mzg2IDMyLjAwMjggMTkuNTc2NyAzMi4wNzggMTkuNTc2N0gzMy4zNDY5TDMzLjQyNjkgMTkuMTU4NEMzMy43Nzc5IDE3LjIyODggMzMuODI2NSAxNS42MjAyIDMzLjgzMzMgMTQuNDMxNEgzNS42MDY5VjE4LjM0N0gzNC4zNDc0TDM0LjMxMjggMTguMzUxOUMzNC4yNzA0IDE4LjM2NDggMzQuMjQ1MSAxOC40MDQyIDM0LjI3MSAxOC40NzRMMzQuNjE3OSAxOS42MDY1SDM2Ljg3MDNaTTc4LjI0NTggMTEuODI0OVYxMC40Mzk1SDY0LjE2NDFWMTEuODI0OUg2OC4wNzA5TDY1LjIyNSAxOS4yNjI4QzY1LjIwMyAxOS4zMjQgNjUuMjQzMyAxOS4zNjk2IDY1LjI5NjggMTkuMzY5Nkg3Ny40NDI4TDc3LjQ3MzkgMTkuMzYzM0M3Ny41MTExIDE5LjM0NzIgNzcuNTI5IDE5LjMwMjUgNzcuNTEyNiAxOS4yNTk3TDc1LjcwMTYgMTQuNTIxOEg3NC4xODk3TDc0LjE1ODIgMTQuNTI3OUM3NC4xMjA3IDE0LjU0MzcgNzQuMTAxOCAxNC41ODcxIDc0LjExNzEgMTQuNjI3MUw3NS4zOTg2IDE3Ljk4NDNINjcuMzQ1M0w2OS42OTY1IDExLjgyNDlINzguMjQ1OFpNNDQuMTc0MiAxNi4xNTYyVjE3LjQxNTdIMzcuMjczNFYxNi4xNTYySDQ0LjE3NDJaTTM1LjYwODMgMTAuMjgzMkgzMy44MzU5VjEzLjI5NzRIMzUuNjA4M1YxMC4yODMyWk00My4xMTM4IDEwLjAwMzlINDAuODYwN0M0MC42Mjg2IDEwLjQxMTUgNDAuMzgyOSAxMC43Njg4IDQwLjEyOTIgMTEuMDg0NUwzOS45Mzc1IDExLjMxMzZINDQuMDgwNkM0My43NDM2IDEwLjkzMzMgNDMuNDE3IDEwLjUwMDIgNDMuMTEzOCAxMC4wMDM5Wk02MC4xNDE1IDYuMTI4OTFINTYuODEyNVYxMC43MjA0SDYwLjE0MTVWNi4xMjg5MVpNMzUuNjA4MyA2LjE2MDE2SDMzLjgzNTlWOS4xNTA1SDM1LjYwODNWNi4xNjAxNlpNNDguMjY2IDQuNTg5ODRINDkuNzg3NUw1MS43MDY2IDcuNTA2MzhDNTEuNzMwNSA3LjU0MjQ1IDUxLjcxNzYgNy41OTYzIDUxLjY3NjkgNy42MTY0TDUxLjY0MTQgNy42MjQzNEg1MC4xMkw0OC4xOTg1IDQuNzA0MUM0OC4xNzMxIDQuNjY1NTYgNDguMTk0NiA0LjYxNTU2IDQ4LjIzMzggNC41OTcxTDQ4LjI2NiA0LjU4OTg0Wk03Ni43MDU3IDYuNTg4NDdWNS4yMDMxMkg2NS43MTg4VjYuNTg4NDdINzYuNzA1N1oiIGZpbGw9ImN1cnJlbnRDb2xvciIvPgogIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjIuNzU5IDE3LjkwNzhDMjIuMjk5OCAxOC4zNjE2IDIxLjQ4MDQgMTguODc2OSAyMC4xMzUxIDE4LjkyMjRDMTkuNTEzMyAxOC45NDM0IDE4Ljc4NjYgMTguOTQ1OSAxOC40NTQzIDE4Ljk0NTlIMTEuMjI2NkMxMy44NTYyIDE2LjM5NjUgMTYuMTUwMiAxNC4xNzMxIDE2LjQxMDUgMTMuOTIwN0MxNi42NDg3IDEzLjY4OTggMTcuMTg1IDEzLjE3NzcgMTcuNjQ3NCAxMi43NjIxQzE4LjY2MjkgMTEuODQ5NiAxOS41NzY4IDExLjY2NiAyMC4yMjMyIDExLjY3MkMyMS4yMzYyIDExLjY4MTMgMjIuMTU3MiAxMi4wOTQxIDIyLjgxNTQgMTIuNzYwNkMyNC4yMjQxIDE0LjE5NzYgMjQuMTkwNiAxNi40OTM3IDIyLjc1OSAxNy45MDc4Wk0yNC40ODg1IDExLjEyNDZDMjMuNDA4NSAxMC4wMjUzIDIxLjkwMzIgOS4zMzI3NyAyMC4yMjk4IDkuMzMyNzdDMTguNzgzMyA5LjMzMjQxIDE3LjUzNzggOS44MzAyNyAxNi40NTAyIDEwLjcxMzlDMTUuOTc2NCAxMS4wOTkzIDE1LjQ3OTQgMTEuNTYwNSAxNC44NTM2IDEyLjE2NjlDMTQuNjQ2MSAxMi4zNjgzIDEwLjU0NjcgMTYuMzM4IDcuODU1MDEgMTguOTQ0NkM3LjQ4MDMxIDE4Ljk0MzMgNi45NDE4NyAxOC45Mzc5IDYuNDY0NDcgMTguOTIxOUM1LjExOTE5IDE4Ljg3NjQgNC4yOTk4NCAxOC4zNjExIDMuODQwNTMgMTcuOTA3M0MyLjQwOTAyIDE2LjQ5MzIgMi4zNzU1NCAxNC4xOTcxIDMuNzg0MjcgMTIuNzYwMUM0LjQ0MjQyIDEyLjA5MzUgNS4zNjM4NCAxMS42ODA4IDYuMzc2NDQgMTEuNjcxNUM3LjAxMTA5IDExLjY2OSA3Ljg3MjU3IDExLjg1MyA4Ljg0NTU2IDEyLjY1ODNDOS4zMTAzNyAxMy4wNDI2IDEwLjM0MTkgMTMuOTQ3NiAxMC43OTQ1IDE0LjM1NUMxMC44MTc2IDE0LjM3NTcgMTAuODQ1MyAxNC4zNzc2IDEwLjg3MjMgMTQuMzU1NUwxMi40NjkyIDEyLjgwMDRDMTIuNDk2OCAxMi43NzM3IDEyLjQ5NTIgMTIuNzM3NiAxMi40Njc5IDEyLjcxM0MxMS43IDEyLjAyMDIgMTAuNjExMyAxMS4wNTA3IDkuOTU1OTEgMTAuNTYzN0M5LjI2NzM1IDEwLjA0OTUgOC41MjUwNCA5LjY4MzY2IDcuNzIwNjMgOS40OTA3OUM4LjI4ODIzIDYuOTExNDggMTAuNTc3MSA0Ljk5MjI3IDEzLjI5ODcgNC45OTIyN0MxNS41NjU2IDQuOTkyMjcgMTcuNTU0MiA2LjM1NjY3IDE4LjQ1MSA4LjI5MDQzQzE4LjQ2NDggOC4zMjEwNiAxOC40ODg4IDguMzMxMDQgMTguNTEzMyA4LjMyNDIxQzE5LjE4NzYgOC4xMzkyNCAxOS45OTU5IDguMDMxNzEgMjAuNzc2OCA4LjA4OTM4QzIwLjg1MjcgOC4wOTUwNCAyMC44ODIzIDguMDUyMDEgMjAuODU3NyA3Ljk4MjkzQzE5Ljc1NTUgNC44NzY2NSAxNi43ODg3IDIuNjUwMzkgMTMuMjk4NyAyLjY1MDM5QzkuMjk1NTIgMi42NTAzOSA1Ljk3ODE1IDUuNTg4NDEgNS4zNzczNCA5LjQxNTMzQzQuMTA3NjcgOS42Mjg1MSAyLjk3MjM5IDEwLjI0NTkgMi4xMDkxMiAxMS4xMjQ2Qy0wLjIwNDU2NCAxMy40ODQ2IC0wLjE2ODkyMSAxNy4yNTU4IDIuMjAxNDYgMTkuNTc5MUMzLjE1MzEzIDIwLjUxMTkgNC4zMDYyMyAyMS4wMTk0IDUuNTM2MDMgMjEuMTkwOUM2LjAwNzc2IDIxLjI1ODEgNi42NTcgMjEuMjc4MSA3LjIzNjM4IDIxLjI4MTdDNy43Nzg3OCAyMS4yODUzIDE4LjEyNzkgMjEuMjg0MSAxOC41NjExIDIxLjI4NDFDMTkuNDMzMiAyMS4yODQxIDIwLjAwMDUgMjEuMjgzNSAyMC42MTAyIDIxLjIzODlDMjIuMDA3OSAyMS4xMzY5IDIzLjMyODYgMjAuNjI1NCAyNC4zOTYxIDE5LjU3OTFDMjYuNzY2NSAxNy4yNTU4IDI2LjgwMjMgMTMuNDg0NiAyNC40ODg1IDExLjEyNDZaIiBmaWxsPSJjdXJyZW50Q29sb3IiLz4KPC9zdmc+Cg==" alt="腾讯云"></a>
+    <nav class="topbar-nav" aria-label="全局导航"><button class="home-entry"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.4 14.7 7.3v7.2h-1.4V7.9L8 3.2 2.7 7.9v6.6H1.3V7.3L8 1.4Z" fill="currentColor"/></svg>控制台</button><button>我的收藏<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></nav>
+    <div class="topbar-search"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2a5 5 0 1 0 3.6 8.5L14 14" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12.7 2.2v3.1M11.2 3.8h3.1" stroke="#0052d9" stroke-width="1.2"/></svg><input aria-label="搜索云产品" placeholder="搜索云产品、与 API"><kbd>/</kbd></div>
+    <div class="topbar-actions"><button>企业</button><button>备案</button><button>模板</button><button>支持</button><button>费用<span class="notify-dot"></span></button><button class="icon-action" aria-label="语言">中<br><small>En</small></button><button class="icon-action" aria-label="通知"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 11.5H3l1-1.5V7a4 4 0 0 1 8 0v3l1 1.5ZM6.5 13.2a1.7 1.7 0 0 0 3 0" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></button><button class="account">julacliang@332...<small>子用户</small></button><span class="avatar">基</span></div>
+  </header>
+
+  <aside class="sider">
+    <div class="product-name"><b>Agent Runtime</b></div>
+    <nav class="sider-nav" aria-label="产品导航">
+      <a class="nav-parent" href="#"><img src="https://cloudcache.tencentcs.com/qcloud/ui/static/console_aside_v5/4245fd7f-9688-4d81-be1a-84c078289ca9-light.svg" alt=""><span>Agent沙箱</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 6 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></a>
+      <a href="#"><img src="https://cloudcache.tencentcs.com/qcloud/ui/static/console_aside_v5/2a038a2b-3d49-4cfc-af94-cbf3d86f021d-light.svg" alt="">身份凭证</a>
+      <a href="#"><img src="https://cloudcache.tencentcs.com/qcloud/ui/static/console_aside_v5/60298bd7-db72-4bef-81de-0a75142a8dca-light.svg" alt="">API Keys</a>
+      <a class="active" href="#caches"><img src="https://cloudcache.tencentcs.com/qcloud/ui/static/console_aside_v5/6d3bdc86-7504-42a7-b915-026efc561f95-light.svg" alt="">镜像管理</a>
+      <a href="#"><img src="https://cloudcache.tencentcs.com/qcloud/ui/static/console_aside_v5/da997d31-83c7-4a25-9e0a-34df0a221c13-light.svg" alt="">用量信息</a>
+      <a href="#"><img src="https://cloudcache.tencentcs.com/qcloud/ui/static/console_aside_v5/f71a8f60-b19f-410a-a769-2eb3e6767859-light.svg" alt="">快速开始</a>
+    </nav>
+    <button class="collapse-sider"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4h12v12H4zM8.5 4v12m5-8-2 2 2 2" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>收起</button>
+  </aside>
+
+  <main class="content" id="caches">
+    <div class="content-header"><h1>镜像管理</h1><button class="region-button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.2a6.8 6.8 0 1 0 0 13.6A6.8 6.8 0 0 0 8 1.2Zm0 0c1.7 1.8 2.5 4 2.5 6.8S9.7 13 8 14.8M1.4 8h13.2M8 1.2C6.3 3 5.5 5.2 5.5 8s.8 5 2.5 6.8" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>广州<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 6 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+    <div class="page-tabs" role="tablist" aria-label="镜像管理页签">
+      <button role="tab" aria-selected="false" data-page-tab="snapshots">镜像快照</button>
+      <button role="tab" aria-selected="false" data-page-tab="system-images">系统镜像</button>
+      <button class="active" role="tab" aria-selected="true" data-page-tab="precache">镜像预热</button>
+    </div>
+
+    <section class="content-body">
+      <section class="page-tab-panel tab-placeholder" data-page-panel="snapshots" role="tabpanel" hidden>
+        <div class="placeholder-symbol" aria-hidden="true"></div>
+        <h2>镜像快照</h2>
+        <p>镜像快照内容沿用现有控制台，本次原型仅调整镜像管理页签结构。</p>
+        <button class="tea-btn tea-btn-primary" data-switch-tab="precache">查看镜像预热</button>
+      </section>
+      <section class="page-tab-panel tab-placeholder" data-page-panel="system-images" role="tabpanel" hidden>
+        <div class="placeholder-symbol" aria-hidden="true"></div>
+        <h2>系统镜像</h2>
+        <p>系统镜像内容沿用现有控制台，本次原型仅调整镜像管理页签结构。</p>
+        <button class="tea-btn tea-btn-primary" data-switch-tab="precache">查看镜像预热</button>
+      </section>
+      <section class="page-tab-panel active" id="precache-page" data-page-panel="precache" role="tabpanel">
+        <div class="precache-view-tabs" role="tablist" aria-label="镜像预热功能页签">
+          <button class="active" id="precache-list-tab" type="button" role="tab" aria-selected="true" aria-controls="precache-resource-panel">镜像预热列表</button>
+          <button id="precache-monitor-tab" type="button" role="tab" aria-selected="false" aria-controls="precache-monitor-panel">镜像预热监控</button>
+        </div>
+        <section class="console-list-body" id="precache-list-view" aria-label="镜像预热列表">
+        <div id="precache-list-content">
+        <div id="precache-resource-panel" role="tabpanel" aria-labelledby="precache-list-tab">
+        <div class="action-panel primary-actions"><div class="primary-action-group"><button class="tea-btn tea-btn-primary" data-open="create">新建预热任务</button></div><label class="task-list-search"><span aria-hidden="true">⌕</span><input id="task-list-search" placeholder="请选择筛选条件或输入 ID、镜像地址、摘要" aria-label="搜索预热任务"></label></div>
+
+        <div class="table-card">
+          <div class="tea-table" role="table" aria-label="镜像预热列表">
+            <div class="tea-table-row tea-table-head" role="row"><div role="columnheader">镜像预热 ID</div><div role="columnheader">镜像地址</div><div role="columnheader">镜像摘要</div><div role="columnheader"><span class="filter-column-title"><span>仓库类型</span><details class="column-filter"><summary aria-label="筛选镜像仓库类型" title="筛选镜像仓库类型"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4h14l-5.5 6.2V16l-3-1.6v-4.2L3 4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></summary><div class="column-filter-panel"><select id="registry-filter" size="4" aria-label="镜像仓库类型筛选"><option value="all" selected>全部</option><option value="enterprise">TCR 企业版</option><option value="personal">CCR 个人版</option><option value="custom">第三方镜像仓库</option></select></div></details></span></div><div role="columnheader">解压后镜像大小</div><div role="columnheader"><span class="filter-column-title"><span>状态</span><details class="column-filter"><summary aria-label="筛选镜像预热状态" title="筛选镜像预热状态"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4h14l-5.5 6.2V16l-3-1.6v-4.2L3 4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></summary><div class="column-filter-panel"><select id="status-filter" size="5" aria-label="镜像预热状态筛选"><option value="all" selected>全部</option><option value="pending">排队中</option><option value="processing">预热中</option><option value="success">已预热</option><option value="failed">预热失败</option></select></div></details></span></div><div role="columnheader">来源类型</div><div role="columnheader">创建时间</div><div role="columnheader">操作</div></div>
+            <div class="tea-table-body" id="resource-rows">
+              <div class="tea-table-row resource-row" role="row" data-unpacked-image-size="3.42 GB" data-message="成功新建预热任务" data-source-type="自动创建" data-id="pcimg-08f3a1" data-unload-error="ResourceInUse" data-digest="sha256:2a1f8c37e46b9510fd27a0438b624f19c77e023da16d941cb5327681900c" data-status="success" data-registry="enterprise" data-create-time="2026-08-01T10:15:00+08:00" data-last-matched-time="2026-08-25T00:00:00+08:00" data-retention-days="30" data-expire-days="22" data-expiring="true" data-unused="false" data-search="tcr.tencentcloudcr.com/ags/browser:v42 sha256:2a1f900c pcimg-08f3a1"><div role="cell" class="resource-id-cell"><span class="list-copy-value"><button class="resource-link resource-id-link" data-action="detail">pcimg-08f3a1</button><button class="list-copy" data-copy-field="id" aria-label="复制镜像预热 ID" title="复制镜像预热 ID"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="image-cell"><span class="list-copy-value"><button class="resource-link" data-action="detail">tcr.tencentcloudcr.com/ags/browser:v42</button><button class="list-copy" data-copy-field="image" aria-label="复制镜像地址" title="复制镜像地址"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="digest-cell"><span class="list-copy-value"><span>sha256:2a1f8c37e46b9510fd27a0438b624f19c77e023da16d941cb5327681900c</span><button class="list-copy" data-copy-field="digest" aria-label="复制镜像摘要" title="复制镜像摘要"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell">容器镜像服务企业版</div><div role="cell" class="unpacked-size-cell">3.42 GB</div><div role="cell" class="cache-status-cell"><span class="status-text success">已预热</span></div><div role="cell" class="source-type-cell">自动创建</div><div role="cell" class="create-time-cell">2026-08-01 10:15:00</div><div role="cell" class="row-actions"><button data-action="detail">详情</button><button data-action="delete">停止</button></div>
+              </div>
+              <div class="tea-table-row resource-row" role="row" data-unpacked-image-size="12.80 GB" data-create-time="2026-09-10T10:20:00+08:00" data-message="镜像预热的创建已提交" data-source-type="手动创建" data-id="pcimg-3f9c22" data-digest="sha256:ca76321e10bf790285a1e64c5fdc8390d27cc671ac0981b6380e19bb7311" data-status="pending" data-registry="enterprise" data-retention-days="0" data-expiring="false" data-unused="false" data-search="tcr.tencentcloudcr.com/ags/model:v7 sha256:ca767311 pcimg-3f9c22"><div role="cell" class="resource-id-cell"><span class="list-copy-value"><button class="resource-link resource-id-link" data-action="detail">pcimg-3f9c22</button><button class="list-copy" data-copy-field="id" aria-label="复制镜像预热 ID" title="复制镜像预热 ID"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="image-cell"><span class="list-copy-value"><button class="resource-link" data-action="detail">tcr.tencentcloudcr.com/ags/model:v7</button><button class="list-copy" data-copy-field="image" aria-label="复制镜像地址" title="复制镜像地址"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="digest-cell"><span class="list-copy-value"><span>sha256:ca76321e10bf790285a1e64c5fdc8390d27cc671ac0981b6380e19bb7311</span><button class="list-copy" data-copy-field="digest" aria-label="复制镜像摘要" title="复制镜像摘要"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell">容器镜像服务企业版</div><div role="cell" class="unpacked-size-cell">12.80 GB</div><div role="cell" class="cache-status-cell"><span class="status-text pending">排队中</span></div><div role="cell" class="source-type-cell">手动创建</div><div role="cell" class="create-time-cell">2026-09-10 10:20:00</div><div role="cell" class="row-actions"><button data-action="detail">详情</button></div>
+              </div>
+              <div class="tea-table-row resource-row" role="row" data-unpacked-image-size="1.86 GB" data-message="正在新建预热任务" data-source-type="手动创建" data-id="pcimg-7a81d0" data-digest="sha256:60a9c8137f2460de3ab821e5a1094c2e7d90b6f1921c837c8e0d10b3be32" data-status="processing" data-registry="personal" data-create-time="2026-08-24T00:00:00+08:00" data-retention-days="90" data-expiring="false" data-unused="false" data-search="ccr.ccs.tencentyun.com/agent/runner:v3 sha256:60a9be32 pcimg-7a81d0"><div role="cell" class="resource-id-cell"><span class="list-copy-value"><button class="resource-link resource-id-link" data-action="detail">pcimg-7a81d0</button><button class="list-copy" data-copy-field="id" aria-label="复制镜像预热 ID" title="复制镜像预热 ID"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="image-cell"><span class="list-copy-value"><button class="resource-link" data-action="detail">ccr.ccs.tencentyun.com/agent/runner:v3</button><button class="list-copy" data-copy-field="image" aria-label="复制镜像地址" title="复制镜像地址"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="digest-cell"><span class="list-copy-value"><span>sha256:60a9c8137f2460de3ab821e5a1094c2e7d90b6f1921c837c8e0d10b3be32</span><button class="list-copy" data-copy-field="digest" aria-label="复制镜像摘要" title="复制镜像摘要"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell">容器镜像服务个人版</div><div role="cell" class="unpacked-size-cell">1.86 GB</div><div role="cell" class="cache-status-cell"><span class="status-text processing">预热中</span></div><div role="cell" class="source-type-cell">手动创建</div><div role="cell" class="create-time-cell">2026-08-24 00:00:00</div><div role="cell" class="row-actions"><button data-action="detail">详情</button></div>
+              </div>
+              <div class="tea-table-row resource-row" role="row" data-unpacked-image-size="5.37 GB" data-create-time="2026-09-09T16:42:00+08:00" data-message="新建预热任务的过程中因为异常而导致的失败" data-source-type="手动创建" data-id="pcimg-a293e4" data-digest="sha256:77d1e9c461280abc8f70d6ea1290eaf984e5c8bd71f20a4e1c6a3d87d022" data-status="failed" data-retry-attempt="0" data-registry="enterprise" data-retention-days="0" data-expiring="false" data-unused="false" data-search="tcr.tencentcloudcr.com/ags/worker:v12 sha256:77d1d022 pcimg-a293e4"><div role="cell" class="resource-id-cell"><span class="list-copy-value"><button class="resource-link resource-id-link" data-action="detail">pcimg-a293e4</button><button class="list-copy" data-copy-field="id" aria-label="复制镜像预热 ID" title="复制镜像预热 ID"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="image-cell"><span class="list-copy-value"><button class="resource-link" data-action="detail">tcr.tencentcloudcr.com/ags/worker:v12</button><button class="list-copy" data-copy-field="image" aria-label="复制镜像地址" title="复制镜像地址"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="digest-cell"><span class="list-copy-value"><span>sha256:77d1e9c461280abc8f70d6ea1290eaf984e5c8bd71f20a4e1c6a3d87d022</span><button class="list-copy" data-copy-field="digest" aria-label="复制镜像摘要" title="复制镜像摘要"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell">容器镜像服务企业版</div><div role="cell" class="unpacked-size-cell">5.37 GB</div><div role="cell" class="cache-status-cell"><span class="status-text failed">预热失败</span></div><div role="cell" class="source-type-cell">手动创建</div><div role="cell" class="create-time-cell">2026-09-09 16:42:00</div><div role="cell" class="row-actions"><button data-action="detail">详情</button><button data-action="delete">停止</button></div>
+              </div>
+              <div class="tea-table-row resource-row" role="row" data-unpacked-image-size="1.12 GB" data-create-time="2026-09-10T10:25:00+08:00" data-message="镜像预热的创建已提交" data-source-type="自动创建" data-id="pcimg-bf0c11" data-digest="sha256:8800a1f6e5327db2c89917a0e14e975ca402dd913bb028d46b041a90dd31" data-status="pending" data-registry="enterprise" data-retention-days="0" data-expiring="false" data-unused="true" data-search="tcr.tencentcloudcr.com/ags/legacy:v8 sha256:8800dd31 pcimg-bf0c11"><div role="cell" class="resource-id-cell"><span class="list-copy-value"><button class="resource-link resource-id-link" data-action="detail">pcimg-bf0c11</button><button class="list-copy" data-copy-field="id" aria-label="复制镜像预热 ID" title="复制镜像预热 ID"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="image-cell"><span class="list-copy-value"><button class="resource-link" data-action="detail">tcr.tencentcloudcr.com/ags/legacy:v8</button><button class="list-copy" data-copy-field="image" aria-label="复制镜像地址" title="复制镜像地址"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="digest-cell"><span class="list-copy-value"><span>sha256:8800a1f6e5327db2c89917a0e14e975ca402dd913bb028d46b041a90dd31</span><button class="list-copy" data-copy-field="digest" aria-label="复制镜像摘要" title="复制镜像摘要"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell">容器镜像服务企业版</div><div role="cell" class="unpacked-size-cell">1.12 GB</div><div role="cell" class="cache-status-cell"><span class="status-text pending">排队中</span></div><div role="cell" class="source-type-cell">自动创建</div><div role="cell" class="create-time-cell">2026-09-10 10:25:00</div><div role="cell" class="row-actions"><button data-action="detail">详情</button></div>
+              </div>
+              <div class="tea-table-row resource-row" role="row" data-unpacked-image-size="2.48 GB" data-message="成功新建预热任务" data-source-type="手动创建" data-id="pcimg-c4e901" data-digest="sha256:b8c732ef0c9ca2f8fd3f8dc4a346dd602df31cd73cf8dcc77db133e0b367c4a1" data-status="success" data-registry="custom" data-create-time="2026-08-29T14:20:00+08:00" data-retention-days="30" data-expiring="false" data-unused="false" data-search="ghcr.io/acme/sandbox:1.4.2 sha256:b8c7c4a1 pcimg-c4e901"><div role="cell" class="resource-id-cell"><span class="list-copy-value"><button class="resource-link resource-id-link" data-action="detail">pcimg-c4e901</button><button class="list-copy" data-copy-field="id" aria-label="复制镜像预热 ID" title="复制镜像预热 ID"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="image-cell"><span class="list-copy-value"><button class="resource-link" data-action="detail">ghcr.io/acme/sandbox:1.4.2</button><button class="list-copy" data-copy-field="image" aria-label="复制镜像地址" title="复制镜像地址"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell" class="digest-cell"><span class="list-copy-value"><span>sha256:b8c732ef0c9ca2f8fd3f8dc4a346dd602df31cd73cf8dcc77db133e0b367c4a1</span><button class="list-copy" data-copy-field="digest" aria-label="复制镜像摘要" title="复制镜像摘要"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div><div role="cell">三方镜像仓库</div><div role="cell" class="unpacked-size-cell">2.48 GB</div><div role="cell" class="cache-status-cell"><span class="status-text success">已预热</span></div><div role="cell" class="source-type-cell">手动创建</div><div role="cell" class="create-time-cell">2026-08-29 14:20:00</div><div role="cell" class="row-actions"><button data-action="detail">详情</button><button data-action="delete">停止</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="table-state" id="table-state" hidden></div>
+          <div class="pagination" aria-label="列表分页"><span>共 <b id="page-total">6</b> 条</span><select id="page-size" aria-label="每页条数"><option value="30">30 条/页</option><option value="50">50 条/页</option><option value="100">100 条/页</option><option value="200">200 条/页</option></select><button id="page-prev" aria-label="上一页" disabled>‹</button><span id="page-numbers" class="page-numbers"><button class="current" aria-current="page">1</button></span><button id="page-next" aria-label="下一页" disabled>›</button></div>
+        </div>
+        </div>
+
+        <section class="precache-monitor-panel" id="precache-monitor-panel" role="tabpanel" aria-labelledby="precache-monitor-tab" hidden>
+          <div class="monitor-toolbar">
+            <div class="monitor-toolbar-title"><b>镜像预热监控</b><span>统计当前地域中镜像预热的创建规模、创建状态和创建趋势</span></div>
+            <label class="monitor-time-filter"><span>时间范围</span><select id="monitor-range"><option value="24h">近 24 小时</option><option value="7d" selected>近 7 天</option><option value="30d">近 30 天</option></select></label>
+          </div>
+
+          <div class="monitor-panel-body">
+            <section class="monitor-section">
+              <div class="monitor-section-heading"><div><h3>创建规模与创建状态</h3><p>展示所选时间范围内的创建请求规模及当前镜像预热状态</p></div></div>
+              <div class="monitor-overview-layout">
+                <div class="monitor-metric-grid monitor-metric-grid-compact monitor-primary-metrics">
+                  <article class="monitor-metric-card monitor-metric-primary"><div class="monitor-metric-title">创建请求的总数 <button class="help-tip monitor-help-tip" type="button" aria-label="创建请求的总数说明" data-tooltip="统计时间范围内提交的镜像预热创建请求的数量，用于判断镜像预热创建请求的整体规模">?</button></div><strong data-monitor-value="total">128</strong><small>次</small></article>
+                  <article class="monitor-metric-card"><div class="monitor-metric-title">排队中 数量 <button class="help-tip monitor-help-tip" type="button" aria-label="排队中 数量说明" data-tooltip="统计时间范围内当前已提交但尚未开始创建的镜像预热的数量，用于判断创建过程中正在排队的镜像预热的数量">?</button></div><strong data-monitor-value="pending">18</strong><small>个</small></article>
+                  <article class="monitor-metric-card"><div class="monitor-metric-title">Queuing 数量 <button class="help-tip monitor-help-tip" type="button" aria-label="Queuing 数量说明" data-tooltip="统计时间范围内正在排队等待创建的镜像预热数量">?</button></div><strong data-monitor-value="queuing">12</strong><small>个</small></article>
+                  <article class="monitor-metric-card"><div class="monitor-metric-title">预热中 数量 <button class="help-tip monitor-help-tip" type="button" aria-label="预热中 数量说明" data-tooltip="统计时间范围内当前已经开始创建、但尚未完成的镜像预热的数量，用于判断当前正在队列中进行创建的镜像预热的数量">?</button></div><strong data-monitor-value="processing">26</strong><small>个</small></article>
+                  <article class="monitor-metric-card"><div class="monitor-metric-title">预热失败 数量 <button class="help-tip monitor-help-tip" type="button" aria-label="预热失败 数量说明" data-tooltip="统计时间范围内镜像预热创建失败的数量">?</button></div><strong data-monitor-value="failed">7</strong><small>个</small></article>
+                </div>
+
+                <article class="monitor-chart-card">
+                  <div class="monitor-chart-heading"><div><h4>创建状态分布</h4><p>排队中、Queuing、预热中 和 预热失败 数量占比</p></div></div>
+                  <div class="status-chart-layout">
+                    <div class="status-pie creation-status-pie" id="creation-status-pie"><div><strong data-monitor-value="statusTotal">51</strong><span>状态数量</span></div></div>
+                    <ul class="monitor-chart-legend">
+                      <li><i class="legend-pending"></i><span>排队中</span><b data-monitor-value="pending">18</b></li>
+                      <li><i class="legend-queuing"></i><span>Queuing</span><b data-monitor-value="queuing">12</b></li>
+                      <li><i class="legend-processing"></i><span>预热中</span><b data-monitor-value="processing">26</b></li>
+                      <li><i class="legend-failed"></i><span>预热失败</span><b data-monitor-value="failed">7</b></li>
+                    </ul>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="monitor-section">
+              <div class="monitor-section-heading"><div><h3>创建趋势</h3><p>按所选时间窗口观察创建请求量和同时执行数量的变化</p></div></div>
+              <div class="monitor-trend-grid">
+                <article class="monitor-chart-card trend-chart-card">
+                  <div class="monitor-chart-heading"><div><h4>创建请求量趋势 <button class="help-tip monitor-help-tip" type="button" aria-label="创建请求量趋势说明" data-tooltip="统计按不同时间窗口（如分钟、小时、天）提交的镜像预热创建请求数量的变化">?</button></h4><p>创建规模</p></div></div>
+                  <div class="trend-chart" aria-label="创建请求量趋势图"><svg viewBox="0 0 720 232" preserveAspectRatio="none" role="img"><g class="trend-grid-lines"><path d="M52 20H700M52 65H700M52 110H700M52 155H700M52 200H700"></path></g><path class="trend-area trend-request-area" id="request-trend-area"></path><polyline class="trend-line trend-request-line" id="request-trend-line"></polyline><g class="trend-points" id="request-trend-points"></g><g class="trend-axis-labels"><text x="16" y="24">40</text><text x="22" y="114">20</text><text x="30" y="204">0</text></g><g class="trend-time-labels" id="request-trend-times"></g></svg></div>
+                </article>
+                <article class="monitor-chart-card trend-chart-card">
+                  <div class="monitor-chart-heading"><div><h4>并发数趋势 <button class="help-tip monitor-help-tip" type="button" aria-label="并发数趋势说明" data-tooltip="统计同时执行镜像预热创建的数量随时间的变化">?</button></h4><p>创建并发</p></div></div>
+                  <div class="trend-chart" aria-label="并发数趋势图"><svg viewBox="0 0 720 232" preserveAspectRatio="none" role="img"><g class="trend-grid-lines"><path d="M52 20H700M52 65H700M52 110H700M52 155H700M52 200H700"></path></g><path class="trend-area trend-concurrency-area" id="concurrency-trend-area"></path><polyline class="trend-line trend-concurrency-line" id="concurrency-trend-line"></polyline><g class="trend-points" id="concurrency-trend-points"></g><g class="trend-axis-labels"><text x="22" y="24">20</text><text x="22" y="114">10</text><text x="30" y="204">0</text></g><g class="trend-time-labels" id="concurrency-trend-times"></g></svg></div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </section>
+        </div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <div class="overlay" id="overlay" hidden></div>
+
+  <main class="content create-task-page" id="create-drawer" hidden aria-hidden="true">
+    <header class="task-page-header"><button class="task-back" data-create-cancel aria-label="返回镜像预热列表">←</button><h1 id="create-page-title" tabindex="-1">新建预热任务</h1></header>
+    <div class="create-task-body"><div class="create-task-notice"><span aria-hidden="true">ⓘ</span>创建后可在预热列表查看预热状态</div>
+    <section class="create-task-section"><h2>基本信息</h2><div class="create-task-fields">
+    <label class="create-task-field"><span>镜像 <em>*</em></span><div><input id="create-image" placeholder="可直接粘贴完整镜像地址，可自动识别仓库及版本"><small>当前镜像来源支持容器镜像服务企业版、个人版和三方镜像仓库。</small><small class="field-error" id="image-error" hidden>请输入有效的完整镜像地址。</small></div></label>
+    <label class="create-task-field"><span>镜像版本（Tag）</span><div><input id="create-tag" placeholder="不填默认为 latest"><small></small></div></label>
+    <label class="create-task-field"><span>镜像仓库类型 <em>*</em></span><div><select id="create-registry"><option value="custom">三方镜像仓库</option><option value="enterprise">容器镜像服务企业版</option><option value="personal">容器镜像服务个人版</option></select></div></label>
+    <label class="create-task-field" id="create-credential-field"><span>镜像仓库凭证</span><div><select id="create-credential"><option value="">请选择镜像仓库凭证</option><option value="credential-harbor-prod">harbor-prod-credential</option><option value="credential-dockerhub">dockerhub-credential</option></select><small>选填；公开仓库可不选择，私有仓库请选择镜像仓库凭证</small></div></label>
+    <div class="create-task-field" id="digest-choice" hidden><span>摘要（SHA256） ⓘ</span><label><input type="checkbox" id="use-digest"><span id="digest-choice-text"></span></label></div><div class="create-task-field" id="picked-status" hidden><span>镜像预热状态</span><span class="status-text success">已预热</span></div><label class="create-task-field"><span>预热超时时长（分钟）</span><div><div class="create-timeout-control"><button type="button" id="timeout-minus" aria-label="减少预热超时时长">−</button><input id="create-timeout" type="number" min="1" step="1" placeholder="请输入预热超时"><button type="button" id="timeout-plus" aria-label="增加预热超时时长">+</button></div><small>选填；不填时默认 120 分钟</small><small class="field-error" id="timeout-error" hidden>请输入大于 0 的整数分钟数。</small></div></label>
+    </div></section>
+    <section class="create-task-section"><h2>网络配置</h2><div class="create-task-fields">
+    <div class="create-task-field"><span>高级网络配置</span><div><label class="create-vpc-check"><input type="checkbox" id="create-vpc">配置 VPC 网络</label><small>镜像仓库仅可通过 VPC 访问时配置</small><div id="create-vpc-fields" hidden><label>私有网络 <select id="create-vpc-id"><option value="">请选择私有网络</option><option value="vpc-demo-gz">广州默认网络（vpc-demo-gz）</option></select></label><label>子网 <select id="create-subnet-id"><option value="">请选择子网</option><option value="subnet-demo-gz">广州默认子网（subnet-demo-gz）</option></select></label><small class="field-error" id="vpc-error" hidden>请选择私有网络和子网。</small></div></div></div>
+    </div></section></div>
+    <footer class="create-task-footer"><div><button class="tea-btn tea-btn-primary" id="create-submit">确认创建</button><button class="tea-btn" data-create-cancel>取消</button></div></footer>
+    <div class="legacy-create-fields" hidden><button id="open-image-selector"></button><button id="choose-image-version"></button><dl id="create-review"></dl>      <section class="image-selector-inline" id="image-selector-inline" aria-hidden="true">
+        <div class="inline-selector-heading"><button type="button" data-close-selector aria-label="关闭镜像选择">×</button><div><h3>选择镜像</h3><p>从当前地域的容器镜像服务中选择镜像仓库。</p></div></div>
+        <div class="selector-row"><span class="selector-label">镜像类型</span><div class="image-type-tabs" role="tablist"><button class="active" type="button" data-image-registry="enterprise" role="tab" aria-selected="true">容器镜像服务企业版<i>推荐</i></button><button type="button" data-image-registry="personal" role="tab" aria-selected="false">容器镜像服务个人版</button><button type="button" data-image-registry="custom" role="tab" aria-selected="false">第三方镜像仓库</button></div></div>
+        <div class="selector-row selector-content-row">
+          <span class="selector-label">选择镜像</span>
+          <div class="selector-content">
+            <div class="third-party-selector" id="third-party-selector" hidden>
+              <div class="third-party-notice"><span aria-hidden="true">i</span><p>第三方镜像仓库不支持在线浏览镜像列表，请直接填写完整镜像地址（如 harbor.example.com/project/image:tag）。</p></div>
+              <label class="third-party-field"><span>镜像地址 <em>*</em></span><input id="third-party-image" placeholder="请输入完整镜像地址，如 harbor.example.com/project/image:tag"><small class="field-error" id="third-party-image-error" hidden>请输入完整镜像地址。</small></label>
+              <label class="third-party-field"><span>镜像仓库凭证 <i class="info-dot" title="用于访问需要身份认证的第三方私有镜像仓库">i</i></span><select id="third-party-credential"><option value="">请选择凭证</option><option value="credential-harbor-prod">harbor-prod-credential</option><option value="credential-dockerhub">dockerhub-credential</option></select></label>
+              <div class="third-party-field third-party-network"><span>高级网络配置</span><div><label><input id="third-party-vpc" type="checkbox"> 网络配置</label><small>如镜像仓库仅在 VPC 内可访问，请配置网络信息</small></div></div>
+            </div>
+            <div class="selector-config" id="managed-selector-config">
+              <label><span>所属实例</span><select disabled><option>广州</option></select><select id="selector-instance"><option value="tcr-test-jx">tcr-test-jx</option></select></label>
+              <label><span>可选域名</span><select id="selector-domain" disabled><option>tcr-test-jx.tencentcloudcr.com</option></select></label>
+              <p>Agent 沙箱不支持跨地域拉取镜像和可选域名</p>
+              <label class="selector-search"><span class="search-icon" aria-hidden="true"></span><input id="selector-search" placeholder="请输入关键词，模糊检索仓库名称和命名空间"></label>
+              <div class="selector-table" role="table" aria-label="镜像仓库列表"><div class="selector-table-row selector-table-head" role="row"><span></span><b>名称</b><b>命名空间</b><b>镜像仓库地址</b></div><label class="selector-table-row selector-image-row" data-selector-registry="enterprise" data-selector-search="nginx/nginx jx tcr-test-jx.tencentcloudcr.com"><input type="radio" name="selected-image" value="tcr-test-jx.tencentcloudcr.com/jx/nginx/nginx"><span>nginx/nginx</span><span>jx</span><span>tcr-test-jx.tencentcloudcr.com/jx/nginx/nginx</span></label><label class="selector-table-row selector-image-row" data-selector-registry="enterprise" data-selector-search="agent-browser ags tcr-test-jx.tencentcloudcr.com"><input type="radio" name="selected-image" value="tcr-test-jx.tencentcloudcr.com/ags/agent-browser"><span>agent-browser</span><span>ags</span><span>tcr-test-jx.tencentcloudcr.com/ags/agent-browser</span></label><label class="selector-table-row selector-image-row" data-selector-registry="personal" data-selector-search="agent-runner personal ccr.ccs.tencentyun.com"><input type="radio" name="selected-image" value="ccr.ccs.tencentyun.com/personal/agent-runner"><span>agent-runner</span><span>personal</span><span>ccr.ccs.tencentyun.com/personal/agent-runner</span></label><div class="selector-table-empty" id="selector-table-empty" hidden>没有匹配的镜像仓库</div><footer class="selector-pagination"><span id="selector-total">共 2 条</span><span>20 条/页　‹　1 / 1 页　›</span></footer></div>
+            </div>
+          </div>
+        </div>
+        <div class="inline-selector-actions"><button class="tea-btn tea-btn-primary" id="confirm-image-selection" disabled>确定</button><button class="tea-btn" data-close-selector>取消</button></div>
+      </section>
+      <section class="image-version-selector" id="image-version-selector" aria-hidden="true">
+        <div class="inline-selector-heading version-selector-heading"><button type="button" data-close-version aria-label="关闭版本选择">×</button><div><h3>选择镜像版本</h3><p id="version-selector-image">请先选择镜像仓库。</p></div></div>
+        <div class="version-toolbar"><label class="version-search"><span class="search-icon" aria-hidden="true"></span><input id="version-search" placeholder="请输入关键词进行搜索"></label></div>
+        <div class="version-table" role="table" aria-label="镜像版本列表">
+          <div class="version-table-row version-table-head" role="row"><span></span><b>镜像版本</b><b>摘要（SHA256）</b></div>
+          <label class="version-table-row version-option" data-version-search="v1 sha256:2a1f8c37e46b9510fd27a0438b624f19c77e023da16d941cb5327681900c"><input type="radio" name="selected-version" value="v1" checked><span>v1</span><span>sha256:2a1f8c37e46b9510fd27a0438b624f19c77e023da16d941cb5327681900c</span></label>
+          <label class="version-table-row version-option" data-version-search="tag-59 sha256:04fa00f6febbb0368335a6890e878e720e388e286e2f36c4db0556adb1226b57"><input type="radio" name="selected-version" value="tag-59"><span>tag-59</span><span>sha256:04fa00f6febbb0368335a6890e878e720e388e286e2f36c4db0556adb1226b57</span></label>
+          <label class="version-table-row version-option" data-version-search="tag-57 sha256:155da94e6ba3e7b14aa33ca601b025c41864e6a7727bd53882619f360313bc4c"><input type="radio" name="selected-version" value="tag-57"><span>tag-57</span><span>sha256:155da94e6ba3e7b14aa33ca601b025c41864e6a7727bd53882619f360313bc4c</span></label>
+          <label class="version-table-row version-option" data-version-search="tag-56 sha256:ad1ea7d36eede8fa6689f47da664d45092769880d85b70a011f748c597640d8c"><input type="radio" name="selected-version" value="tag-56"><span>tag-56</span><span>sha256:ad1ea7d36eede8fa6689f47da664d45092769880d85b70a011f748c597640d8c</span></label>
+          <div class="version-table-empty" id="version-table-empty" hidden>没有匹配的镜像版本</div>
+        </div>
+        <footer class="version-pagination"><span>共 4 条</span><span><select aria-label="镜像版本每页条数"><option>20 条/页</option></select><button disabled aria-label="首页">|‹</button><button disabled aria-label="上一页">‹</button><b>1</b><span>/ 1 页</span><button disabled aria-label="下一页">›</button><button disabled aria-label="末页">›|</button></span></footer>
+        <div class="inline-selector-actions"><button class="tea-btn tea-btn-primary" id="confirm-version-selection">确定</button><button class="tea-btn" data-close-version>取消</button></div>
+      </section>
+</div>
+  </main>
+
+
+  <main class="content task-detail-page" id="task-detail-page" hidden><header class="task-page-header"><button class="task-back" id="task-back" aria-label="返回镜像预热列表">←</button><h1 tabindex="-1" id="task-page-title">预热任务详情</h1></header><div class="task-page-body"><section class="task-info-card"><h2>基础信息</h2><div class="task-info-columns"><dl class="task-info-list"><dt>镜像预热 ID</dt><dd><span id="overview-resource-id">—</span><button class="task-copy" data-copy-target="overview-resource-id" aria-label="复制镜像预热 ID" title="复制"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></dd><dt>镜像地址</dt><dd><span id="overview-image">—</span><button class="task-copy" data-copy-target="overview-image" aria-label="复制镜像地址" title="复制"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></dd><dt>镜像摘要</dt><dd><span id="overview-digest">—</span><button class="task-copy" data-copy-target="overview-digest" aria-label="复制镜像摘要" title="复制"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></dd><dt>仓库类型</dt><dd><span id="overview-registry">—</span></dd><dt>创建时间</dt><dd><span id="overview-create-time">—</span></dd></dl><dl class="task-info-list"><dt>状态</dt><dd><span id="overview-status">—</span></dd><dt>状态信息</dt><dd><span id="overview-message">—</span></dd><dt>来源类型</dt><dd><span id="overview-source">—</span></dd><dt>预热大小</dt><dd><span id="overview-size">—</span></dd></dl></div></section></div></main>
+
+  <section class="modal stop-image-modal" id="delete-modal" role="dialog" aria-modal="true" aria-labelledby="stop-image-title" aria-hidden="true"><header><h2 id="stop-image-title">镜像预热卸载</h2><button class="close-button" data-close aria-label="关闭">×</button></header><div class="modal-body"><div class="stop-image-notice"><span class="stop-notice-icon" aria-hidden="true">!</span><span>卸载将清除该镜像的预热缓存，并停止产生预热费用，不会删除镜像仓库中的原镜像。再次使用该镜像创建沙箱时，系统将重新预热镜像，首次启动耗时会增加。</span></div><dl class="compact-facts"><dt>镜像</dt><dd id="delete-image">tcr.tencentcloudcr.com/ags/browser:v42</dd></dl><label class="confirm-check"><input type="checkbox" id="delete-check">我已了解卸载影响</label></div><footer><button class="tea-btn" data-close>取消</button><button class="tea-btn tea-btn-primary" id="confirm-delete" disabled>确认卸载</button></footer></section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>(() => {
+  "use strict";
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const overlay = $("#overlay");
+  const toast = $("#toast");
+  const rowsRoot = $("#resource-rows");
+  const tableState = $("#table-state");
+  let selectedRow = null;
+  let toastTimer = null;
+  let prototypeState = "default";
+  let currentPage = 1;
+  let pageSize = 30;
+  const MAX_RETRY_ATTEMPTS = 3;
+
+  const registryNames = {
+    enterprise: "TCR 企业版",
+    personal: "CCR 个人版",
+    custom: "第三方镜像仓库"
+  };
+
+  const stateMessages = {
+    pending: "镜像预热的创建已提交",
+    queuing: "镜像预热的创建正在排队中",
+    processing: "正在新建预热任务",
+    success: "成功新建预热任务",
+    failed: "新建预热任务的过程中因为异常而导致的失败"
+  };
+
+  const monitorSnapshots = {
+    "24h": {
+      total: 23, pending: 4, queuing: 3, processing: 6, failed: 2,
+      requests: [2, 4, 3, 7, 5, 8, 6, 10, 9, 12, 8, 11, 9],
+      concurrency: [1, 2, 2, 4, 3, 5, 4, 6, 5, 7, 6, 6, 5]
+    },
+    "7d": {
+      total: 128, pending: 18, queuing: 12, processing: 26, failed: 7,
+      requests: [12, 18, 16, 24, 21, 28, 26, 31, 29, 35, 32, 24, 30, 27, 24],
+      concurrency: [3, 5, 4, 8, 7, 11, 9, 13, 12, 15, 12, 9, 11, 10, 9]
+    },
+    "30d": {
+      total: 542, pending: 42, queuing: 35, processing: 58, failed: 29,
+      requests: [24, 31, 28, 42, 38, 47, 44, 55, 51, 62, 58],
+      concurrency: [6, 8, 7, 12, 10, 15, 14, 18, 16, 20, 17]
+    }
+  };
+
+  function trendPoints(values) {
+    const left = 52;
+    const right = 700;
+    const bottom = 200;
+    const height = 180;
+    const max = Math.max(...values, 1) * 1.12;
+    return values.map((value, index) => {
+      const x = left + ((right - left) * index) / Math.max(values.length - 1, 1);
+      const y = bottom - (value / max) * height;
+      return { x, y, value };
+    });
+  }
+
+  function trendTimes(range, count) {
+    const durations = { "24h": 24, "7d": 24 * 7, "30d": 24 * 30 };
+    const end = new Date("2026-09-02T00:00:00+08:00");
+    const durationMs = durations[range] * 60 * 60 * 1000;
+    const interval = durationMs / Math.max(count - 1, 1);
+    return Array.from({ length: count }, (_, index) => new Date(end.getTime() - durationMs + interval * index));
+  }
+
+  function padTime(value) {
+    return String(value).padStart(2, "0");
+  }
+
+  function formatTrendTime(date, includeYear = false) {
+    const prefix = includeYear ? `${date.getFullYear()}-` : "";
+    return `${prefix}${padTime(date.getMonth() + 1)}-${padTime(date.getDate())} ${padTime(date.getHours())}:${padTime(date.getMinutes())}`;
+  }
+
+  function showTrendPointTooltip(point, text) {
+    $(".trend-point-tooltip")?.remove();
+    const tooltip = document.createElement("div");
+    tooltip.className = "viewport-tooltip trend-point-tooltip";
+    tooltip.setAttribute("role", "tooltip");
+    tooltip.textContent = text;
+    document.body.appendChild(tooltip);
+
+    const pointRect = point.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const margin = 12;
+    const preferredLeft = pointRect.left + pointRect.width / 2 - tooltipRect.width / 2;
+    const left = Math.min(Math.max(margin, preferredLeft), window.innerWidth - tooltipRect.width - margin);
+    const above = pointRect.top - tooltipRect.height - 10;
+    const top = above >= margin ? above : pointRect.bottom + 10;
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${Math.min(top, window.innerHeight - tooltipRect.height - margin)}px`;
+  }
+
+  function renderTrendGraph({ range, values, lineId, areaId, pointsId, timesId, unit }) {
+    const points = trendPoints(values);
+    const times = trendTimes(range, values.length);
+    const pointString = points.map(({ x, y }) => `${x.toFixed(1)},${y.toFixed(1)}`);
+    $(lineId).setAttribute("points", pointString.join(" "));
+    $(areaId).setAttribute("d", `M52 200 L${pointString.join(" L")} L700 200 Z`);
+
+    const pointsGroup = $(pointsId);
+    pointsGroup.replaceChildren();
+    points.forEach(({ x, y, value }, index) => {
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      const tooltipText = `${formatTrendTime(times[index], true)}　${value} ${unit}`;
+      circle.setAttribute("cx", x.toFixed(1));
+      circle.setAttribute("cy", y.toFixed(1));
+      circle.setAttribute("r", "3.5");
+      circle.setAttribute("class", "trend-data-point");
+      circle.setAttribute("tabindex", "0");
+      circle.setAttribute("aria-label", tooltipText);
+      circle.addEventListener("mouseenter", () => showTrendPointTooltip(circle, tooltipText));
+      circle.addEventListener("mouseleave", () => $(".trend-point-tooltip")?.remove());
+      circle.addEventListener("focus", () => showTrendPointTooltip(circle, tooltipText));
+      circle.addEventListener("blur", () => $(".trend-point-tooltip")?.remove());
+      pointsGroup.appendChild(circle);
+    });
+
+    const timesGroup = $(timesId);
+    timesGroup.replaceChildren();
+    const candidateIndexes = [0, Math.round((values.length - 1) / 4), Math.round((values.length - 1) / 2), Math.round(((values.length - 1) * 3) / 4), values.length - 1];
+    [...new Set(candidateIndexes)].forEach((index, labelIndex, indexes) => {
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute("x", points[index].x.toFixed(1));
+      label.setAttribute("y", "226");
+      label.setAttribute("text-anchor", labelIndex === 0 ? "start" : labelIndex === indexes.length - 1 ? "end" : "middle");
+      label.textContent = formatTrendTime(times[index], false);
+      timesGroup.appendChild(label);
+    });
+  }
+
+  function renderMonitor(range = "7d") {
+    const snapshot = monitorSnapshots[range] || monitorSnapshots["7d"];
+    const statusTotal = snapshot.pending + snapshot.queuing + snapshot.processing + snapshot.failed;
+    const values = {
+      ...snapshot,
+      statusTotal
+    };
+
+    Object.entries(values).forEach(([key, value]) => {
+      $$(`[data-monitor-value="${key}"]`).forEach((element) => { element.textContent = value; });
+    });
+
+    const pendingEnd = (snapshot.pending / statusTotal) * 100;
+    const queuingEnd = pendingEnd + (snapshot.queuing / statusTotal) * 100;
+    const processingEnd = queuingEnd + (snapshot.processing / statusTotal) * 100;
+    $("#creation-status-pie").style.background = `conic-gradient(var(--tea-color-text-warning-default) 0 ${pendingEnd}%, #ff9540 ${pendingEnd}% ${queuingEnd}%, var(--tea-color-text-brand) ${queuingEnd}% ${processingEnd}%, var(--tea-color-text-error-default) ${processingEnd}% 100%)`;
+
+    renderTrendGraph({ range, values: snapshot.requests, lineId: "#request-trend-line", areaId: "#request-trend-area", pointsId: "#request-trend-points", timesId: "#request-trend-times", unit: "次" });
+    renderTrendGraph({ range, values: snapshot.concurrency, lineId: "#concurrency-trend-line", areaId: "#concurrency-trend-area", pointsId: "#concurrency-trend-points", timesId: "#concurrency-trend-times", unit: "个" });
+  }
+
+  function showMonitorView(show) {
+    const resourcePanel = $("#precache-resource-panel");
+    const monitorPanel = $("#precache-monitor-panel");
+    const listTab = $("#precache-list-tab");
+    const monitorTab = $("#precache-monitor-tab");
+    resourcePanel.hidden = show;
+    monitorPanel.hidden = !show;
+    listTab.classList.toggle("active", !show);
+    listTab.setAttribute("aria-selected", String(!show));
+    monitorTab.classList.toggle("active", show);
+    monitorTab.setAttribute("aria-selected", String(show));
+    if (show) {
+      renderMonitor($("#monitor-range").value);
+    }
+  }
+
+  function initMonitorTooltips() {
+    let tooltip = null;
+
+    const hide = () => {
+      tooltip?.remove();
+      tooltip = null;
+    };
+
+    const show = (trigger) => {
+      hide();
+      tooltip = document.createElement("div");
+      tooltip.className = "viewport-tooltip";
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.textContent = trigger.dataset.tooltip || "";
+      document.body.appendChild(tooltip);
+
+      const triggerRect = trigger.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const margin = 12;
+      const preferredLeft = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2;
+      const left = Math.min(Math.max(margin, preferredLeft), window.innerWidth - tooltipRect.width - margin);
+      const below = triggerRect.bottom + 8;
+      const above = triggerRect.top - tooltipRect.height - 8;
+      const top = below + tooltipRect.height <= window.innerHeight - margin ? below : Math.max(margin, above);
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+    };
+
+    $$(".monitor-help-tip").forEach((trigger) => {
+      trigger.addEventListener("mouseenter", () => show(trigger));
+      trigger.addEventListener("mouseleave", hide);
+      trigger.addEventListener("focus", () => show(trigger));
+      trigger.addEventListener("blur", hide);
+    });
+    window.addEventListener("scroll", hide, true);
+    window.addEventListener("resize", hide);
+  }
+
+  function stateMessage(status) {
+    return stateMessages[status] || "镜像预热状态已更新";
+  }
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+  }
+
+
+  function closeLayers() {
+    $$(".drawer.open, .modal.open").forEach((layer) => {
+      layer.classList.remove("open");
+      layer.setAttribute("aria-hidden", "true");
+    });
+    overlay.hidden = true;
+    document.body.classList.remove("layer-open");
+    $("#create-drawer").classList.remove("image-select-mode");
+    $("#create-drawer").classList.remove("version-select-mode");
+    $("#image-selector-inline").setAttribute("aria-hidden", "true");
+    $("#image-version-selector").setAttribute("aria-hidden", "true");
+  }
+
+  function openLayer(layer) {
+    closeLayers();
+    overlay.hidden = false;
+    document.body.classList.add("layer-open");
+    layer.classList.add("open");
+    layer.setAttribute("aria-hidden", "false");
+    const focusTarget = $("input, select, button", layer);
+    if (focusTarget) setTimeout(() => focusTarget.focus(), 50);
+  }
+
+  function closeImageSelector() {
+    closeLayers();
+    $("#create-drawer").classList.remove("image-select-mode");
+    $("#image-selector-inline").setAttribute("aria-hidden", "true");
+    setTimeout(() => $("#open-image-selector").focus(), 40);
+  }
+
+  function closeVersionSelector() {
+    closeLayers();
+    $("#create-drawer").classList.remove("version-select-mode");
+    $("#image-version-selector").setAttribute("aria-hidden", "true");
+    setTimeout(() => $("#choose-image-version").focus(), 40);
+  }
+
+  function renderVersionSelector() {
+    const keyword = $("#version-search").value.trim().toLowerCase();
+    let visible = 0;
+    $$(".version-option").forEach((row) => {
+      const match = !keyword || row.dataset.versionSearch.includes(keyword);
+      row.hidden = !match;
+      if (match) visible += 1;
+    });
+    $("#version-table-empty").hidden = visible !== 0;
+  }
+
+  function openVersionSelector() {
+    const image = $("#create-image").value.trim();
+    if (!image) return;
+    $("#version-selector-image").textContent = image;
+    $("#version-search").value = "";
+    renderVersionSelector();
+    openLayer($("#image-version-selector"));
+    $("#image-version-selector").setAttribute("aria-hidden", "false");
+    setTimeout(() => $("#version-search").focus(), 40);
+  }
+
+  function renderImageSelector() {
+    const registry = $("#create-registry").value;
+    const keyword = $("#selector-search").value.trim().toLowerCase();
+    let visible = 0;
+    $$(".selector-image-row").forEach((row) => {
+      const match = row.dataset.selectorRegistry === registry && (!keyword || row.dataset.selectorSearch.includes(keyword));
+      row.hidden = !match;
+      if (match) visible += 1;
+    });
+    $("#selector-total").textContent = `共 ${visible} 条`;
+    $("#selector-table-empty").hidden = visible !== 0;
+  }
+
+  function configureImageRegistrySelector(registry) {
+    const isCustom = registry === "custom";
+    $("#third-party-selector").hidden = !isCustom;
+    $("#managed-selector-config").hidden = isCustom;
+    $("#selector-instance").disabled = registry !== "enterprise";
+    $("#selector-domain").options[0].text = registry === "enterprise" ? "tcr-test-jx.tencentcloudcr.com" : "ccr.ccs.tencentyun.com";
+    if (isCustom) {
+      $("#confirm-image-selection").disabled = !$("#third-party-image").value.trim();
+      $("#third-party-image-error").hidden = true;
+    } else {
+      $("#confirm-image-selection").disabled = !$('input[name="selected-image"]:checked');
+      renderImageSelector();
+    }
+  }
+
+  function openImageSelector() {
+    const registry = $("#create-image").value ? $("#create-registry").value : "enterprise";
+    $("#create-registry").value = registry;
+    $("#selector-search").value = "";
+    $$("[data-image-registry]").forEach((button) => {
+      const active = button.dataset.imageRegistry === registry;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+    $$('input[name="selected-image"]').forEach((input) => { input.checked = false; });
+    if (registry === "custom") $("#third-party-image").value = $("#create-image").value.trim();
+    configureImageRegistrySelector(registry);
+    openLayer($("#image-selector-inline"));
+    $("#image-selector-inline").setAttribute("aria-hidden", "false");
+    setTimeout(() => (registry === "custom" ? $("#third-party-image") : $("#selector-search")).focus(), 40);
+  }
+
+  function allRows() {
+    return $$(".resource-row", rowsRoot);
+  }
+
+  function firstText(element) {
+    if (!element) return "—";
+    const node = [...element.childNodes].find((item) => item.nodeType === Node.TEXT_NODE && item.textContent.trim());
+    return node ? node.textContent.trim() : element.textContent.trim();
+  }
+
+  function idleTTL(row) {
+    const value = Number(row.dataset.retentionDays);
+    return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 0;
+  }
+
+  function rowInfo(row) {
+    const small = $(".image-cell small", row)?.textContent || "";
+    return {
+      id: row.dataset.id,
+      image: $(".image-cell .resource-link", row)?.textContent.trim() || "—",
+      digest: row.dataset.digest || small.replace(/^镜像 Digest：/, "").split("·")[0].trim() || "—",
+      status: row.dataset.status,
+      message: row.dataset.message || stateMessage(row.dataset.status),
+      registry: registryNames[row.dataset.registry] || row.dataset.registry,
+      registryType: row.dataset.registry || "—",
+      retention: idleTTL(row) === 0 ? "永久保留" : `${idleTTL(row)} 天`,
+      expire: calculateExpireTime(row) || "—",
+      createTime: row.dataset.createTime ? formatDateTime(row.dataset.createTime) : "",
+      lastMatchedTime: row.dataset.lastMatchedTime ? formatDateTime(row.dataset.lastMatchedTime) : "",
+      idleTTL: String(idleTTL(row)),
+      expireTime: calculateExpireTime(row),
+      requestId: row.dataset.requestId || `req-${row.dataset.id.replace("pcimg-", "")}-ags`
+    };
+  }
+
+  function titleCase(value) {
+    const labels = { pending: "排队中", processing: "预热中", success: "已预热", failed: "预热失败", cancelled: "预热已取消", unloaded: "预热已卸载" };
+    return labels[value] || "—";
+  }
+
+  function formatDateTime(value) {
+    if (!value) return "—";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "—";
+    const pad = (part) => String(part).padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  }
+
+  function expiryBaseTime(row) {
+    return row.dataset.lastMatchedTime || row.dataset.createTime || "";
+  }
+
+  function calculateExpireTime(row) {
+    const days = idleTTL(row);
+    if (!row.dataset.createTime) return "";
+    if (days === 0) return "无到期时间";
+    const baseTime = expiryBaseTime(row);
+    if (!baseTime) return "";
+    const expiry = new Date(baseTime);
+    if (Number.isNaN(expiry.getTime())) return "";
+    expiry.setDate(expiry.getDate() + days);
+    return formatDateTime(expiry.toISOString());
+  }
+
+  function formatExpiryDate(days, baseTime) {
+    if (!baseTime) return "暂无到期时间";
+    const expiry = new Date(baseTime);
+    if (Number.isNaN(expiry.getTime())) return "暂无到期时间";
+    expiry.setDate(expiry.getDate() + Number(days));
+    const year = expiry.getFullYear();
+    const month = String(expiry.getMonth() + 1).padStart(2, "0");
+    const day = String(expiry.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day} 到期`;
+  }
+
+  function visiblePreheatSize(row) {
+    return ['success', 'unloaded'].includes(row.dataset.status) ? (row.dataset.unpackedImageSize || '—') : '—';
+  }
+
+  function refreshExpiryForRow(row) {
+    const retentionDays = idleTTL(row);
+    row.dataset.retentionDays = String(retentionDays);
+    $(".create-time-cell", row).textContent = row.dataset.createTime ? formatDateTime(row.dataset.createTime) : "—";
+    $(".unpacked-size-cell", row).textContent = visiblePreheatSize(row);
+    if (!row.dataset.createTime || retentionDays === 0) {
+      delete row.dataset.expireDays;
+      return;
+    }
+    const baseTime = expiryBaseTime(row);
+    if (!baseTime) {
+      delete row.dataset.expireDays;
+      return;
+    }
+    const expiry = new Date(baseTime);
+    expiry.setDate(expiry.getDate() + retentionDays);
+    row.dataset.expireDays = String(Math.ceil((expiry.getTime() - Date.now()) / 86400000));
+  }
+
+  function statusClass(status) {
+    return ["success", "failed", "pending", "processing"].includes(status) ? status : "pending";
+  }
+
+  function operationMarkup(status) {
+    return `<button data-action="delete" ${['success','failed'].includes(status)?'':'disabled'}>卸载</button>`;
+  }
+
+  function setRowStatus(row, status, message = stateMessage(status)) {
+    row.dataset.status = status;
+    $(".cache-status-cell", row).innerHTML = `<span class="status-text ${statusClass(status)}">${titleCase(status)}</span>`;
+    $(".cache-status-cell", row).setAttribute("aria-live", "polite");
+    row.dataset.message = message;
+    refreshExpiryForRow(row);
+    $(".row-actions", row).innerHTML = operationMarkup(status);
+    if (selectedRow === row && !$("#task-detail-page").hidden) populateDetail(row);
+  }
+
+  function updateCounts(visibleRows) {
+    $("#page-total").textContent = visibleRows;
+  }
+
+  function renderPagination(totalRows) {
+    const pageCount = Math.max(1, Math.ceil(totalRows / pageSize));
+    currentPage = Math.min(currentPage, pageCount);
+    const pageNumbers = $("#page-numbers");
+    pageNumbers.innerHTML = "";
+    for (let page = 1; page <= pageCount; page += 1) {
+      const button = document.createElement("button");
+      button.textContent = String(page);
+      button.dataset.page = String(page);
+      button.classList.toggle("current", page === currentPage);
+      if (page === currentPage) button.setAttribute("aria-current", "page");
+      pageNumbers.append(button);
+    }
+    $("#page-prev").disabled = currentPage === 1;
+    $("#page-next").disabled = currentPage === pageCount || totalRows === 0;
+  }
+
+  function renderTableState(kind, visibleRows = 0) {
+    if (kind === "empty" || (kind === "default" && allRows().length === 0)) {
+      tableState.innerHTML = '<p class="empty-region-message">当前地域【<span class="empty-region-name"></span>】暂无实例，您可以<a class="empty-create-link" href="#create-drawer" data-open="create">新建预热任务</a></p>';
+      $(".empty-region-name", tableState).textContent = $(".region-button").textContent.trim();
+      tableState.hidden = false;
+      return;
+    }
+    if (kind === "error") {
+      tableState.innerHTML = '<b>镜像预热加载失败</b><p>网络或服务暂时不可用，请稍后重试。</p><button class="tea-btn" id="state-retry">重新加载</button>';
+      tableState.hidden = false;
+      return;
+    }
+    tableState.hidden = true;
+    tableState.innerHTML = "";
+  }
+
+  let teaFilters = [];
+  function filterRows(resetPage = true) {
+    const status = $("#status-filter").value || "all";
+    const registry = $("#registry-filter").value || "all";
+    const keyword = $("#task-list-search").value.trim().toLowerCase();
+    const matchedRows = [];
+
+    if (resetPage) currentPage = 1;
+
+    allRows().forEach((row) => {
+      const match = prototypeState === "default" && teaFilters.every(t=>{const k=t.attr?.key;const value=k==='id'?row.dataset.id:k==='image'?rowInfo(row).image:k==='digest'?row.dataset.digest:k==='status'?row.dataset.status:k==='registry'?row.dataset.registry:k==='source'?row.dataset.sourceType:searchText(row);return (t.values||[]).some(v=>['status','registry','source'].includes(k)?value===String(v.key??v.name):String(value).toLowerCase().includes(String(v.name).toLowerCase()))}) &&
+        (status === "all" || row.dataset.status === status) &&
+        (registry === "all" || row.dataset.registry === registry) &&
+        ($("#source-filter").value === "all" || row.dataset.sourceType === $("#source-filter").value) &&
+        (!keyword || searchText(row).toLowerCase().includes(keyword));
+      row.dataset.matches = String(match);
+      if (match) matchedRows.push(row);
+    });
+
+    const visible = prototypeState === "default" ? matchedRows.length : 0;
+    const pageCount = Math.max(1, Math.ceil(visible / pageSize));
+    currentPage = Math.min(currentPage, pageCount);
+    const pageStart = (currentPage - 1) * pageSize;
+    const pageEnd = pageStart + pageSize;
+    allRows().forEach((row) => { row.hidden = true; });
+    matchedRows.slice(pageStart, pageEnd).forEach((row) => { row.hidden = false; });
+
+    updateCounts(visible);
+    renderPagination(visible);
+    renderTableState(prototypeState, visible);
+  }
+
+  function resetWizard() {
+    clearPickedDigest();
+    $("#create-drawer").classList.remove("image-select-mode");
+    $("#create-drawer").classList.remove("version-select-mode");
+    $("#image-selector-inline").setAttribute("aria-hidden", "true");
+    $("#image-version-selector").setAttribute("aria-hidden", "true");
+    $("#create-registry").value = "custom";
+    $("#create-image").value = "";
+    delete $("#create-image").dataset.credential;
+    delete $("#create-image").dataset.vpcNetwork;
+    $("#third-party-image").value = "";
+    $("#third-party-credential").value = "";
+    $("#third-party-vpc").checked = false;
+    $("#third-party-image-error").hidden = true;
+    $("#create-tag").value = "";
+    $("#choose-image-version").disabled = true;
+    $("#image-error").hidden = true;
+    $("#create-timeout").value = "";
+    $("#create-credential").value = "";
+    $("#create-vpc").checked = false;
+    $("#create-vpc-fields").hidden = true;
+    $("#create-vpc-id").value = "";
+    $("#create-subnet-id").value = "";
+    $("#timeout-error").hidden = true;
+    $("#vpc-error").hidden = true;
+    populateReview();
+  }
+
+
+  function validateCreateForm() {
+    const image = $("#create-image").value.trim();
+    const imageValid = image.length > 4 && image.includes("/");
+    $("#image-error").hidden = imageValid;
+    const timeout = $("#create-timeout").value.trim();
+    const validTimeout = timeout === "" || (Number.isInteger(Number(timeout)) && Number(timeout) > 0);
+    const validVpc = !$("#create-vpc").checked || Boolean($("#create-vpc-id").value && $("#create-subnet-id").value);
+    $("#timeout-error").hidden = validTimeout;
+    $("#vpc-error").hidden = validVpc;
+    return imageValid && validTimeout && validVpc;
+  }
+
+  function resolvedCreateImage() {
+    const image = $("#create-image").value.trim();
+    if (!image) return "—";
+    if ($("#use-digest").checked && $("#create-image").dataset.pickedDigest) return image.split("@")[0].replace(/:[^/:]+$/, "") + "@" + $("#create-image").dataset.pickedDigest;
+    const tag = $("#create-tag").value.trim() || "latest";
+    const imageName = image.split("/").pop() || "";
+    if (image.includes("@") || imageName.includes(":")) return image;
+    return `${image}:${tag}`;
+  }
+
+  function syncCredentialVisibility() {
+    const isThirdParty = $("#create-registry").value === "custom";
+    $("#create-credential-field").hidden = !isThirdParty;
+    $("#create-credential").disabled = !isThirdParty;
+    if (!isThirdParty) $("#create-credential").value = "";
+  }
+
+  function populateReview() {
+    syncCredentialVisibility();
+    const registry = $("#create-registry").value;
+    const hasImage = Boolean($("#create-image").value.trim());
+    const customAccess = $("#create-image").dataset.credential ? "指定镜像仓库凭证" : "匿名访问";
+    const values = [$(".region-button").textContent.trim(), hasImage ? registryNames[registry] : "—", resolvedCreateImage(), hasImage ? (registry === "custom" ? customAccess : "当前账号授权") : "—"];
+    $$("dd", $("#create-review")).forEach((item, index) => { item.textContent = values[index]; });
+  }
+
+
+  let linkedTool=null;
+  function createRow() {
+    if (!validateCreateForm()) return;
+    const registry = $("#create-registry").value;
+    const image = resolvedCreateImage();
+    let id;
+    do {
+      id = `pcimg-${Math.random().toString(16).slice(2, 8)}`;
+    } while ($$(".resource-row").some((existing) => existing.dataset.id === id));
+    const digestBytes = crypto.getRandomValues(new Uint8Array(32));
+    const digest = ($("#use-digest").checked && $("#create-image").dataset.pickedDigest) || `sha256:${[...digestBytes].map((byte) => byte.toString(16).padStart(2, "0")).join("")}`;
+    const row = document.createElement("div");
+    row.className = "tea-table-row resource-row";
+    row.setAttribute("role", "row");
+    Object.assign(row.dataset, {
+      id, digest, status: "pending", registry, toolId:linkedTool?.toolId||"",toolTag:linkedTool?.toolTag||"",
+      credential: registry === "custom" ? ($("#create-image").dataset.credential || $("#create-credential").value) : "",
+      timeoutMinutes: $("#create-timeout").value || "120",
+      sourceType: "手动创建",
+      vpcId: $("#create-vpc").checked ? $("#create-vpc-id").value : "",
+      subnetId: $("#create-vpc").checked ? $("#create-subnet-id").value : "",
+      unpackedImageSize: "3.42 GB", // Prototype sample unpacked size.
+      retentionDays: "0", region: $(".region-button").textContent.trim(),
+      createTime: new Date().toISOString(), lastMatchedTime: "", requestId: `req-${id.replace("pcimg-", "")}-ags`,
+      expiring: "false", unused: "false",
+      search: `${image} ${digest} ${id}`.toLowerCase()
+    });
+    row.innerHTML = `
+      <div role="cell" class="resource-id-cell"><span class="list-copy-value"><button class="resource-link resource-id-link" data-action="detail"></button><button class="list-copy" data-copy-field="id" aria-label="复制镜像预热 ID" title="复制镜像预热 ID"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div>
+      <div role="cell" class="image-cell"><span class="list-copy-value"><button class="resource-link" data-action="detail"></button><button class="list-copy" data-copy-field="image" aria-label="复制镜像地址" title="复制镜像地址"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div>
+      <div role="cell" class="digest-cell"><span class="list-copy-value"><span class="digest-value"></span><button class="list-copy" data-copy-field="digest" aria-label="复制镜像摘要" title="复制镜像摘要"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h7v9H6zM3 5v9h7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></span></div>
+      <div role="cell">${registry === "enterprise" ? "容器镜像服务企业版" : registry === "personal" ? "容器镜像服务个人版" : "三方镜像仓库"}</div>
+      <div role="cell" class="unpacked-size-cell">—</div>
+      <div role="cell" class="cache-status-cell"><span class="status-text pending">排队中</span></div>
+      <div role="cell" class="source-type-cell">手动创建</div>
+      <div role="cell" class="create-time-cell">—</div>
+      <div role="cell" class="row-actions">${operationMarkup("pending")}</div>`;
+    $(".resource-id-link", row).textContent = id;
+    $(".image-cell .resource-link", row).textContent = image;
+    $(".digest-value", row).textContent = digest;
+    $("#task-list-search").value = "";
+    arrangeRow(row);
+    rowsRoot.prepend(row);
+    linkedTool=null;
+    refreshExpiryForRow(row);
+    prototypeState = "default";
+    ["#status-filter", "#registry-filter", "#source-filter"].forEach((selector) => {
+      const filter = $(selector);
+      filter.value = "all";
+      const menu = filter.closest(".column-filter");
+      menu.classList.remove("is-filtered");
+      menu.open = false;
+      menu.querySelector("summary").title = "全部";
+    });
+    filterRows();
+    closeLayers();
+    location.hash = "caches";
+    renderTaskRoute();
+    showToast(`镜像预热 ${id} 已受理`);
+  }
+
+  function populateDetail(row) {
+    const info = rowInfo(row);
+    const statusLabels = { pending: "排队中", processing: "预热中", success: "已预热", failed: "预热失败", cancelled: "预热已取消", unloaded: "预热已卸载" };
+    $("#overview-resource-id").textContent = info.id;
+    $("#overview-image").textContent = info.image;
+    $("#overview-digest").textContent = info.digest;
+    $("#overview-registry").textContent = info.registry;
+    $("#overview-status").textContent = statusLabels[info.status] || titleCase(info.status);
+    $("#overview-status").className = `task-status ${statusClass(info.status)}`;
+    $("#overview-message").textContent = info.message;
+    $("#overview-source").textContent = row.dataset.sourceType || "手动创建";
+    $("#overview-size").textContent = visiblePreheatSize(row);
+    $("#overview-create-time").textContent = info.createTime || "—";
+  }
+
+  function renderTaskRoute() {
+    const match = location.hash.match(/^#task=(.+)$/);
+    const row = match && allRows().find((item) => encodeURIComponent(item.dataset.id) === match[1]);
+    closeLayers();
+    const creating = location.hash === "#create";
+    $("#create-drawer").hidden = !creating;
+    $("#create-drawer").setAttribute("aria-hidden", String(!creating));
+    $("#caches").hidden = Boolean(row) || creating;
+    if (creating) {
+      syncCredentialVisibility();
+      $("#create-page-title").focus();
+    }
+    $("#task-detail-page").hidden = !row;
+    if (row) {
+      selectedRow = row;
+      populateDetail(row);
+      $("#task-page-title").focus();
+    }
+  }
+
+  function openDetail(row) {
+    location.hash = `task=${encodeURIComponent(row.dataset.id)}`;
+  }
+
+  $("#task-back").addEventListener("click", () => { location.hash = "caches"; });
+  window.addEventListener("hashchange", renderTaskRoute);
+  $$("[data-create-cancel]").forEach((button) => button.addEventListener("click", () => { location.hash = "caches"; }));
+  $("#task-list-search").addEventListener("input", () => filterRows());
+  document.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-copy-field]");
+    if (!button) return;
+    const row = button.closest(".resource-row");
+    const info = rowInfo(row);
+    try {
+      await navigator.clipboard.writeText(info[button.dataset.copyField]);
+      showToast("已复制");
+    } catch { showToast("复制失败，请选中文本手动复制"); }
+  });
+  $("#create-registry").addEventListener("change", populateReview);
+  $("#create-vpc").addEventListener("change", (event) => { $("#create-vpc-fields").hidden = !event.target.checked; });
+  ["timeout-minus", "timeout-plus"].forEach((id) => $("#" + id).addEventListener("click", () => {
+    const input = $("#create-timeout");
+    const value = Number(input.value) || 0;
+    input.value = String(Math.max(1, value + (id === "timeout-plus" ? 1 : -1)));
+    $("#timeout-error").hidden = true;
+  }));
+  document.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-copy-target]");
+    if (!button) return;
+    try {
+      await navigator.clipboard.writeText(document.getElementById(button.dataset.copyTarget).textContent);
+      showToast("已复制");
+    } catch {
+      showToast("复制失败，请选中文本手动复制");
+    }
+  });
+
+  function canUnload(row) {
+    return ["success", "failed"].includes(row?.dataset.status);
+  }
+
+  function openDelete(row) {
+    if (!canUnload(row)) {
+      closeLayers();
+      showToast("仅镜像预热状态为 已预热 或 预热失败 时可卸载");
+      return;
+    }
+    selectedRow = row;
+    const info = rowInfo(row);
+    $("#delete-image").textContent = info.image;
+    $("#delete-check").checked = false;
+    $("#confirm-delete").disabled = true;
+    openLayer($("#delete-modal"));
+  }
+
+
+  function switchPageTab(name) {
+    $$("[data-page-tab]").forEach((button) => {
+      const active = button.dataset.pageTab === name;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+    $$("[data-page-panel]").forEach((panel) => {
+      const active = panel.dataset.pagePanel === name;
+      panel.classList.toggle("active", active);
+      panel.hidden = !active;
+    });
+  }
+
+  $$("[data-page-tab]").forEach((button) => button.addEventListener("click", () => switchPageTab(button.dataset.pageTab)));
+  $$("[data-switch-tab]").forEach((button) => button.addEventListener("click", () => switchPageTab(button.dataset.switchTab)));
+
+  setupReferenceUI();
+  ["#status-filter", "#registry-filter", "#source-filter"].forEach((selector) => $(selector).addEventListener("change", (event) => {
+    const menu = event.target.closest(".column-filter");
+    menu.classList.toggle("is-filtered", event.target.value !== "all");
+    menu.querySelector("summary").title = event.target.value === "all" ? "全部" : event.target.selectedOptions[0].textContent;
+    menu.open = false;
+    filterRows();
+  }));
+  $$(".column-filter").forEach((menu) => menu.addEventListener("toggle", () => {
+    if (menu.open) $$(".column-filter").forEach((other) => { if (other !== menu) other.open = false; });
+  }));
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".column-filter")) $$(".column-filter").forEach((menu) => { menu.open = false; });
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") $$(".column-filter").forEach((menu) => { menu.open = false; });
+  });
+  $("#page-size").addEventListener("change", (event) => {
+    pageSize = Number(event.target.value);
+    currentPage = 1;
+    filterRows(false);
+  });
+  $("#page-prev").addEventListener("click", () => {
+    if (currentPage <= 1) return;
+    currentPage -= 1;
+    filterRows(false);
+  });
+  $("#page-next").addEventListener("click", () => {
+    currentPage += 1;
+    filterRows(false);
+  });
+  $("#page-numbers").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-page]");
+    if (!button) return;
+    currentPage = Number(button.dataset.page);
+    filterRows(false);
+  });
+
+  document.addEventListener("click", (event) => {
+    const openButton = event.target.closest("[data-open]");
+    if (openButton?.dataset.open === "create") {
+      event.preventDefault();
+      linkedTool=null;resetWizard();
+      location.hash = "create";
+      return;
+    }
+    const actionButton = event.target.closest("[data-action]");
+    if (!actionButton) return;
+    const row = actionButton.closest(".resource-row");
+    if (!row) return;
+    const action = actionButton.dataset.action;
+    if (action === "detail") openDetail(row);
+    if (action === "delete") openDelete(row);
+  });
+
+  overlay.addEventListener("click", closeLayers);
+  $$('[data-close]').forEach((button) => button.addEventListener("click", closeLayers));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeLayers(); });
+
+  $("#open-image-selector").addEventListener("click", openImageSelector);
+  $$('[data-close-selector]').forEach((button) => button.addEventListener("click", closeImageSelector));
+  $$("[data-image-registry]").forEach((button) => button.addEventListener("click", () => {
+    const registry = button.dataset.imageRegistry;
+    $("#create-registry").value = registry;
+    $$("[data-image-registry]").forEach((item) => {
+      const active = item === button;
+      item.classList.toggle("active", active);
+      item.setAttribute("aria-selected", String(active));
+    });
+    $$('input[name="selected-image"]').forEach((input) => { input.checked = false; });
+    if (registry === "custom") $("#third-party-image").value = $("#create-image").value.trim();
+    configureImageRegistrySelector(registry);
+  }));
+  $("#selector-search").addEventListener("input", renderImageSelector);
+  $$('input[name="selected-image"]').forEach((input) => input.addEventListener("change", () => {
+    $("#confirm-image-selection").disabled = false;
+  }));
+  $("#third-party-image").addEventListener("input", (event) => {
+    const value = event.target.value.trim();
+    $("#third-party-image-error").hidden = true;
+    $("#confirm-image-selection").disabled = !value;
+  });
+  $("#confirm-image-selection").addEventListener("click", () => {
+    clearPickedDigest();
+    if ($("#create-registry").value === "custom") {
+      const image = $("#third-party-image").value.trim();
+      if (!image || !image.includes("/")) {
+        $("#third-party-image-error").hidden = false;
+        $("#third-party-image").focus();
+        return;
+      }
+      $("#create-image").value = image;
+      $("#create-image").dataset.credential = $("#third-party-credential").value;
+      $("#create-image").dataset.vpcNetwork = String($("#third-party-vpc").checked);
+      $("#choose-image-version").disabled = true;
+      $("#image-error").hidden = true;
+      populateReview();
+      closeImageSelector();
+      return;
+    }
+    const selected = $('input[name="selected-image"]:checked');
+    if (!selected) return;
+    $("#create-image").value = selected.value;
+    $("#choose-image-version").disabled = false;
+    $("#image-error").hidden = true;
+    populateReview();
+    closeImageSelector();
+  });
+  $("#create-image").addEventListener("input", (event) => {
+    clearPickedDigest();
+    const image = event.target.value.trim();
+    delete event.target.dataset.credential;
+    delete event.target.dataset.vpcNetwork;
+    $("#choose-image-version").disabled = !image;
+    if (image) $("#create-registry").value = "custom";
+    if (image.includes("ccr.ccs.tencentyun.com")) $("#create-registry").value = "personal";
+    if (image.includes("tencentcloudcr.com")) $("#create-registry").value = "enterprise";
+    populateReview();
+  });
+  $("#create-tag").addEventListener("input", () => {
+    populateReview();
+  });
+  $("#choose-image-version").addEventListener("click", openVersionSelector);
+  $$('[data-close-version]').forEach((button) => button.addEventListener("click", closeVersionSelector));
+  $("#version-search").addEventListener("input", renderVersionSelector);
+  $("#confirm-version-selection").addEventListener("click", () => {
+    const selected = $('input[name="selected-version"]:checked');
+    if (!selected) return;
+    $("#create-tag").value = selected.value;
+    const digest = selected.closest(".version-option").lastElementChild.textContent.trim();
+    $("#create-image").dataset.pickedDigest = digest;
+    $("#digest-choice").hidden = false;
+    $("#digest-choice-text").textContent = "使用" + digest;
+    $("#use-digest").checked = true;
+    $("#create-tag").disabled = true;
+    const match = allRows().find(row => row.dataset.digest === digest && row.dataset.status === "success");
+    $("#picked-status").hidden = !match;
+    populateReview();
+    closeVersionSelector();
+  });
+
+  $("#create-submit").addEventListener("click", createRow);
+
+
+  $("#delete-check").addEventListener("change", (event) => { $("#confirm-delete").disabled = !event.target.checked; });
+  // Prototype backend response: browser:v42 demonstrates the resource-in-use error.
+  // Replace this adapter with the backend unload API when integrating the console.
+  async function requestUnload(row) {
+    if (!canUnload(row)) return { success: false, code: "InvalidStatus" };
+    return row.dataset.unloadError === "ResourceInUse"
+      ? { success: false, code: "ResourceInUse" }
+      : { success: true };
+  }
+
+  $("#confirm-delete").addEventListener("click", async () => {
+    if (!selectedRow || !$("#delete-check").checked || $("#confirm-delete").disabled) return;
+    const row = selectedRow;
+    if (!canUnload(row)) {
+      closeLayers();
+      showToast("仅镜像预热状态为 已预热 或 预热失败 时可卸载");
+      return;
+    }
+    const button = $("#confirm-delete");
+    button.disabled = true;
+    button.textContent = "卸载中…";
+    try {
+      const result = await requestUnload(row);
+      if (!result.success) {
+        closeLayers();
+        showToast(result.code === "ResourceInUse"
+          ? "该镜像预热仍被使用中，不能被卸载"
+          : result.code === "InvalidStatus"
+            ? "仅镜像预热状态为 已预热 或 预热失败 时可卸载"
+            : "卸载失败，请稍后重试");
+        return;
+      }
+      const id = row.dataset.id;
+      setRowStatus(row, "unloaded", "镜像预热缓存已卸载");
+      closeLayers();
+      filterRows();
+      showToast(`${id} 已卸载`);
+    } catch {
+      closeLayers();
+      showToast("卸载失败，请稍后重试");
+    } finally {
+      button.textContent = "确认卸载";
+      button.disabled = !$("#delete-check").checked;
+    }
+  });
+
+
+  tableState.addEventListener("click", (event) => {
+    if (event.target.id === "state-retry") {
+      prototypeState = "default";
+      filterRows();
+      showToast("镜像预热已重新加载");
+    }
+  });
+
+  $("#precache-list-tab").addEventListener("click", () => showMonitorView(false));
+  $("#precache-monitor-tab").addEventListener("click", () => showMonitorView(true));
+  $("#monitor-range").addEventListener("change", (event) => {
+    renderMonitor(event.target.value);
+    showToast(`监控时间范围已切换为${event.target.options[event.target.selectedIndex].text}`);
+  });
+  initMonitorTooltips();
+  renderMonitor($("#monitor-range").value);
+
+  allRows().forEach(refreshExpiryForRow);
+  filterRows();
+  renderTaskRoute();
+
+  function clearPickedDigest() {
+    delete $("#create-image").dataset.pickedDigest;
+    $("#digest-choice").hidden = true;
+    $("#picked-status").hidden = true;
+    $("#use-digest").checked = false;
+    $("#create-tag").disabled = false;
+  }
+  function arrangeRow(row) {
+    if(row.dataset.arranged) return;
+    const cells=[...row.children];
+    const last=document.createElement('div'); last.className='last-use-cell'; last.setAttribute('role','cell');
+    last.textContent=row.dataset.lastMatchedTime?formatDateTime(row.dataset.lastMatchedTime):'—';
+    [0,1,2,5,6,3,4,7].forEach(i=>row.append(cells[i])); row.append(last,cells[8]);
+    row.dataset.arranged='true';
+    $('.row-actions',row).innerHTML=operationMarkup(row.dataset.status);
+    $$('.list-copy-value > :first-child',row).forEach(el=>el.title=el.textContent);
+  }
+  function searchText(row) {
+    const fields={id:row.dataset.id,image:rowInfo(row).image,digest:row.dataset.digest,status:titleCase(row.dataset.status),source:row.dataset.sourceType,registry:registryNames[row.dataset.registry]};
+    return $('#search-property').value==='all'?Object.values(fields).join(' '):fields[$('#search-property').value]||'';
+  }
+  function setupReferenceUI() {
+    $('.create-task-fields').prepend($('.create-task-notice'));
+    const head=$('.tea-table-head'); const c=[...head.children];
+    const last=document.createElement('div'); last.setAttribute('role','columnheader'); last.textContent='最后使用时间';
+    [0,1,2,5,6,3,4,7].forEach(i=>head.append(c[i]));head.append(last,c[8]);
+    c[4].textContent='预热大小'; c[4].title='解压后镜像大小';
+    c[6].innerHTML=c[5].innerHTML.replace(/状态/g,'来源类型').replace(/status-filter/g,'source-filter');
+    $('#source-filter').innerHTML='<option value="all" selected>全部</option>'+['手动创建','自动创建','TCR自动预热'].map(x=>`<option>${x}</option>`).join(''); $('#source-filter').size=4;
+    $('#status-filter').insertAdjacentHTML('beforeend','<option value="cancelled">预热已取消</option><option value="unloaded">预热已卸载</option>'); $('#status-filter').size=7;
+    registryNames.enterprise='容器镜像服务企业版';registryNames.personal='容器镜像服务个人版';registryNames.custom='三方镜像仓库';
+    [...$('#registry-filter').options].forEach(o=>{if(registryNames[o.value])o.textContent=registryNames[o.value]});
+    const search=$('.task-list-search');
+    search.insertAdjacentHTML('afterbegin','<select id="search-property" aria-label="选择属性进行过滤"><option value="all">全部属性</option><option value="id">镜像预热 ID</option><option value="image">镜像地址</option><option value="digest">镜像摘要</option><option value="status">状态</option><option value="source">来源类型</option><option value="registry">仓库类型</option></select>');
+    const input=$('#task-list-search');
+    $('#search-property').hidden=true;
+    search.insertAdjacentHTML('beforeend', `<div class="search-property-menu" id="search-property-menu" role="listbox" aria-label="选择筛选属性" hidden><div class="search-property-hint">选择资源属性进行过滤</div>${[...$('#search-property').options].filter(o=>o.value!=='all').map(o=>`<button type="button" role="option" aria-selected="false" data-search-property="${o.value}">${o.textContent}</button>`).join('')}</div>`);
+    input.insertAdjacentHTML('beforebegin','<span class="search-property-chip" hidden><span id="search-property-label"></span><button type="button" id="clear-search-property" aria-label="清除筛选属性">×</button></span>');
+    const menu=$('#search-property-menu');
+    const setMenu=open=>{menu.hidden=!open;input.setAttribute('aria-expanded',String(open));};
+    input.placeholder='请选择筛选条件';input.setAttribute('role','combobox');input.setAttribute('aria-controls','search-property-menu');input.setAttribute('aria-expanded','false');input.setAttribute('aria-autocomplete','list');
+    input.addEventListener('focus',()=>{if($('#search-property').value==='all')setMenu(true)});
+    input.addEventListener('click',()=>{if($('#search-property').value==='all')setMenu(true)});
+    input.addEventListener('input',()=>setMenu(false));
+    input.addEventListener('keydown',event=>{if(event.key==='ArrowDown'){event.preventDefault();setMenu(true);menu.querySelector('button').focus()}if(event.key==='Escape')setMenu(false)});
+    menu.addEventListener('keydown',event=>{const buttons=[...menu.querySelectorAll('button')];const index=buttons.indexOf(document.activeElement);if(['ArrowDown','ArrowUp'].includes(event.key)){event.preventDefault();buttons[(index+(event.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length].focus()}if(event.key==='Escape'){input.focus();setMenu(false)}});
+    $$('[data-search-property]').forEach(button=>button.addEventListener('click',()=>{
+      $('#search-property').value=button.dataset.searchProperty;
+      $('#search-property-label').textContent=button.textContent+'：';$('.search-property-chip').hidden=false;
+      $$('[data-search-property]').forEach(item=>item.setAttribute('aria-selected',String(item===button)));
+      input.placeholder='请输入'+button.textContent;input.focus();setMenu(false);filterRows();
+    }));
+    $('#clear-search-property').addEventListener('click',()=>{$('#search-property').value='all';$('.search-property-chip').hidden=true;input.value='';input.placeholder='请选择筛选条件';filterRows();input.focus();setMenu(true)});
+    document.addEventListener('click',event=>{if(!search.contains(event.target))setMenu(false)});
+    const icon=search.querySelector('span[aria-hidden]');
+    if(icon)icon.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6M3 11h5M3 18h16M16 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm4 9 3 3" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>';
+
+    search.insertAdjacentHTML('afterend','<button class="tea-btn icon-action" id="refresh-tasks" aria-label="刷新任务列表" title="刷新"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16.7 7.4A7 7 0 0 0 4.8 4.8L2.6 7M2.6 2.7V7H7M3.3 12.6a7 7 0 0 0 11.9 2.6l2.2-2.2m0 4.3V13H13" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="tea-btn icon-action" id="export-tasks" aria-label="下载任务列表" title="下载"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5v10m-3.5-3.5 3.5 3.5 3.5-3.5M3.5 12v4.5h13V12" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg></button>');
+    $('#refresh-tasks').onclick=()=>{filterRows(false);showToast('任务列表已刷新')};
+    $('#export-tasks').onclick=()=>{const rows=allRows().filter(r=>r.dataset.matches==='true');const csv='\ufeff'+[['镜像预热 ID','镜像地址','镜像摘要','状态','来源类型','仓库类型','预热大小','创建时间','最后使用时间'],...rows.map(r=>[r.dataset.id,rowInfo(r).image,r.dataset.digest,titleCase(r.dataset.status),r.dataset.sourceType,registryNames[r.dataset.registry],visiblePreheatSize(r),formatDateTime(r.dataset.createTime),r.dataset.lastMatchedTime?formatDateTime(r.dataset.lastMatchedTime):'—'])].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='镜像预热任务.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+    allRows().forEach(arrangeRow);
+    const template=allRows()[5];
+    for(const item of JSON.parse(document.getElementById('preheat-demo-records').textContent)){const row=template.cloneNode(true);Object.assign(row.dataset,item.dataset);$('.resource-id-link',row).textContent=row.dataset.id;$('.resource-id-link',row).title=row.dataset.id;row.children[5].textContent=registryNames[row.dataset.registry];$('.image-cell .resource-link',row).textContent=item.image;$('.image-cell .resource-link',row).title=item.image;$('.source-type-cell',row).textContent=row.dataset.sourceType;$('.create-time-cell',row).textContent=formatDateTime(row.dataset.createTime);$('.cache-status-cell',row).innerHTML=`<span class="status-text ${row.dataset.status}">${titleCase(row.dataset.status)}</span>`;$('.row-actions',row).innerHTML=operationMarkup(row.dataset.status);rowsRoot.append(row)}
+    $('#use-digest').onchange=e=>{$('#create-tag').disabled=e.target.checked};
+    $('#create-image').after($('#open-image-selector'));$('#create-tag').after($('#choose-image-version'));
+    $('#open-image-selector').textContent='选择镜像';$('#choose-image-version').textContent='选择镜像版本';$('#choose-image-version').disabled=true;
+    [$('#image-selector-inline'),$('#image-version-selector')].forEach(el=>{document.body.append(el);el.classList.add('modal','picker-modal');el.setAttribute('role','dialog');el.setAttribute('aria-modal','true')});
+  }
+  // Share preheat tasks and source tools with the surrounding prototype.
+  const taskStore='snapshot-demo-v2-preheat-tasks';
+  const taskTemplate=allRows()[0].cloneNode(true);
+  try{const saved=JSON.parse(localStorage.getItem(taskStore)||'null');if(saved?.length){const restored=saved.map(item=>{const r=taskTemplate.cloneNode(true);Object.assign(r.dataset,item.dataset);$('.resource-id-link',r).textContent=r.dataset.id;$('.image-cell .resource-link',r).textContent=item.image;$('.digest-cell .list-copy-value > :first-child',r).textContent=r.dataset.digest;$('.cache-status-cell',r).innerHTML='<span class="status-text '+r.dataset.status+'">'+titleCase(r.dataset.status)+'</span>';$('.row-actions',r).innerHTML=operationMarkup(r.dataset.status);$('.create-time-cell',r).textContent=formatDateTime(r.dataset.createTime);$('.source-type-cell',r).textContent=r.dataset.sourceType;r.children[5].textContent=registryNames[r.dataset.registry];$('.last-use-cell',r).textContent=r.dataset.lastMatchedTime?formatDateTime(r.dataset.lastMatchedTime):'—';return r});allRows().forEach(r=>r.remove());restored.forEach(r=>rowsRoot.append(r));filterRows()}}catch{}
+  function persistTasks(){localStorage.setItem(taskStore,JSON.stringify(allRows().map(r=>({dataset:{...r.dataset},image:rowInfo(r).image}))))}
+  new MutationObserver(persistTasks).observe(rowsRoot,{childList:true,subtree:true,attributes:true,attributeFilter:['data-status','data-tool-id']});
+  function consumeTool(){const view=sessionStorage.getItem('snapshot-preheat-view');if(view){sessionStorage.removeItem('snapshot-preheat-view');location.hash='task='+encodeURIComponent(view);renderTaskRoute();return}let request;try{request=JSON.parse(sessionStorage.getItem('snapshot-preheat-request')||'null')}catch{}if(!request)return;sessionStorage.removeItem('snapshot-preheat-request');resetWizard();linkedTool=request;$('#create-image').value=request.image;$('#create-registry').value=request.image.includes('tencentcloudcr.com')?'enterprise':request.image.includes('ccr.ccs.tencentyun.com')?'personal':'custom';$('#create-tag').value='';populateReview();location.hash='create';renderTaskRoute();}
+  window.addEventListener('message',event=>{
+    if(event.source!==parent || event.origin!==parent.location.origin || event.data?.type!=='tea-preheat')return;
+    const {action,value}=event.data;
+    if(action==='filter'){teaFilters=Array.isArray(value)?value:[];filterRows();}
+    if(action==='create')document.querySelector('[data-open="create"]').click();
+    if(action==='refresh')document.querySelector('#refresh-tasks').click();
+    if(action==='export')document.querySelector('#export-tasks').click();
+  });
+  window.addEventListener('message',event=>{if(event.source===parent&&event.data==='snapshot-open-preheat')consumeTool()});
+  const sourceLink=document.createElement('a');sourceLink.style.cssText='display:block;margin:12px 0;color:var(--tea-color-text-brand)';sourceLink.textContent='查看关联沙箱模板';sourceLink.hidden=true;$('#task-detail-page').append(sourceLink);
+  const updateSource=()=>{const id=decodeURIComponent(location.hash.replace('#task=',''));const row=allRows().find(r=>r.dataset.id===id);sourceLink.hidden=!row?.dataset.toolId;if(row?.dataset.toolId){sourceLink.href=parent.location.pathname+'?area=templates&tool='+encodeURIComponent(row.dataset.toolId);sourceLink.target='_parent'}};
+  window.addEventListener('hashchange',updateSource);persistTasks();consumeTool();
+
+})();
+</script>
+</body>
+</html>

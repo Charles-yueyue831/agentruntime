@@ -1,0 +1,71 @@
+/**
+ * Console Shell — 内容区公共样式覆盖
+ *
+ * 覆盖 Tea 组件库 (tea-themeable.css) 对 .tea-layout__content-body-inner
+ * 的默认约束（max-width: 1360px），使内容区撑满可用宽度。
+ * 同时确保布局容器高度占满屏幕。
+ *
+ * 引入顺序：必须在 tea-themeable.css 之后引入。
+ */
+
+/* ── 全局盒模型：统一使用 border-box ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── 内容区边距 ── */
+.tea-layout__content-body {
+  padding: 16px;
+}
+
+/* ── 内容区宽度 ── */
+.tea-layout__content-body-inner {
+  max-width: 100%;
+}
+
+/* ── 内容区 Tea Card margin 重置 ── */
+/*
+ * Tea Card 默认 margin: 20px auto 0，在 flex / grid 等布局下会产生
+ * 多余间距。统一重置为 0，让间距完全由父容器的 gap 控制。
+ * 个别位置如需特殊 margin（如列表页 Card 的 marginTop: 14px），
+ * 用 inline style 覆盖即可。
+ */
+.tea-card {
+  margin: 0;
+}
+
+.tea-card+.tea-card {
+  margin-top: 0;
+}
+
+
+/* ── 内容区 Tea Alert margin 重置 ── */
+/*
+ * Tea Alert 默认 margin-left/right: auto，在 flex 容器下会导致
+ * Alert 无法拉满宽度。仅重置左右 margin 为 0 用于拉通宽度。
+ * ⚠️ 不重置 margin-bottom（默认 20px），非 gap 布局可能依赖它。
+ * flex column + gap 容器内需在业务 CSS 中局部归零。
+ */
+.tea-alert {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* ── 根容器 & 布局容器高度占满屏幕 ── */
+#root {
+  height: 100%;
+}
+
+.tea-layout__body {
+  height: 100%;
+}
+
+.tea-layout__sidebar {
+  height: 100%;
+}
+
+.tea-layout__content {
+  height: 100%;
+}

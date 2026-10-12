@@ -1,0 +1,32 @@
+._snapshot-workspace ._auto-preheat{padding:20px;min-height:calc(100vh - 150px);box-sizing:border-box;background:#f3f4f7;font-size:12px}
+._auto-notice{margin-bottom:20px}
+._auto-preheat>.tea-table__action-panel{padding:0;margin:0 0 20px}
+._auto-toolbar{display:flex;align-items:center;gap:20px}
+._auto-toolbar>.tea-search{flex:1;min-width:160px;width:auto!important;max-width:none!important}
+._auto-toolbar>.tea-btn:first-child{flex:none;margin:0}
+._auto-preheat>.tea-card{border-radius:0;box-shadow:none;margin:0}
+._auto-preheat .tea-table th{height:48px;background:#fff;font-weight:400}
+._auto-preheat .tea-table td{height:68px;box-sizing:border-box;vertical-align:middle}
+._auto-preheat .tea-pagination{padding:16px}
+._auto-name,._auto-rule-cell{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0}
+._auto-name>.tea-btn{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0}
+._auto-secondary{font-size:12px;color:#888;line-height:18px}
+._auto-rule-value{font-family:SFMono-Regular,Consolas,monospace;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+._auto-actions{display:flex;align-items:center;gap:16px;white-space:nowrap}
+._auto-actions>.tea-btn{margin:0}
+._auto-footnote{margin:16px 0 0;color:#888;line-height:20px}
+._auto-form{max-height:68vh;overflow:auto;padding-right:8px}
+._auto-form>.tea-alert{margin-bottom:24px}
+._auto-form .tea-form__label{vertical-align:top}
+._auto-rule-input{display:block;margin-top:10px}
+._auto-test{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+._auto-test-ok{color:#00875a}
+._auto-test-no{color:#b45c00}
+._auto-detail{padding:4px 24px 24px}
+._auto-detail h3{font-size:14px;font-weight:600;margin:16px 0 20px}
+._auto-detail>.tea-alert{margin-top:24px}
+._auto-confirm{margin-bottom:20px;line-height:24px;overflow-wrap:anywhere}
+/* The tab itself has exactly the text width; separation lives on tab items. */
+._snapshot-workspace ._accel-list-tabs._auto-tabs .tea-tabs__tab{padding-left:0;padding-right:0;min-width:0;width:max-content}
+._snapshot-workspace ._accel-list-tabs._auto-tabs .tea-tabs__tabitem{margin-right:24px;min-width:0}
+@media(max-width:900px){._auto-toolbar{flex-wrap:wrap;gap:12px}._auto-toolbar>.tea-search{flex-basis:60%}}

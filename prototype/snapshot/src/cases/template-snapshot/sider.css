@@ -1,0 +1,29 @@
+/* Two-level product navigation, scoped to this prototype. */
+.tea-layout__sidebar:has(._snap-navigation){width:388px;flex:0 0 388px;background:var(--tea-color-bg-container-default);border-right:1px solid var(--tea-color-border-primary-default)}
+.tea-layout__sidebar:has(._snap-navigation--create){width:197px;flex-basis:197px}
+._snap-navigation{display:flex;width:388px;height:100%;background:var(--tea-color-bg-container-default);overflow:hidden}
+._snap-navigation--create{width:197px}
+._snap-navigation .tea-menu{position:relative;height:100%;min-width:0;background:var(--tea-color-bg-container-default);border-radius:0;box-shadow:none}
+._snap-navigation ._snap-primary-menu{width:197px;flex:0 0 197px;border-right:1px solid var(--tea-color-border-primary-default)}
+._snap-navigation ._snap-secondary-menu{width:191px;flex:0 0 191px}
+._snap-navigation .tea-menu__title{height:52px;min-height:52px;line-height:52px;padding:0 14px;border-bottom:1px solid var(--tea-color-border-primary-default);font-size:16px;font-weight:600}
+._snap-navigation ._snap-secondary-menu .tea-menu__title{height:64px;line-height:64px;padding:0 24px}
+._snap-navigation .tea-menu__list{padding:0}
+._snap-navigation .tea-menu__item{height:36px;line-height:36px;padding:0 14px;font-size:14px}
+._snap-navigation .tea-menu__item>.ruyi-icon{color:var(--tea-color-text-tertiary)}
+._snap-navigation .is-selected>.tea-menu__item{background:var(--tea-color-bg-brand-default);color:var(--tea-color-text-on-bg-brand-default)}
+._snap-navigation .is-selected>.tea-menu__item>.ruyi-icon{color:var(--tea-color-text-on-bg-brand-default)}
+._snap-navigation .tea-menu__group-title{padding:16px 14px 8px;font-size:12px;color:var(--tea-color-text-tertiary);font-weight:400}
+._snap-navigation ._snap-secondary-menu .tea-menu__list{padding-top:12px}
+._snap-navigation ._snap-secondary-menu .tea-menu__item{display:flex;align-items:center;box-sizing:border-box;height:44px;min-height:44px;line-height:22px;padding:0 24px;margin:0;border-radius:0}
+._snap-navigation ._snap-secondary-menu .tea-menu__text{line-height:22px;margin:0}
+._snap-navigation ._snap-secondary-menu li:not(.is-selected)>.tea-menu__item:hover{background:var(--tea-color-bg-brand-lighten-default);color:var(--tea-color-text-link-default)}
+._snap-navigation ._snap-secondary-menu .is-selected>.tea-menu__item{background:var(--tea-color-bg-brand-default);color:var(--tea-color-text-on-bg-brand-default);font-weight:600}
+._snap-navigation ._snap-secondary-menu .tea-menu__item:focus-visible{outline:2px solid var(--tea-color-border-brand-default);outline-offset:-2px}
+._snap-navigation ._snap-secondary-menu .is-selected>.tea-menu__item:focus-visible{outline-color:var(--tea-color-bg-container-default)}
+body:has(._snap-navigation--create) ._snap-form-footer{left:197px}
+
+._snap-primary-menu .tea-menu__item{display:flex;align-items:center;gap:12px}
+._snap-primary-menu .tea-menu__item>.ruyi-icon{flex:none;margin:0;color:var(--tea-color-text-tertiary)}
+._snap-primary-menu .is-selected>.tea-menu__item>.ruyi-icon{color:var(--tea-color-text-on-bg-brand-default)}
+._snap-navigation .tea-menu__label .tea-menu__item{font-size:12px;color:var(--tea-color-text-tertiary)}

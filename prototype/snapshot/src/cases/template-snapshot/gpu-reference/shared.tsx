@@ -1,0 +1,8 @@
+import {gpuUnits,readyCount} from './gpuUnits';
+import React from 'react';
+import {Form,StatusTip} from '@tencent/tea-component';
+import {specs,statusText} from './mock';
+import type {Resource} from './types';
+export function State({r}:{r:Resource}){return <StatusTip.InstanceTip status={r.status==='ready'?'running':(r.status==='preparing'||r.status==='recovering'||r.status==='releasing')?'operating':r.status==='failed'?'error':'closed'}>{statusText[r.status]}</StatusTip.InstanceTip>}
+export function SpecInfo({id,expanded=false,gpuCards=1}:{id:string;expanded?:boolean;gpuCards?:number}){const s=specs.find(s=>s.id===id)!;if(expanded)return <Form readonly layout="fixed" fixedLabelWidth="120px">{[["GPU 类型",s.gpu],["GPU 卡数",gpuCards+" 卡"],["GPU 显存大小",s.vram+" GiB"],["vCPU 核数",s.cpu+" 核"],["内存大小",s.memory+" GiB"]].map(([label,value])=><Form.Item key={label} showStatusIcon={false} label={label}><Form.Text>{value}</Form.Text></Form.Item>)}</Form>;return <Form readonly layout="fixed" fixedLabelWidth="100px"><Form.Item showStatusIcon={false} label="GPU"><Form.Text>{s.gpu} × {gpuCards} 卡 · {s.vram} GiB 显存</Form.Text></Form.Item><Form.Item showStatusIcon={false} label="CPU / 内存"><Form.Text>{s.cpu} 核 / {s.memory} GiB</Form.Text></Form.Item></Form>}
+export function Stats({records}:{records:Resource[]}){const total=records.reduce((n,r)=>n+readyCount(r),0),used=records.reduce((n,r)=>n+r.used,0);return <div className="_ags-stats">{[['可用资源额度',total,''],['使用中',used,''],['空闲资源',Math.max(0,total-used),''],['准备中',records.reduce((n,r)=>n+gpuUnits(r).filter(u=>u.status==='preparing').length,0),'']].map(([label,n,unit])=><div className="_ags-stat" key={label}><span>{label}</span><strong>{n}<small>{unit}</small></strong></div>)}</div>}

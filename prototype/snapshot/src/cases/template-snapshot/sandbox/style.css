@@ -1,0 +1,109 @@
+._sandbox-page{background:var(--tea-color-bg-page-default);min-width:0}
+._sandbox-page .console-list-body{padding:20px}
+._sandbox-toolbar,._sandbox-monitor-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+._sandbox-toolbar>.tea-tag-search-box{flex:1}
+._sandbox-page .tea-table td{vertical-align:middle}
+._sandbox-page .tea-table td p{margin:6px 0 0}
+._sandbox-wrap{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:250px}
+._sandbox-page .tea-form__text{overflow-wrap:anywhere;white-space:pre-wrap}
+._sandbox-charts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+._sandbox-chart{border:1px solid var(--tea-color-border-primary-default);padding:16px;min-width:0;background:var(--tea-color-bg-container-default)}
+._sandbox-chart h4{font-size:13px;margin:0 0 16px}
+._sandbox-chart svg{width:100%;display:block}
+._sandbox-chart svg text{font-size:10px;fill:var(--tea-color-text-tertiary)}
+._sandbox-monitor-note{font-size:12px;color:var(--tea-color-text-tertiary);margin:0 0 16px}
+._sandbox-instance-heading{margin-bottom:20px;color:var(--tea-color-text-secondary)}
+._sandbox-terminal{background:var(--tea-color-bg-inverse-default);color:var(--tea-color-text-on-bg-inverse-default);padding:24px;min-height:220px;line-height:2}
+@media(max-width:1300px){._sandbox-charts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){._sandbox-charts{grid-template-columns:minmax(0,1fr)}}
+
+/* 实例监控图表：配色走 Design Token，主系列蓝、对比系列绿 */
+._sandbox-gridline{stroke:var(--tea-color-border-primary-default)}
+._sandbox-series{fill:none;stroke:var(--tea-color-bg-brand-default)}
+._sandbox-series--compare{stroke:var(--tea-color-text-success-default)}
+/* Adapted from platform StatCard, filter cards, striped tables and detail drawers. */
+._platform-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:24px}
+._platform-stat{padding:18px 20px;background:#fff;border:1px solid #e5e7eb;border-top:3px solid #0052d9;min-width:0}
+._platform-stat span{display:block;font-size:13px;color:#6b7280;margin-bottom:8px}
+._platform-stat strong{font-size:28px;font-weight:600;color:#1f2937;font-variant-numeric:tabular-nums}
+._platform-stat-1{border-top-color:#00a870}._platform-stat-2{border-top-color:#ed7b2f}._platform-stat-3{border-top-color:#8a929e}
+._sandbox-page .console-list-body{padding:24px}
+._sandbox-page ._sandbox-toolbar{background:#fff;border:1px solid #e5e7eb;padding:20px;align-items:flex-end;gap:12px;margin-bottom:20px}
+._platform-filter-field{display:flex;flex-direction:column;gap:8px;min-width:150px;color:#4b5563;font-size:13px}
+._platform-filter-field:first-of-type{min-width:230px}
+._platform-filter-field .tea-input{width:240px;max-width:100%}
+._sandbox-page .tea-table tbody tr:nth-child(even)>td{background:#fafbfc}
+._sandbox-page .tea-table tbody tr:hover>td{background:#f0f6ff}
+._sandbox-page .tea-table th{background:#f5f7fa;color:#606266;font-weight:600}
+._sandbox-page .tea-table td{border-right:1px solid #f0f1f3}
+._sandbox-page .tea-table__body .tea-btn{font-size:13px}
+._sandbox-page .tea-pagination{padding-top:16px}
+._platform-detail-drawer .tea-form{padding:24px}
+._platform-detail-drawer .tea-form__item{padding:14px 0;border-bottom:1px solid #ebeef5}
+._platform-detail-drawer .tea-form__text{overflow-wrap:anywhere;white-space:pre-wrap}
+._platform-detail-drawer .tea-form__label{color:#6b7280}
+._platform-empty{padding:60px 20px;text-align:center;color:#909399;border:1px dashed #dcdfe6;background:#fafafa}
+._platform-monitor-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+._platform-monitor-title h3{font-size:16px;font-weight:600}
+._platform-monitor-filter{background:#f8fafc;border:1px solid #e5e7eb;padding:16px;margin-bottom:20px}
+._platform-chart-value{font-size:20px;font-weight:600;margin:8px 0;color:#1f2937}
+._sandbox-charts{gap:20px;grid-template-columns:repeat(2,minmax(0,1fr))}
+._sandbox-chart h4{font-size:14px;margin-bottom:0}
+._platform-chart{height:260px;width:100%}
+@media(min-width:1700px){._sandbox-charts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1024px){._platform-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}._sandbox-page .console-list-body{padding:16px}}
+@media(max-width:767px){._sandbox-charts{grid-template-columns:minmax(0,1fr)}._sandbox-page ._sandbox-toolbar{padding:14px;align-items:stretch}._platform-filter-field{width:100%}._platform-filter-field .tea-input{width:100%}._platform-stat strong{font-size:22px}}
+._gpu-tools-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+._gpu-tools-toolbar .tea-search{width:360px;margin-left:16px}
+._gpu-tools-list .tea-table tbody tr:nth-child(even) td{background:#fff}
+._gpu-tools-list .tea-table td{padding-top:18px;padding-bottom:18px;border-left:0;border-right:0}
+._gpu-tools-list .tea-table th{background:#fff;border-left:0;border-right:0}
+._gpu-tools-list ._gpu-tool-image{display:block;background:#f3f4f7;color:#7e8693;padding:5px 8px;white-space:normal;overflow:hidden;overflow-wrap:anywhere;max-height:44px;line-height:17px}
+
+._tool-detail>.tea-card{margin-bottom:20px} ._tool-info-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:50px}._tool-info-grid{font-size:12px}
+._tool-field{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:13px 0;font-size:12px;line-height:22px}._tool-field>span{color:#888}
+._tool-field>div{white-space:pre-wrap;overflow-wrap:anywhere;min-width:0} ._tool-field>span{color:#888}
+@media(max-width:1100px){._tool-info-grid{grid-template-columns:1fr;gap:0}}
+
+/* Tea resource list: actions and filters precede the table card. */
+._tea-template-list .tea-table__action-panel{margin-bottom:12px}
+._tea-template-primary{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+._tea-template-search{display:flex;align-items:center;justify-content:space-between;gap:16px}
+._tea-template-search>.tea-tag-search{flex:1;min-width:0;max-width:760px}
+._tea-template-tools{display:flex;align-items:center;gap:8px;margin-left:auto}
+._tea-template-list>.tea-card{border-radius:0}
+._tea-template-list .tea-table td{vertical-align:middle}
+._tea-template-list .tea-table__tr .tea-copy{opacity:0}
+._tea-template-list .tea-table__tr:hover .tea-copy,._tea-template-list .tea-table__tr:focus-within .tea-copy{opacity:1}
+
+/* Tea first-level tab page: action strip on the canvas, table on a white surface. */
+._instance-console-list{background:var(--tea-color-bg-secondary-default,#f3f4f7)}
+._instance-console-list .tea-table__action-panel{margin:0 0 12px;padding:0}
+._instance-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
+._instance-search-tools{display:grid;grid-template-columns:minmax(0,1fr) 30px 30px;align-items:center;gap:8px;flex:1;min-width:0}
+._instance-search-tools>.tea-search--tags,._instance-search-tools>.tea-search--tags.is-active{width:100%!important;min-width:0;max-width:100%;margin:0}
+._instance-search-tools>.tea-btn{width:30px;min-width:30px;height:30px;padding:0;border:1px solid var(--tea-color-border-primary-default,#ddd);background:var(--tea-color-bg-container-default,#fff)}
+._instance-filters{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+._instance-console-list>.tea-card{border-radius:0;margin:0;background:var(--tea-color-bg-container-default,#fff)}
+._instance-console-list .tea-table th{background:var(--tea-color-bg-container-default,#fff);color:var(--tea-color-text-secondary);font-weight:400}
+._sandbox-page ._instance-console-list .tea-table td,
+._sandbox-page ._instance-console-list .tea-table th{border-left:0;border-right:0}
+._instance-actions>.tea-btn{flex-shrink:0}
+
+._instance-console-list ._instance-actions{margin-bottom:0}
+
+/* List gutters belong to the list, not nested Tea layout containers. */
+._sandbox-page>.tea-layout__content-inner>.tea-layout__content-body:has(._tea-template-list,._instance-console-list){padding:0}
+._sandbox-page .console-list-body._tea-template-list,
+._sandbox-page .console-list-body._instance-console-list{padding:20px;background:#f3f4f7}
+._sandbox-page .tea-tabs:has(._instance-console-list){margin:0}
+._sandbox-page .tea-tabs__tabpanel:has(._instance-console-list){padding:0}
+._sandbox-page ._tea-template-list>.tea-table__action-panel{display:flex;align-items:center;gap:24px;padding:0;margin:0 0 20px}
+._sandbox-page ._tea-template-primary{flex:0 0 auto;margin:0;gap:8px;white-space:nowrap}
+._sandbox-page ._tea-template-primary>.tea-btn{margin:0}
+._sandbox-page ._tea-template-search{flex:1;min-width:0;gap:12px}
+._sandbox-page ._tea-template-search>.tea-search--tags{flex:1;width:100%!important;min-width:0!important;max-width:none!important;margin:0}
+._sandbox-page ._tea-template-tools{flex:0 0 auto;margin:0}
+._sandbox-page ._tea-template-tools .tea-btn{width:30px;min-width:30px;height:30px;padding:0;border:1px solid #ddd;background:#fff}
+._sandbox-page ._tea-template-list>.tea-card{margin:0}
+._sandbox-page ._instance-console-list>.tea-table__action-panel{margin-bottom:20px}

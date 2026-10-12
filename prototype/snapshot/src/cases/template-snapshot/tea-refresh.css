@@ -1,0 +1,145 @@
+/* Scoped Tea console presentation. Existing data and routes remain shared. */
+._snap-tea-refresh{--snap-surface:var(--tea-color-bg-primary-default,#fff);--snap-page:var(--tea-color-bg-page-default,#f2f3f5);--snap-border:var(--tea-color-border-primary-default,#e5e8ed);--snap-text:var(--tea-color-text-primary,#1f2329);background:var(--snap-page);color:var(--snap-text);font-size:12px;line-height:20px}
+._snap-tea-refresh>.tea-layout__content-header{padding:12px 20px;min-height:52px;box-sizing:border-box;background:var(--snap-surface);border-bottom:1px solid var(--snap-border)}
+._snap-tea-refresh ._snap-header-line{min-height:28px;gap:32px}
+._snap-tea-refresh .tea-layout__header-title{font-size:16px;line-height:24px;font-weight:600}
+._snap-tea-refresh .tea-tabs__tabbar{padding:0 20px;background:var(--snap-surface);border-bottom:1px solid var(--snap-border)}
+._snap-tea-refresh .tea-tabs__tab{height:48px;min-height:48px;line-height:48px;font-size:14px}
+._snap-tea-refresh .tea-tabs__tabpanel{padding:0}
+._snap-tea-refresh .console-list-body._snap-build-list,._snap-tea-refresh .console-list-body._snap-monitor-body{padding:20px!important;background:var(--snap-page);min-height:calc(100vh - 148px)}
+._snap-tea-refresh ._snap-unified-toolbar.tea-table__action-panel{margin:0 0 20px;padding:0}
+._snap-toolbar-row{display:flex;align-items:center;gap:12px;width:100%;min-width:0}
+._snap-toolbar-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+._snap-toolbar-actions .tea-btn{margin:0;white-space:nowrap}
+._snap-toolbar-search{flex:1 1 0;min-width:0}
+._snap-tea-refresh ._snap-toolbar-search .tea-search--tags{width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box}
+._snap-tea-refresh ._snap-overview-card>.tea-card__body{padding:0}
+._snap-tea-refresh ._snap-overview-card .tea-card__title{padding:16px 20px;margin:0}
+._snap-tea-refresh ._snap-overview-card .tea-card__content{padding:0}
+._snap-tea-refresh .console-list-body .tea-table th{background:var(--tea-color-bg-secondary-default,#f7f8fa);height:44px;box-sizing:border-box;font-weight:400;color:var(--tea-color-text-secondary,#666)}
+._snap-tea-refresh .console-list-body .tea-table td{padding-top:12px;padding-bottom:12px;vertical-align:middle}
+._snap-tea-refresh .tea-table th,._snap-tea-refresh .tea-table td{border-left:0;border-right:0}
+._snap-tea-refresh ._snap-overview-card .tea-pagination{padding:16px 20px;border-top:1px solid var(--snap-border)}
+._snap-tea-refresh ._snap-actions{gap:12px;align-items:center}
+._snap-tea-refresh ._snap-actions .tea-btn{margin:0}
+._snap-tea-refresh>.tea-layout__content-inner>.tea-layout__content-body:has(._snap-build-detail){padding:20px}
+._snap-tea-refresh ._snap-build-detail{background:var(--snap-surface)}
+._snap-tea-refresh ._snap-build-detail>.tea-card__body{padding:20px}
+._snap-tea-refresh ._snap-build-detail .tea-card__title{font-size:14px;line-height:22px;font-weight:600;margin-bottom:20px}
+._snap-basic-grid-v2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+._snap-tea-refresh ._snap-basic-grid-v2>.tea-form{margin:0;min-width:0}
+._snap-basic-grid-v2 .tea-form__controls{min-width:0;overflow-wrap:anywhere}
+._snap-basic-grid-v2 .tea-form__item,._snap-production-config .tea-form__item{padding-bottom:16px}
+._snap-tea-refresh ._snap-task-detail{background:transparent}
+._snap-tea-refresh ._snap-task-detail>.tea-card__body:first-child{padding:0}
+._snap-tea-refresh ._snap-task-detail ._snap-phase{margin-bottom:20px;grid-template-columns:220px minmax(0,1fr);border-color:var(--snap-border)}
+._snap-tea-refresh ._snap-task-detail ._snap-phase>header{padding:20px;background:var(--tea-color-bg-secondary-default,#f7f8fa)}
+._snap-tea-refresh ._snap-task-detail ._snap-phase.is-current{border-color:var(--tea-color-border-brand-default,#006eff)}
+._snap-tea-refresh ._snap-task-detail ._snap-phase.is-failed{border-color:var(--tea-color-border-error-default,#e54545)}
+._snap-tea-refresh ._snap-task-detail ._snap-leaf-title{flex-wrap:wrap}
+._snap-tea-refresh ._snap-task-detail .tea-card__body._snap-production-config{margin:0;background:var(--snap-surface);border:1px solid var(--snap-border);border-radius:6px;padding:20px}
+._snap-tea-refresh ._snap-build-detail ._snap-config-columns .tea-form{margin:0}
+._snap-tea-refresh ._snap-monitor-toolbar{margin:0 0 20px!important}
+._snap-tea-refresh ._snap-monitor-filters{display:flex;gap:12px;width:100%;align-items:center;flex-wrap:nowrap}
+._snap-tea-refresh ._snap-monitor-update{justify-content:flex-end;display:flex;margin-top:12px;gap:8px}
+._snap-tea-refresh ._snap-monitor .tea-card__body{padding:20px}
+._snap-tea-refresh ._snap-monitor .tea-card__body+.tea-card__body{border-top:1px solid var(--snap-border)}
+._snap-tea-refresh ._snap-monitor ._snap-chart-grid{gap:20px}
+._snap-tea-refresh ._snap-monitor ._snap-chart-card{padding:20px;min-width:0;background:var(--snap-surface);border-color:var(--snap-border)}
+._snap-tea-refresh ._snap-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:0 0 20px}
+._snap-tea-refresh ._monitor-time-range>.tea-dropdown__header,._snap-tea-refresh ._monitor-granularity .tea-dropdown__header{height:32px;padding:0 12px}
+._snap-time-error{color:var(--tea-color-text-error-default,#e34d59);font-size:12px;line-height:20px;margin-top:8px}
+._snap-tea-modal .tea-dialog__inner{max-width:calc(100vw - 40px)}
+._snap-tea-modal._snap-create-build-modal .tea-dialog__inner{width:860px}
+._snap-tea-modal .tea-dialog__header{padding-bottom:20px}
+._snap-tea-modal .tea-dialog__headertitle{font-size:16px;line-height:24px;font-weight:600}
+._snap-tea-modal .tea-dialog__body{max-height:calc(100vh - 220px);overflow-y:auto;padding:0 8px 8px 0;scrollbar-gutter:stable}
+._snap-tea-modal .tea-dialog__footer{padding-top:20px;border-top:1px solid var(--tea-color-border-primary-default,#e5e8ed);margin-top:12px}
+._snap-tea-modal .tea-form__label{line-height:32px}
+._snap-tea-modal .tea-form__controls{padding-bottom:20px;min-width:0}
+._snap-tea-modal .tea-input:not(textarea){min-height:32px;padding:0 12px}
+._snap-tea-modal textarea.tea-input{min-height:72px;padding:8px 12px;line-height:20px;resize:vertical}
+._snap-tea-modal .tea-dropdown{max-width:100%}
+._snap-tea-modal .tea-form__text{font-size:12px;line-height:24px}
+._snap-tea-modal ._snap-policy-help{font-size:12px;margin:8px 0 0;line-height:20px}
+._snap-build-config-fields ._snap-config-section{border-top:1px solid var(--tea-color-border-primary-default,#e5e8ed);padding-top:20px;margin-top:8px}
+._snap-tea-modal ._snap-build-config-fields ._snap-config-section h3{font-size:14px;line-height:22px;font-weight:600;margin:0 0 20px}
+._snap-tea-modal ._snap-idle-input{width:240px;max-width:100%}
+._snap-tea-refresh ._ags-create-page{padding:0;gap:20px}
+._snap-tea-refresh ._ags-create-section .tea-card__body{padding:20px}
+._snap-tea-refresh ._ags-create-section-grid{grid-template-columns:160px minmax(0,1fr);gap:20px}
+._snap-tea-refresh ._ags-create-section-grid>h3{font-size:14px;line-height:24px}
+@media(max-width:1000px){._snap-toolbar-row{flex-wrap:wrap}._snap-toolbar-search{flex-basis:calc(100% - 44px);order:2}._snap-toolbar-row>.tea-btn{order:3}._snap-toolbar-actions{flex-basis:100%}._snap-basic-grid-v2{grid-template-columns:1fr}._snap-tea-refresh ._snap-task-detail ._snap-phase{grid-template-columns:1fr}._snap-tea-refresh ._snap-task-detail ._snap-phase>header{border-right:0;border-bottom:1px solid var(--snap-border)}._snap-tea-refresh ._snap-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+._snap-config-section-help{font-size:12px;line-height:20px;color:var(--tea-color-text-secondary,#666);margin:-8px 0 20px}
+
+._snap-build-create-page ._snap-build-config-fields{display:flex;flex-direction:column;gap:20px}
+._snap-build-create-page ._snap-config-section-help{margin:0 0 20px}
+._snap-build-create-page ._ags-create-footer{position:sticky;bottom:0;background:white;z-index:10}
+._snap-build-create-page .tea-form__controls>.tea-dropdown{max-width:560px}
+
+/* Scoped to the custom-template form; other console pages keep their layout. */
+._snap-build-create-page{max-width:none;margin:0;padding:20px 20px 96px;gap:20px;background:#f2f3f5}
+._snap-build-create-page ._ags-create-section,._snap-build-create-page ._ags-image-launch{margin:0!important;box-shadow:none;border-radius:0}
+._snap-build-create-page ._ags-create-section>.tea-card__body{padding:24px}
+._snap-build-create-page ._ags-create-section-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+._snap-build-create-page ._ags-create-section-grid h3,._snap-build-create-page ._ags-image-launch h3{margin:0;font-size:16px;line-height:24px;font-weight:600;color:#000}
+._snap-build-create-page ._ags-image-launch h3{margin-bottom:20px}
+._snap-build-create-page ._ags-create-section-grid>div,._ags-image-launch-panel{min-width:0}
+._snap-build-create-page ._ags-image-launch-panel{padding:0;border:0}
+._snap-build-create-page .tea-form__label{width:130px!important;color:#555;font-size:12px;line-height:20px}
+._snap-build-create-page .tea-form__item{margin-bottom:24px}
+._snap-build-create-page .tea-form__help-text,._snap-build-create-page ._ags-muted,._snap-build-create-page ._ags-launch-hint{color:#888;line-height:20px;font-size:12px}
+._snap-build-create-page .tea-form__help-text{margin-top:8px}
+._snap-build-create-page .tea-input:not(textarea){height:32px;box-sizing:border-box;padding:0 12px}
+._snap-build-create-page textarea.tea-input{padding:8px 12px;resize:vertical}
+._snap-build-create-page .tea-dropdown__header{min-height:32px;box-sizing:border-box}
+._snap-build-create-page .tea-form__controls>.tea-input,._snap-build-create-page ._snap-reference-version{width:560px;max-width:100%}
+._snap-build-create-page ._ags-field-row>.tea-input,._snap-build-create-page ._ags-image-input-row>.tea-input{max-width:100%}
+._snap-build-create-page ._ags-field-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+._snap-build-create-page ._ags-option-cards{display:flex;flex-wrap:wrap;gap:12px;max-width:1000px}
+._snap-build-create-page ._ags-option-cards ._ags-choice{flex:1;min-width:220px;min-height:80px;border-radius:0;padding:16px;text-align:left}
+._snap-build-create-page ._ags-health-badge{border-radius:0;background:#f2f3f5;border:0;padding:4px 8px;font-size:12px;font-weight:400}
+._snap-build-create-page ._ags-health-panel{max-width:900px;margin-top:16px;padding:20px}
+._snap-build-create-page ._ags-health-panel .tea-input{max-width:100%}
+._snap-build-create-page ._ags-create-footer{height:64px;margin:0;padding:16px 24px;display:flex;align-items:center;gap:12px;border-top:1px solid #e5e5e5;box-shadow:0 -2px 6px #00000006}
+._snap-build-create-page ._ags-create-footer .tea-btn{margin:0;min-width:64px}
+._snap-build-create-page ._ags-create-footer>span{margin-left:auto}
+._snap-build-create-page ._ags-more-toggle{display:flex;align-items:center;gap:6px;margin:0 0 20px}
+._snap-build-create-page ._ags-image-more{margin-top:20px!important}
+._snap-build-create-page ._ags-digest-value{overflow-wrap:anywhere}
+._snap-build-create-page ._ags-image-env .tea-dropdown{width:100%;min-width:0}
+._snap-build-create-page .tea-input:focus-visible,._snap-build-create-page .tea-btn:focus-visible{outline:2px solid #006eff;outline-offset:2px}
+@media(max-width:900px){._snap-build-create-page{padding:16px 16px 88px}._snap-build-create-page ._ags-create-section>.tea-card__body,._snap-build-create-page ._ags-image-launch{padding:20px}._snap-build-create-page ._ags-create-section-grid{grid-template-columns:minmax(0,1fr)}._snap-build-create-page ._ags-option-cards ._ags-choice{min-width:180px}}
+
+._snap-build-create-page .tea-form__controls.is-error .tea-form__help-extra{display:none}
+
+._snap-page ._snap-build-create-page{max-width:100%;min-width:0;padding:20px;box-sizing:border-box}
+._snap-page ._snap-build-create-page ._ags-create-section-grid{grid-template-columns:minmax(0,1fr)}
+._snap-page ._snap-build-create-page .tea-form{width:100%;table-layout:fixed}
+._snap-page ._snap-build-create-page .tea-form__controls{min-width:0;overflow-wrap:anywhere}
+._snap-page ._snap-build-create-page .tea-input--full,._snap-page ._snap-build-create-page .tea-dropdown--full{width:560px;max-width:100%}
+._snap-page ._snap-build-create-page ._ags-create-footer{position:sticky;left:auto;right:auto;bottom:0;background:white;z-index:10}
+
+._snap-build-create-page ._snap-resource-inline{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+._snap-build-create-page ._snap-resource-control{display:flex;align-items:stretch;max-width:100%;height:32px}
+._snap-build-create-page ._snap-resource-label,._snap-build-create-page ._snap-resource-unit{display:flex;align-items:center;padding:0 12px;background:#f2f3f5;border:1px solid #d5dbe5;white-space:nowrap;font-size:12px;color:#000}
+._snap-build-create-page ._snap-resource-label{border-right:0}
+._snap-build-create-page ._snap-resource-unit{border-left:0}
+._snap-build-create-page ._snap-resource-control .tea-dropdown{width:100px;min-width:0}
+._snap-build-create-page ._snap-resource-disk .tea-dropdown{width:160px}
+._snap-build-create-page ._snap-resource-control .tea-dropdown__header{border-radius:0}
+._snap-build-create-page ._snap-resource-health ._ags-health-badge{background:#fff;border:1px solid #d5dbe5;border-radius:18px;padding:5px 12px;font-weight:600;color:#202b3b}
+._snap-build-create-page ._snap-resource-control .tea-dropdown{width:80px}
+._snap-build-create-page ._snap-resource-disk .tea-dropdown{width:130px}
+@media(min-width:1600px){._snap-page ._snap-build-create-page ._snap-resource-health ._ags-create-section-grid{grid-template-columns:180px minmax(0,1fr)}}
+
+/* Tea form alignment and interaction, scoped to snapshot creation. */
+._snap-page ._snap-build-create-page{gap:20px;padding:20px;min-width:0}
+._snap-page ._snap-build-create-page ._ags-create-section-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+._snap-page ._snap-build-create-page .tea-form__label{width:130px!important}
+._snap-page ._snap-build-create-page ._ags-health-panel{background:#f7f8fa;border:1px solid #e5e5e5;padding:20px;margin-top:16px}
+._snap-page ._snap-build-create-page ._ags-create-footer{padding:16px 24px;border-top:1px solid #e5e5e5;box-shadow:0 -2px 6px #00000006;min-height:64px}
+._snap-page ._snap-build-create-page .tea-form__help-text.is-error{color:#e34d59}
+._snap-page ._snap-build-create-page .tea-dropdown:focus-within,._snap-page ._snap-build-create-page .tea-btn:focus-visible{outline:2px solid #006eff;outline-offset:2px}
+@media(max-width:900px){._snap-page ._snap-build-create-page ._ags-image-input-row{flex-wrap:wrap}._snap-page ._snap-build-create-page ._ags-image-input-row>.tea-input{width:100%}._snap-page ._snap-build-create-page ._snap-resource-inline{gap:8px}}

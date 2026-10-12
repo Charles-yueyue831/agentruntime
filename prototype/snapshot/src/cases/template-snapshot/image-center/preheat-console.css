@@ -1,0 +1,84 @@
+/* Shared Tea console presentation for preheat lists, forms, dialogs and monitoring. */
+.tp-app,._auto-preheat,.pm-page{color:var(--tea-color-text-primary,#333);background:var(--tea-color-bg-page-default,#f3f4f7);font-size:12px}
+.tp-app .tp-list,._snapshot-workspace ._auto-preheat,.pm-page{padding:20px;box-sizing:border-box}
+.tp-app .tea-card,.tp-app .tea-card:hover,._auto-preheat .tea-card,._auto-preheat .tea-card:hover,.pm-page .tea-card,.pm-page .tea-card:hover{border-radius:0;box-shadow:none}
+.tp-list>.tea-table__action-panel,._auto-preheat>.tea-table__action-panel{padding:0;margin:0 0 20px}
+.tp-filter-row,._auto-toolbar{gap:16px;min-width:0}
+.tp-filter-row>.tea-btn,._auto-toolbar>.tea-btn{flex-shrink:0}
+.tp-tools{gap:12px}
+.tp-list .tea-table th,._auto-preheat .tea-table th{height:48px;font-weight:400}
+.tp-list .tea-table td,._auto-preheat .tea-table td{height:68px;box-sizing:border-box;vertical-align:middle}
+.tp-list .tea-pagination,._auto-preheat .tea-pagination{padding:16px 20px}
+.tp-create,.tp-detail{padding:20px 20px 100px;gap:20px}
+.tp-app:has(.tp-create){background:var(--tea-color-bg-page-default,#f3f4f7)}
+.tp-app .tp-page-header,.tp-app:has(.tp-create) .tp-page-header{padding:20px;min-height:68px;border-bottom:1px solid var(--tea-color-border-secondary-default,#e5e8ed)}
+.tp-create .tea-card{border:0;overflow:visible}
+.tp-create .tea-card__body,.tp-detail .tea-card__body{padding:24px}
+.tp-basic{grid-template-columns:140px minmax(0,1fr);gap:24px}
+.tp-basic h2{font-size:16px;line-height:24px;margin:0;font-weight:600}
+.tp-fields,.tp-policy-fields{width:100%;max-width:800px;min-width:0}
+.tp-fields .tea-form__item{margin-bottom:24px}
+.tp-fields .tea-form__item,.tp-policy-fields .tea-form__item{padding-bottom:0}
+.tp-fields .tea-form__item:last-child,.tp-policy-fields .tea-form__item:last-child{margin-bottom:0}
+.tp-fields .tea-form__controls,.tp-policy-fields .tea-form__controls{min-width:0;overflow-wrap:anywhere}
+.tp-fields .tp-input-action>.tea-input,.tp-fields .tp-input-action>.tea-input-group{flex:1;min-width:0;width:100%;max-width:560px}
+.tp-policy-fields .tp-policy-business .tea-form__item{margin-bottom:12px}
+.tp-policy-fields .tp-policy-business .tea-form__item:last-child{margin-bottom:0}
+.tp-policy-task-settings{margin-top:24px;padding-top:24px;border-top:1px solid var(--tea-color-border-secondary-default,#e5e8ed)}
+.tp-policy-fields .tp-policy-task-option{margin-top:0;padding-top:0;border:0}
+.tp-policy-fields .tea-form__help-text,.tp-fields .tea-form__help-text{line-height:20px;color:var(--tea-color-text-tertiary,#888);max-width:560px}
+.tp-policy-number.tea-inputnum{width:200px;max-width:100%}
+.tp-policy-number.tea-inputnum>.tea-input{width:160px;max-width:calc(100% - 36px)}
+.tp-app .tp-fixed-footer{padding:16px 20px;gap:12px}
+.tp-app .tp-fixed-footer .tea-btn{min-width:88px}
+.preheat-console-dialog .tea-dialog__inner{padding:0}
+.preheat-console-dialog .tea-dialog__header{padding:24px 32px 20px;margin:0}
+.preheat-console-dialog .tea-dialog__headertitle{font-size:16px;line-height:24px;font-weight:600;margin:0}
+.preheat-console-dialog .tea-dialog__header>.tea-btn[aria-label="关闭"]{top:20px;right:20px}
+.preheat-console-dialog .tea-dialog__body,.tp-policy-dialog.preheat-console-dialog .tea-dialog__body{padding:0 32px 24px}
+.preheat-console-dialog .tea-dialog__footer,.tp-policy-dialog.preheat-console-dialog .tea-dialog__footer{padding:0 32px 24px;margin:0;text-align:center}
+.preheat-console-dialog .tea-dialog__footer .tea-btn{min-width:88px}
+.preheat-console-dialog .tea-form__controls{min-width:0;overflow-wrap:anywhere}
+.preheat-console-dialog .tea-form__help-text{line-height:20px;max-width:520px}
+.preheat-console-dialog ._auto-form,.preheat-console-dialog ._unload-form{max-height:none;overflow:visible;padding:0}
+.preheat-console-dialog ._auto-form .tea-input,.preheat-console-dialog ._auto-form .tea-dropdown{width:100%;max-width:420px}
+.preheat-console-dialog .tea-form__item{margin-bottom:24px;padding-bottom:0}
+.preheat-console-dialog .tea-form__item:last-child{margin-bottom:0}
+._auto-detail-page ._auto-detail{padding:8px 24px 24px}
+._auto-detail-header h2{overflow-wrap:anywhere}
+.pm-top{margin-bottom:20px}
+.pm-filters,.pm-metrics{margin-bottom:20px}
+.pm-metrics,.pm-charts{gap:20px}
+@media(max-width:700px){
+ .tp-basic{grid-template-columns:1fr;gap:20px}
+ .tp-create .tea-card__body,.tp-detail .tea-card__body{padding:20px}
+ .tp-filter-row{flex-wrap:wrap;gap:12px}
+ .tp-filter-grow{flex-basis:calc(100% - 76px);order:1}
+ .tp-filter-row>.tp-tools{order:2}
+ .preheat-console-dialog .tea-dialog__header{padding:20px}
+ .preheat-console-dialog .tea-dialog__body,.tp-policy-dialog.preheat-console-dialog .tea-dialog__body{padding:0 20px 20px}
+ .preheat-console-dialog .tea-dialog__footer,.tp-policy-dialog.preheat-console-dialog .tea-dialog__footer{padding:0 20px 20px}
+}
+/* Read-only data is compact; editable fields retain Tea's form rhythm. */
+.tp-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:16px}
+.tp-detail-grid .tea-form__item{margin:0;padding:0;min-width:0}
+.tp-detail-grid .tea-form__controls{min-width:0;overflow-wrap:anywhere}
+.tp-detail .tea-card__title{font-size:16px;line-height:24px;font-weight:600}
+.tp-detail .tea-card__header{margin-bottom:24px}
+._auto-detail-page .tea-form{row-gap:16px}
+._auto-detail-page .tea-form__item{margin:0;padding:0}
+._auto-detail-page .tea-form__label{flex:0 0 140px;min-width:140px}
+._auto-detail-page ._auto-detail h3{font-size:16px;line-height:24px;margin:24px 0}
+._auto-detail-actions{margin-bottom:20px}
+.preheat-console-dialog .tea-form--readonly .tea-form__item{margin-bottom:12px}
+.preheat-console-dialog .tea-form--readonly .tea-form__item:last-child{margin-bottom:0}
+.preheat-console-dialog .tp-policy-task{padding-bottom:12px}
+.preheat-console-dialog .tea-dialog__message{overflow-wrap:anywhere}
+.preheat-console-dialog .tp-unload-resource{margin:20px 0;padding:16px;background:var(--tea-color-bg-secondary-default,#f7f8fa);overflow-wrap:anywhere}
+.preheat-console-dialog .tea-input:focus-visible,.preheat-console-dialog .tea-btn:focus-visible{outline-offset:2px}
+@media(max-width:760px){.tp-detail-grid{grid-template-columns:1fr}}
+
+.tp-value-copy>.tp-ellipsis{flex:1;min-width:0;width:auto}
+.tp-detail-grid .tp-value-copy{width:100%}
+
+.tp-detail-grid .tp-policy-detail-full{grid-column:1 / -1}

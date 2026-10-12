@@ -29,6 +29,7 @@
 | `产品能力/问题性质.html` | 问题性质判断 · 四问归类法（手绘笔记：四闸口 · 八出口，Agent 沙箱八场景演练，判定陷阱与实战要点） | [在线查看](https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html) |
 | `prototype/gpu/` | GPU 沙箱用户体验录像、时间点导航、体验报告及 14 张操作截图 | [观看体验录像](prototype/gpu/) |
 | `prototype/preheat/` | 镜像预热客户使用演示：五个 MP4、配套 SRT 字幕与播放说明 | [查看视频](prototype/preheat/README.md) |
+| `prototype/snapshot/` | 模板快照最新交互原型、React / Tea 源码及构建说明 | [打开原型](prototype/snapshot/?tab=template) |
 
 > 在线访问路径基于 GitHub Pages 站点 `https://charles-yueyue831.github.io/agentruntime/`，与仓库目录结构一一对应；路径中的空格以 `%20`、中文以 URL 编码（UTF-8）表示。
 

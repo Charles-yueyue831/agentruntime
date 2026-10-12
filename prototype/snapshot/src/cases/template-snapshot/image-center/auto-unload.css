@@ -1,0 +1,16 @@
+._auto-unload ._auto-rule-value{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+._unload-form-dialog .tea-dialog__body{padding-top:24px}
+._unload-form{padding-right:8px}
+@media(max-height:620px){._unload-form{max-height:calc(100vh - 210px);overflow-y:auto}}
+._unload-form .tea-input{width:100%;max-width:420px}
+._unload-options{display:flex;flex-direction:column;gap:20px;padding-top:3px}
+._unload-option{display:flex;flex-direction:column;gap:10px}
+._unload-option-field{display:flex;flex-direction:column;gap:8px;padding-left:26px;max-width:420px}
+._unload-sub-label{font-size:12px;color:var(--tea-color-text-primary);line-height:20px}
+._unload-sub-label span{color:var(--tea-color-text-error)}
+._unload-option-field .tea-inputnum{width:240px;max-width:100%}
+._unload-option-field .tea-inputnum .tea-input{width:190px;max-width:calc(100% - 34px)}
+._unload-option-field .tea-form__help-text{line-height:18px}
+._unload-form-dialog .tea-dialog__footer{padding-top:20px}
+
+._auto-detail-page ._unload-rules ._unload-rule-strategy{grid-column:1 / -1}

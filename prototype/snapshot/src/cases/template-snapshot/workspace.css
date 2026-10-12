@@ -1,0 +1,84 @@
+._snapshot-workspace{flex:1;min-width:0;height:100%;overflow:hidden}
+._snapshot-workspace-panel{height:100%;min-width:0;overflow:hidden}
+._snapshot-workspace-panel[hidden]{display:none!important}
+._snapshot-workspace-panel>._mirror-workspace{height:100%;min-height:0}
+._mirror-console-list-body{min-width:0}
+
+/* Keep every list column aligned to its header, including link and copy cells. */
+._snapshot-workspace .tea-table th,
+._snapshot-workspace .tea-table td,
+._snapshot-workspace .tea-table th > div,
+._snapshot-workspace .tea-table td > div{text-align:left}
+._snapshot-workspace .tea-table .tea-btn--link{padding-left:0;padding-right:0;min-width:0;text-align:left;justify-content:flex-start}
+._snapshot-workspace .tea-table ._snap-id,
+._snapshot-workspace .tea-table ._snap-actions,
+._snapshot-workspace .tea-table ._mirror-actions{justify-content:flex-start;text-align:left}
+._snapshot-workspace .tea-table ._snap-id > ._snap-copy-control{order:1}
+
+/* Shared acceleration header geometry prevents title/region jumps on menu changes. */
+._snapshot-workspace ._snap-tabbed ._snap-header-line,
+._snapshot-workspace ._mirror-header-line{display:inline-flex;align-items:center;min-height:30px;height:30px;gap:32px;vertical-align:middle}
+._snapshot-workspace ._snap-tabbed,
+._snapshot-workspace ._mirror-workspace>.tea-layout__content{scrollbar-gutter:stable}
+
+/* Reserve the same title column for four- and five-character menu names. */
+._snapshot-workspace ._snap-tabbed ._snap-header-line>span:first-child,
+._snapshot-workspace ._mirror-header-line>span:first-child{flex:0 0 80px;width:80px;white-space:nowrap}
+._snapshot-workspace ._snap-tabbed>.tea-layout__content-inner>.tea-layout__content-header,
+._snapshot-workspace ._mirror-workspace>.tea-layout__content>.tea-layout__content-inner>.tea-layout__content-header{box-sizing:border-box;height:51px;min-height:51px;flex-shrink:0}
+
+/* Acceleration list pages share the same tab, action, filter and table rhythm. */
+._accel-list-tabs .tea-tabs__tabbar{padding:0 20px;background:#fff;border-bottom:1px solid #ddd;box-shadow:none}
+._accel-list-tabs .tea-tabs__tabitem{margin:0 20px 0 0;padding:0}
+._accel-list-tabs .tea-tabs__tab{box-sizing:border-box;height:32px;min-height:32px;padding:0 20px 0 0;line-height:32px;font-size:12px;font-weight:400;border-radius:0}
+._accel-list-tabs .tea-tabs__tab.is-active{color:#006eff;border-bottom:2px solid #006eff}
+._snapshot-workspace ._mirror-page-content>section:has(._mirror-list)>.tea-layout__content-body{padding:0}
+._snapshot-workspace ._mirror-list{padding:40px 44px 20px;background:#f3f4f7}
+._snapshot-workspace ._mirror-list>.tea-table__action-panel{padding:0;margin:0 0 12px}
+._snapshot-workspace ._mirror-list>.tea-table__action-panel:has(+.tea-card){margin-bottom:24px}
+._snapshot-workspace ._mirror-list>.tea-card{margin:0;border-radius:0;box-shadow:none}
+._snapshot-workspace ._mirror-list .tea-table__action-panel .tea-justify-grid__col--left{flex:1;min-width:0}
+._snapshot-workspace ._mirror-list .tea-table__action-panel .tea-justify-grid__col--right{flex:0 0 auto;margin:0;padding-left:12px}
+._snapshot-workspace ._mirror-list .tea-search--tags,
+._snapshot-workspace ._snap-build-list .tea-search--tags{width:100%!important;max-width:none!important;min-width:0!important}
+._snapshot-workspace ._mirror-list .tea-table__action-panel .tea-btn[aria-label],
+._snapshot-workspace ._snap-tools .tea-btn{min-width:30px;height:30px;padding:0;border:1px solid #ddd;background:#fff}
+._snapshot-workspace ._mirror-list .tea-pagination{padding:16px}
+._snapshot-workspace ._mirror-list .tea-table th,
+._snapshot-workspace ._snap-build-list .tea-table th{background:#fff;color:rgba(0,0,0,.7);font-weight:400}
+._snapshot-workspace ._mirror-preheat{height:calc(100vh - 145px);background:#f3f4f7}
+._snapshot-workspace ._snap-build-list{background:#f3f4f7}
+
+._accel-list-tabs .tea-tabs__tablist{gap:0;margin:0;padding:0}
+._snapshot-workspace ._mirror-list .tea-table th,
+._snapshot-workspace ._snap-build-list .tea-table th{height:48px;box-sizing:border-box;padding:12px 10px;line-height:20px}
+._snapshot-workspace ._mirror-list .tea-table td,
+._snapshot-workspace ._snap-build-list .tea-table td{height:64px;box-sizing:border-box;padding:12px 10px;line-height:20px;border-left:0;border-right:0}
+
+/* Keep actions, fluid filters and refresh controls on a single stable row. */
+._snapshot-workspace ._accel-toolbar{display:flex;align-items:flex-start;gap:24px;margin:0 0 24px;min-width:0}
+._snapshot-workspace ._accel-toolbar>.tea-table__action-panel{padding:0;margin:0;min-width:0;flex:0 0 auto}
+._snapshot-workspace ._accel-toolbar>.tea-table__action-panel:last-child{flex:1 1 0}
+._snapshot-workspace ._accel-toolbar .tea-justify-grid__col--left{flex:1;min-width:0}
+._snapshot-workspace ._accel-toolbar .tea-justify-grid__col--right{flex:0 0 auto;padding-left:12px;margin:0}
+._snapshot-workspace ._accel-toolbar .tea-search--tags{width:100%!important;min-width:0!important;max-width:none!important}
+._snapshot-workspace ._accel-toolbar>.tea-table__action-panel:first-child:not(:last-child) .tea-justify-grid__col--left{display:flex;gap:8px;white-space:nowrap}
+._snapshot-workspace ._accel-toolbar>.tea-table__action-panel:first-child:not(:last-child) .tea-btn{margin:0}
+
+/* Compact 20px list gutters with taller, easier-to-target section tabs. */
+._snapshot-workspace ._mirror-list,
+._snapshot-workspace ._snap-page .console-list-body._snap-build-list,
+._snapshot-workspace ._snap-page .console-list-body._snap-monitor-body{padding:20px}
+._snapshot-workspace ._accel-toolbar{margin-bottom:20px}
+._snapshot-workspace ._accel-list-tabs .tea-tabs__tab,
+._snapshot-workspace :is(._snap-tabbed,._snap-task-detail) .tea-tabs__tab{height:48px;min-height:48px;line-height:48px}
+._snapshot-workspace ._mirror-preheat{padding:0;height:calc(100vh - 148px);min-height:630px}
+
+._snapshot-workspace ._accel-list-tabs .tea-tabs__tabbar,
+._snapshot-workspace :is(._snap-tabbed,._snap-task-detail) .tea-tabs__tabbar{height:48px;box-sizing:border-box}
+._snapshot-workspace ._accel-list-tabs .tea-tabs__tablist,
+._snapshot-workspace :is(._snap-tabbed,._snap-task-detail) .tea-tabs__tablist{display:flex;align-items:stretch;height:100%}
+._snapshot-workspace ._accel-list-tabs .tea-tabs__tab,
+._snapshot-workspace :is(._snap-tabbed,._snap-task-detail) .tea-tabs__tab{display:flex;align-items:center;height:48px;line-height:normal}
+
+._snapshot-quota-panel iframe{display:block;width:100%;height:calc(100vh - 50px);border:0;background:#f3f4f7}

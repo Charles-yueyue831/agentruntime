@@ -1,0 +1,64 @@
+html,body{margin:0;background:#f5f7fa;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;font-size:12px;color:#333;min-height:100%;}
+#legacy-preheat,body>.modal,body>.toast,body>.overlay{display:none!important;}
+.tp-app{min-height:100vh}.tp-list{padding:20px 24px}.tp-list .tea-card{border-radius:0}
+.tp-list .tea-table__action-panel .tea-justify-grid__col--right{display:flex;justify-content:flex-end}.tp-tools{display:flex;align-items:center;gap:12px}
+.tp-id,.tp-value-copy{display:flex;align-items:center;gap:8px;min-width:0;max-width:100%}.tp-ellipsis{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}.tp-id .tea-copy,.tp-value-copy .tea-copy{flex:none}
+.tp-page-header{display:flex;align-items:center;gap:12px;padding:20px 24px;background:#fff;position:sticky;top:0;z-index:10;min-height:64px;box-sizing:border-box;border-bottom:1px solid #e5e8ed}.tp-page-header h1{font-size:20px;font-weight:600;line-height:28px;margin:0}
+.tp-create{padding:24px 24px 110px}.tp-basic{display:grid;grid-template-columns:minmax(120px,22%) minmax(0,1fr);gap:24px}.tp-basic h2{font-size:16px;line-height:24px;font-weight:600;margin:4px 0}.tp-fields{min-width:0}.tp-fields>.tea-alert{margin-bottom:24px}.tp-fields .tea-form--vertical .tea-form__item{margin-bottom:24px}
+.tp-input-action{display:flex;align-items:center;gap:12px}.tp-input-action>.tea-input{flex:1;min-width:0;width:100%;max-width:560px}.tp-input-action>.tea-btn,.tp-input-action>.tea-bubble{flex:none}.tp-digest{word-break:break-all;line-height:20px}
+.tp-fixed-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e8ed;padding:20px 24px;display:flex;gap:12px;z-index:20}.tp-fixed-footer .tea-btn{min-width:80px}.tp-fixed-footer .tea-btn--primary{min-width:106px}.tp-detail{padding:24px}.tp-detail .tea-form{max-width:100%}.tp-modal-form,.tp-picker-table{margin-top:20px}.tea-dialog .tp-value-copy{max-width:100%}.tea-dialog .tea-alert{margin-bottom:20px}
+@media(max-width:700px){.tp-basic{grid-template-columns:1fr;gap:20px}.tp-create,.tp-detail,.tp-list{padding-left:16px;padding-right:16px}.tp-input-action{gap:8px}.tp-page-header{padding:16px}}
+
+/* Creation screenshot: consistent field widths and white sectioned layout. */
+.tp-app:has(.tp-create){background:#fff;}
+.tp-app:has(.tp-create) .tp-page-header{border-bottom:0;min-height:72px;padding:20px 32px;}
+.tp-create{padding:20px 24px 116px;}
+.tp-create .tea-card{border:1px solid #e3e7ef;border-radius:8px;box-shadow:none;overflow:hidden;}
+.tp-create .tea-card__body{padding:24px;}
+.tp-basic{grid-template-columns:220px minmax(0,1fr);gap:24px;}
+.tp-basic h2{font-size:18px;}
+.tp-fields .tp-input-action{width:100%;}
+.tp-fields .tp-input-action>.tea-input{flex:0 1 510px;width:510px;max-width:510px;}
+.tp-fields .tp-input-action>.tea-input-group{flex:0 1 510px;width:510px;max-width:510px;}
+.tp-fields .tp-input-action input{width:100%;}
+.tp-fields .tea-form__help-text{color:#888;}
+.tp-fields .tea-input-number{width:180px;}
+.tp-fixed-footer{padding:24px 32px;}
+@media(max-width:1100px){.tp-basic{grid-template-columns:140px minmax(0,1fr);gap:20px;}.tp-fields .tp-input-action>.tea-input,.tp-fields .tp-input-action>.tea-input-group{flex:1;min-width:0;}.tp-create{padding-left:20px;padding-right:20px;}}
+@media(max-width:700px){.tp-basic{grid-template-columns:1fr;}.tp-create .tea-card__body{padding:20px;}}
+.tp-fields .tea-inputnum{width:180px;display:inline-flex;}
+.tp-fields .tea-inputnum>.tea-input{width:120px;min-width:0;}
+.tp-fields .tea-inputnum__minus,.tp-fields .tea-inputnum__plus{width:30px;flex:none;}
+.tp-page-header .tea-btn{color:#666;}
+
+/* Task-level automatic unload policy follows the existing Tea form vocabulary. */
+.tp-create,.tp-detail{display:flex;flex-direction:column;gap:24px}
+.tp-policy-fields{min-width:0;max-width:760px}.tp-policy-fields .tea-form__item{margin-bottom:24px}
+.tp-policy-fields .tp-policy-task-option{margin-top:12px;padding-top:20px;border-top:1px solid #e5e7eb}
+.tp-policy-duration{display:flex;align-items:center;gap:8px}.tp-policy-duration>.tea-input{width:180px;max-width:60%}
+.tp-policy-duration>span{font-size:12px;color:#555}
+.tp-policy-effective{padding:16px 20px;background:#f2f7ff;border:1px solid #d9e8ff;line-height:22px;color:#444}
+.tp-policy-effective strong{font-weight:600;color:#333}.tp-policy-effective p{margin:6px 0 0}
+.tp-policy-task{margin:0 0 24px;padding:12px 16px;background:#f7f8fa;line-height:22px}
+.tp-row-actions{display:flex;gap:16px;align-items:center;white-space:nowrap}
+.tp-create>.tea-card,.tp-detail>.tea-card{width:100%;margin:0;box-sizing:border-box;}
+
+.tp-primary-actions{display:flex;align-items:center;gap:12px}
+.tp-filter-row{display:flex;align-items:center;gap:16px;width:100%}
+.tp-filter-grow{flex:1;min-width:0}.tp-filter-grow>div{width:100%;box-sizing:border-box}
+.tp-filter-row>.tp-tools{flex:none}
+.tp-page-header .tp-back-button{color:#000;display:inline-flex;align-items:center;justify-content:center;min-width:24px;width:28px;height:28px;padding:0;flex:none}
+.tp-page-header .tp-back-button svg{display:block;color:#000;fill:currentColor}
+@media(max-width:700px){.tp-filter-row{gap:8px}.tp-primary-actions{flex-wrap:wrap}}
+.tp-policy-dialog .tea-dialog__body{padding:32px 40px 24px}
+.tp-policy-dialog .tea-dialog__footer{text-align:center;padding:20px 40px 28px}
+.tp-policy-dialog .tea-dialog__footer .tea-btn{min-width:100px}
+.tp-policy-dialog .tea-form--fixed .tea-form__item{margin-bottom:24px}
+.tp-policy-dialog .tea-form__help-text{max-width:520px;line-height:20px}
+.tp-policy-dialog .tp-policy-fields{max-width:none}
+.tp-policy-dialog .tp-policy-duration>.tea-input{width:220px;max-width:100%}
+.tp-policy-dialog .tp-policy-task{margin:0;padding:0;background:none}
+.tp-policy-dialog .tp-policy-task .tea-form__item{margin-bottom:12px}
+.tp-policy-dialog .tp-policy-task .tea-form__item:last-child{margin-bottom:0}
+.tp-policy-list-value{line-height:20px}
+@media(max-width:700px){.tp-policy-dialog .tea-dialog__body{padding:20px}}

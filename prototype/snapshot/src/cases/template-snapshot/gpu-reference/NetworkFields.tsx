@@ -1,0 +1,15 @@
+import React,{useState} from 'react';
+import {Button,Form,Select,Modal} from '@tencent/tea-component';
+const opts=(values:string[])=>values.map(value=>({value,text:value}));
+export default function NetworkFields({vpc,subnet,groups,onVpc,onSubnet,onGroups,validation}:{vpc:string;subnet:string;groups:string[];onVpc:(v:string)=>void;onSubnet:(v:string)=>void;onGroups:(v:string[])=>void;validation:any}){
+ const [preview,setPreview]=useState(''),[refresh,setRefresh]=useState('');
+ const reload=(name:string)=>{setRefresh(name);setTimeout(()=>setRefresh(''),1500)};
+ const refreshButton=(name:string)=><Button type="text" aria-label={'刷新'+name} icon="refresh" onClick={()=>reload(name)}/>;
+ return <>
+ <Form.Item showStatusIcon={false} label="VPC 网络" required {...validation}><div className="_ags-field-row"><Select size="l" appearance="button" value={vpc} onChange={v=>{onVpc(v);onSubnet('')}} placeholder="请选择 VPC 网络" options={opts(['vpc-freh4oyy | default','vpc-sandbox | sandbox'])}/>{refreshButton('VPC 网络')}</div><p className="_ags-network-help">如现有的网络不合适，您可以去控制台<a href="https://console.cloud.tencent.com/vpc/vpc" target="_blank" rel="noreferrer">新建私有网络 ↗</a></p></Form.Item>
+ <Form.Item showStatusIcon={false} label="子网选择" required {...validation}><div className="_ags-field-row"><Select size="l" appearance="button" value={subnet} onChange={onSubnet} disabled={!vpc} placeholder="请选择子网" options={opts(vpc.includes('sandbox')?['subnet-sandbox | sandbox']:['subnet-mw0fqo42 | default'])}/>{refreshButton('子网')}</div><p className="_ags-network-help">为打通您的 VPC 网络，<span style={{color:'#ff4d4f'}}>沙箱会占用您选择子网下 1 个可用 IP</span></p></Form.Item>
+ <Form.Item showStatusIcon={false} label="安全组">{groups.map((group,i)=><div className="_ags-field-row _ags-security-row" key={i}><Select size="l" appearance="button" value={group} onChange={v=>onGroups(groups.map((g,n)=>n===i?v:g))} placeholder="请选择安全组" options={opts(['sg-mlaixmrl | default','sg-sandbox | sandbox']).map(o=>({...o,disabled:groups.some((g,n)=>n!==i&&g===o.value)}))}/>{refreshButton('安全组')}<Button type="text" aria-label="移除安全组" onClick={()=>onGroups(groups.filter((_,n)=>n!==i))}>×</Button><Button type="link" disabled={!group} onClick={()=>setPreview(group)}>预览安全组规则</Button></div>)}<Button type="link" disabled={groups.length>=2||groups.includes('')} onClick={()=>onGroups([...groups,''])}>＋ 添加安全组</Button><p className="_ags-network-help">选择安全组后沙箱实例将绑定指定的安全组。如需自定义配置安全组规则，可以<a href="https://console.cloud.tencent.com/vpc/securitygroup" target="_blank" rel="noreferrer">新建安全组 ↗</a></p></Form.Item>
+ {refresh&&<div role="status" className="_ags-network-help">{refresh}列表已刷新</div>}
+ <Modal visible={!!preview} caption="安全组规则" onClose={()=>setPreview('')}><Modal.Body><p>{preview}</p><table className="_ags-network-rules"><thead><tr><th>方向</th><th>协议端口</th><th>来源 / 目的</th><th>策略</th></tr></thead><tbody><tr><td>入站</td><td>TCP:80,443</td><td>0.0.0.0/0</td><td>允许</td></tr><tr><td>出站</td><td>全部</td><td>0.0.0.0/0</td><td>允许</td></tr></tbody></table><p className="_ags-network-help">原型示例规则</p></Modal.Body><Modal.Footer><Button onClick={()=>setPreview('')}>关闭</Button></Modal.Footer></Modal>
+ </>;
+}

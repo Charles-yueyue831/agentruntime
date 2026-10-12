@@ -1,0 +1,27 @@
+/**
+ * Console Shell 样式入口文件
+ *
+ * 使用方式：在项目入口文件（如 main.tsx / app.tsx）中引入：
+ *
+ *   // 1. 先引入 Tea 组件库样式
+ *   import "@tencent/tea-component/dist/themes/console-pack.css";
+ *   import "@tencent/tea-component/dist/tea-themeable.css";
+ *
+ *   // 2. 再引入本文件（包含框架壳子所有样式）
+ *   import "@sdk/console-shell/styles/index.css";
+ *
+ * 引入顺序说明：
+ *   1. Tea 主题变量包 (console-pack.css)   — 定义 --tea-color-* CSS 变量
+ *   2. Tea 组件库样式 (tea-themeable.css)   — 组件样式
+ *   3. Console Shell 样式 (本文件)          — 导航 + 菜单 + 内容区覆盖
+ *   4. 业务自定义样式                        — 业务页面样式
+ */
+
+/* 内容区宽度覆盖（覆盖 Tea 默认 max-width: 1360px → 100%） */
+@import './content-area.css';
+
+/* sdk-nav-v2 核心样式（顶部导航 + 二级导航 + 汉堡菜单面板 + 设置面板等） */
+/* 注：此文件为编译产物（~256KB），包含 54 个 SCSS 源文件的编译结果 */
+@import './sdk-nav-v2.css';
+
+

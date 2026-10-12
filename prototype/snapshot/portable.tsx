@@ -1,0 +1,10 @@
+import React from 'react';
+import {createRoot} from 'react-dom/client';
+import {BrowserRouter} from 'react-router-dom';
+import {ConsoleLayout} from './src/console-shell/console-shell';
+import Page from './src/cases/template-snapshot/Workspace';
+import Sider from './src/cases/template-snapshot/Sider';
+import '@tencent/tea-component/dist/themes/console-pack.css';
+import '@tencent/tea-component/dist/tea-themeable.css';
+import './src/console-shell/styles/index.css';
+createRoot(document.getElementById('root')!).render(<BrowserRouter><ConsoleLayout siderContent={<Sider/>}><Page/></ConsoleLayout></BrowserRouter>);
