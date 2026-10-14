@@ -156,6 +156,9 @@
 
 | 122 | `prototype/snapshot/tsconfig.json` | 模板快照 TypeScript 构建配置 | https://charles-yueyue831.github.io/agentruntime/prototype/snapshot/tsconfig.json |
 
+| 123 | `prototype/snapshot/demo.mp4` | 模板快照产品能力视频演示：中文 AI 配音、动态字幕、无背景配乐 | https://charles-yueyue831.github.io/agentruntime/prototype/snapshot/demo.mp4 |
+| 124 | `prototype/snapshot/demo.srt` | 模板快照产品能力视频演示中文字幕 | https://charles-yueyue831.github.io/agentruntime/prototype/snapshot/demo.srt |
+
 **访问路径生成规则**：任意新增文件，其在线访问路径 = `https://charles-yueyue831.github.io/agentruntime/` + 仓库内相对路径（空格 → `%20`，中文 → UTF-8 百分号编码）。
 
 ## 4. 学习主题
