@@ -17,11 +17,28 @@
 
 [查看四段视频、合集与字幕](prototype/preheat/README.md)。中文配音 + 步骤字幕，涵盖预热任务、自动预热、自动卸载和预热任务监控；合集约 4 分 13 秒。
 
+## K8s 交互学习原型
+
+**[打开 K8s Atlas 交互学习原型](https://charles-yueyue831.github.io/agentruntime/prototype/k8s/)** · [查看完整源码](prototype/k8s/index.html)
+
+从技术机制和产品设计两个视角学习 Kubernetes：
+
+- **架构地图**：37 个知识节点，涵盖控制平面、节点执行、工作负载与控制器、网络、存储、安全治理及扩展；支持搜索、关联跳转与已读标记。
+- **第一性原理**：围绕稳定运行、流量突增、版本发布、有状态服务、多团队共享与领域自动化，分析主要矛盾、次要矛盾、设计取舍和验收指标。
+- **控制器对照**：比较 10 组控制逻辑的输入、动作、目标和责任边界。
+- **场景实验**：逐步播放部署、Pod 删除、容器崩溃、节点失联、负载与容量、发布不就绪；扩容实验可调整 CPU 利用率与可调度容量。
+- **理解自测**：6 道题附因果解释，支持本地保存进度；提供三种阅读外观。
+
+原型是自包含 HTML，样式、知识内容与交互代码均在 `prototype/k8s/index.html` 中，无需安装依赖或构建。下载后可直接在浏览器打开；也可在仓库根目录运行 `python3 -m http.server 8000`，访问 `http://localhost:8000/prototype/k8s/`。
+
+实验均为教学模拟，不连接真实集群。各知识节点附有 Kubernetes 官方资料链接；“主要 / 次要矛盾”属于产品分析框架，不是 Kubernetes 官方术语。在线参考链接需要联网。
+
 ## 内容结构
 
 | 本地路径 | 内容说明 | 在线访问路径 |
 | --- | --- | --- |
 | `README.md` | 项目总览（本文件） | [在线查看](https://charles-yueyue831.github.io/agentruntime/) |
+| `prototype/k8s/index.html` | K8s Atlas 交互学习原型：37 个知识节点、双视角解释、控制器对照、6 个场景实验与自测；自包含 HTML 源码 | [打开交互原型](https://charles-yueyue831.github.io/agentruntime/prototype/k8s/) |
 | `Agent 沙箱/计算与执行/envd 使用指南.html` | envd · 沙箱内管理守护进程（Guest Management Agent，把 SDK / 云侧管理请求转换为 Guest Linux 中的命令、进程、文件与健康检查操作） | [在线查看](https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%A7%E8%A1%8C/envd%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html) |
 | `Agent 沙箱/存储/挂载路径覆盖.html` | 图解「为什么 Instance 可以覆盖 Tool 的 MountPath，却不等于绕过存储管控」（MountPath 是位置，StorageSource / ReadOnly 上限 / 路径规则才是边界） | [在线查看](https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html) |
 | `产品经理/产品经理黑话.html` | AI 产品经理 · 产品概念词典（67 词条：AI 产品语境、场景示例、PM 判断；11 章 + 产品判断链路 + 官方参考资料） | [在线查看](https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html) |
