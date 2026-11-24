@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI 前沿每周关键词 · 10 月 19 日至 23 日</title>
+<style>
+:root {
+  color-scheme: light;
+  --paper: #fafbfc; --ink: #20253a; --muted: #51596a; --line: #d8dce3;
+  --iris: #4c4f9b; --cover: #e9eafa; --us: #8595a6; --cn: #444781;
+  font-family: "Avenir Next","PingFang SC","Microsoft YaHei",sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+* {box-sizing:border-box}
+body {margin:0; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased}
+main,.mast,.foot {width:min(calc(100% - 8vw),1456px); margin-inline:auto}
+h1,h2,h3,p,figure {margin:0}
+h2 {font-size:clamp(21px,1.7vw,28px); line-height:1.3; letter-spacing:-.045em; font-weight:650}
+a {color:inherit; text-underline-offset:4px}
+a:focus-visible,[tabindex]:focus-visible {outline:3px solid var(--iris); outline-offset:3px}
+[id] {scroll-margin-top:18px}
+.mast,.mast nav,.issue figcaption,.foot {display:flex; align-items:center; justify-content:space-between}
+.mast {padding:19px 0 15px; font-size:15px; font-weight:650}
+.mast nav {gap:24px; color:var(--muted); font-size:13px; font-weight:500}
+.mast a {text-decoration:none}
+.mast a:hover {text-decoration:underline}
+.cover {display:grid; grid-template-columns:1fr 1.14fr; gap:clamp(16px,5vw,94px); align-items:center; padding:clamp(28px,3.8vw,62px); background:var(--cover); border-radius:4px 30px 4px 4px}
+.cover-copy {display:grid; grid-template-columns:max-content auto; align-items:baseline; column-gap:12px}
+h1 {font-size:clamp(44px,5.1vw,82px); line-height:1.08; letter-spacing:-.055em; font-weight:680; color:#292d5c}
+.series {align-self:end; padding-bottom:.19em; color:var(--iris); font-size:clamp(17px,1.5vw,25px); font-weight:600}
+.issue-date {grid-column:1/-1; margin-top:23px; color:#454a68; font-size:clamp(14px,1.2vw,18px)}
+.issue {min-width:0; max-width:610px; width:100%}
+.issue h2 {font-size:clamp(19px,1.5vw,24px)}
+.issue figcaption span,.issue-caption {font-size:12px; color:#4c526c}
+.issue-rows {margin:13px 0}
+.issue-row {display:grid; grid-template-columns:46px minmax(0,1fr) 24px; align-items:center; gap:12px; padding:3px 0; text-decoration:none; color:#303656; font-size:14px; border-radius:2px}
+.issue-row b {text-align:right}
+.issue-row>span:first-child {text-decoration:underline; text-decoration-color:#8b90af; text-underline-offset:3px}
+.issue-row:hover>span:first-child {text-decoration-color:currentColor}
+.cells {display:grid; grid-template-columns:repeat(var(--slots),minmax(0,1fr)); gap:4px}
+.cells i {height:clamp(12px,1.18vw,20px); background:var(--swatch); border-radius:2px}
+.legend {display:flex; flex-wrap:wrap; gap:5px 15px; font-size:12px; color:#383d56}
+.legend span {display:inline-flex; align-items:center; gap:5px}
+.legend i,.compare-table th i,.dot,.cat-name::before {display:inline-block; width:8px; height:8px; border-radius:2px; background:var(--swatch); flex:none}
+.issue-caption {margin-top:8px}
+.metrics {display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); padding:27px 0 24px; border-bottom:1px solid var(--line)}
+.kpi {padding:0 clamp(10px,1.8vw,28px); border-left:1px solid var(--line)}
+.kpi:first-child {padding-left:0; border:0}
+.kpi-v {font-size:clamp(28px,2.4vw,40px); color:var(--ink); font-weight:600; line-height:1.08; letter-spacing:-.045em}
+.kpi-l {margin-top:8px; font-size:14px; font-weight:650}
+.kpi-s,.desc,.compare-copy p,.note p {color:var(--muted); line-height:1.65}
+.kpi-s {margin-top:3px; font-size:12px}
+.block {margin-top:clamp(34px,4vw,64px)}
+.comparison {display:grid; grid-template-columns:minmax(230px,.8fr) minmax(0,2fr); gap:clamp(18px,5vw,80px); align-items:start}
+.compare-copy h2 {font-size:clamp(28px,2.6vw,42px)}
+.compare-copy p {max-width:34em; margin-top:12px; font-size:14px}
+table {width:100%; border-collapse:collapse; text-align:left}
+.compare-table {table-layout:fixed; font-size:14px}
+.compare-table th,.compare-table td {padding:6px 8px 6px 0}
+.compare-table thead th,.details thead th {color:var(--muted); font-size:12px; font-weight:550; border-bottom:1px solid var(--line)}
+.compare-table th:first-child {width:16%}
+.compare-table th:nth-child(2) {width:36%}
+.compare-table th:nth-child(3) {width:13%}
+.compare-table tbody tr {border-bottom:1px solid #e4e7ed}
+.compare-table th i {margin-right:7px}
+.total,.regional {display:flex; align-items:center; gap:6px; padding-right:25px}
+.total span {background:var(--swatch); height:11px; border-radius:2px; flex:none}
+.total b,.regional b {font-size:12px; line-height:1; font-weight:600}
+.regional span {height:5px; flex:none; background:var(--region)}
+.regional {min-height:14px}
+.US {--region:var(--us)}
+.CN {--region:var(--cn)}
+.region-key {white-space:nowrap; margin-right:10px; display:inline-flex; align-items:center; gap:4px}
+.region-key::before {content:""; width:12px; height:5px; background:var(--region)}
+.share {color:var(--muted)}
+.analysis {display:grid; grid-template-columns:.86fr 1.12fr 1.02fr; gap:clamp(16px,2vw,32px); background:#f0f3f5; padding:clamp(18px,2.3vw,36px); border-radius:12px}
+.analysis section,.agent>div,.days>section {min-width:0}
+.analysis section {display:grid; grid-template-rows:auto auto 1fr; align-content:start}
+.desc {font-size:14px; margin:9px 0 15px}
+svg {display:block; max-width:100%; font-family:inherit}
+.analysis svg {width:100%; height:auto; align-self:center}
+.analysis section:first-child svg {max-height:260px}
+.agent {display:grid; grid-template-columns:minmax(200px,.7fr) minmax(0,2.1fr); gap:clamp(20px,3vw,52px); align-items:start}
+.score {padding:clamp(16px,2vw,30px); border-radius:12px; background:#eceef8}
+.score svg {width:100%; height:auto; max-height:270px}
+.table-scroll {overflow-x:auto}
+.details {font-size:13px; min-width:585px}
+.details th,.details td {padding:8px 9px 8px 0; border-bottom:1px solid var(--line)}
+.details td:first-child {font-weight:650}
+.cat-name {white-space:nowrap}
+.cat-name::before {content:""; margin-right:5px}
+.details td:last-child {color:var(--iris); white-space:nowrap}
+.days {display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:0}
+.daycol {border-top:3px solid #7981a5; padding:15px clamp(8px,1.15vw,19px) 0; border-left:1px solid var(--line)}
+.daycol:first-child {border-left:0}
+.daycol:target {background:#eceef8}
+.dayh {display:flex; justify-content:space-between; align-items:baseline; margin:0 0 12px; font-size:16px}
+.dayh span {font-size:12px; font-weight:500; color:var(--muted)}
+.dayrow {display:grid; grid-template-columns:8px minmax(0,1fr); gap:2px 7px; align-items:baseline; padding:5px 0}
+.dayrow .dot {border-radius:50%}
+.dayrow b {font-size:13px; line-height:1.4; overflow-wrap:anywhere}
+.dayrow em {grid-column:2; font-size:11.5px; font-style:normal; color:var(--muted); overflow-wrap:anywhere}
+.notes {margin-bottom:42px}
+.note-grid {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 6%; margin-top:20px}
+.note {border-top:1px solid var(--line); padding-top:13px}
+.note h3 {font-size:17px; margin-bottom:7px}
+.note p {font-size:14px; max-width:47em}
+.foot {align-items:flex-start; gap:18px; border-top:1px solid var(--line); padding:18px 0 30px; font-size:12px; line-height:1.65; color:var(--muted)}
+@media(max-width:1020px) {
+  .agent {grid-template-columns:minmax(175px,.7fr) minmax(0,1.8fr)}
+  .analysis {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .analysis section:last-child {grid-column:1/-1; grid-template-columns:.75fr 1fr; grid-template-rows:auto 1fr; column-gap:30px}
+  .analysis section:last-child svg {grid-column:2; grid-row:1/3}
+  .days {grid-template-columns:repeat(3,minmax(0,1fr)); row-gap:24px}
+}
+@media(max-width:760px) {
+  main,.mast,.foot {width:calc(100% - 32px)}
+  .mast nav {gap:13px; font-size:12px}
+  .cover {grid-template-columns:1fr; gap:23px; padding:24px}
+  h1 br,.compare-copy h2 br {display:none}
+  h1 {font-size:clamp(28px,5.6vw,42px)}
+  .cover-copy {grid-template-columns:minmax(0,max-content) auto; column-gap:6px}
+  .series {font-size:14px}
+  .issue-date {margin-top:8px}
+  .issue-row {grid-template-columns:37px minmax(0,1fr) 17px; gap:8px}
+  .legend {gap:4px 10px}
+  .metrics {grid-template-columns:repeat(3,minmax(0,1fr)); row-gap:18px; padding-block:18px}
+  .kpi:last-child {grid-column:span 2}
+  .kpi:nth-child(3n+1) {padding-left:0; border:0}
+  .kpi-l {font-size:13px}
+  .kpi-s {font-size:11.5px}
+  .comparison,.agent {grid-template-columns:1fr}
+  .compare-copy h2 {font-size:26px}
+  .compare-copy p {margin-top:6px}
+  .score {display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto 1fr; column-gap:12px}
+  .score svg {grid-row:1/3; grid-column:2}
+  .days {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foot {display:block}
+}
+@media(max-width:540px) {
+  .cover {padding:20px 16px; border-top-right-radius:20px}
+  .analysis,.note-grid {grid-template-columns:1fr}
+  .analysis section,.analysis section:last-child {display:block}
+  .analysis section+section {padding-top:20px; border-top:1px solid var(--line)}
+  .analysis svg {max-height:240px}
+  .score {display:block}
+  .score svg {max-height:205px}
+  .compare-table {font-size:12px}
+  .compare-table th,.compare-table td {padding-right:3px}
+  .compare-table th:first-child {width:17%}
+  .compare-table th i {width:6px; height:6px; margin-right:4px}
+  .total,.regional {padding-right:18px; gap:2px}
+  .region-key {margin-right:5px}
+  .region-key::before {width:7px}
+  .days {grid-template-columns:1fr; gap:18px}
+  .daycol {border-left:0; padding-inline:2px}
+  .dayrow {grid-template-columns:8px minmax(0,1fr) minmax(0,.8fr)}
+  .dayrow em {grid-column:3; text-align:right}
+}
+.day-source {display:inline-block;margin-top:12px;color:#4c4f9b;font-size:12px}
+</style>
+<style>
+:root{--ink:#172e46;--paper:#f8fafb;--muted:#465c70;--line:#c9d7df;--iris:#2444a3;--cover:#193e80;--us:#778d9f;--cn:#30518d;font-family:"Avenir Next","PingFang SC","Microsoft YaHei",sans-serif;font-variant-numeric:tabular-nums;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}a{color:inherit;text-underline-offset:.2em}a:focus-visible,summary:focus-visible{outline:3px solid #3982b2;outline-offset:3px}
+.pubbar,.issue-jump{width:min(92%,1392px);margin:auto}.pubbar{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:15px 0;color:#334c65;font-size:14px}.pubbar>a{font-weight:650;text-decoration:none}.pubbar details{max-width:76%}.pubbar summary{cursor:pointer;text-align:right}.pubbar nav{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px 14px;margin:14px 0 0}.pubbar nav a{padding:4px 6px}.pubbar [aria-current=page]{background:#17366e;color:white;border-radius:3px}
+.mast{border-top:1px solid var(--line);padding:12px 0;font-size:14px}.cover{background:var(--cover);color:white;border-radius:8px 8px 22px 8px;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(16px,3vw,48px);padding:clamp(20px,3.2vw,50px)}
+.cover-copy{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 10px}.cover h1,.edition-title{font-family:"Songti SC","STSong","Noto Serif CJK SC","SimSun",Georgia,serif;font-weight:700;letter-spacing:-.05em}.cover h1{color:white;font-size:clamp(38px,4.7vw,72px);line-height:1.15}.cover .series{color:#d1e4ff;font-size:16px}.cover .issue-date{width:100%;color:#e1eaf5;margin-top:22px}.issue{background:#f7fcff;color:var(--ink);padding:clamp(16px,2.1vw,33px);border-radius:4px 4px 13px 4px;max-width:none}.issue figcaption{gap:12px}.cells i{border-radius:1px 3px 3px 1px}.issue-row:hover{background:#e2eef6}.metrics{background:#e9f1f6;padding-inline:clamp(12px,2.8vw,42px);border:0;border-radius:0 0 8px 8px}.kpi-v{color:#234b73}.analysis{background:#e8eff3;border-radius:6px}.score{background:#e3edf5;border-radius:6px}.daycol{border-top-color:#3d667e}.daycol:target{background:#dfedf6}.note h3{color:#204567}.total span{height:10px}.details th,.details td{line-height:1.5}.issue-jump{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:20px 0 32px;color:#254777;font-size:14px}.issue-jump span{margin-right:.55em;color:var(--muted)}
+@media(max-width:760px){.pubbar,.issue-jump{width:calc(100% - 32px)}.cover{grid-template-columns:1fr;padding:18px;gap:20px}.cover .issue-date{margin-top:10px}.cover h1{font-size:clamp(24px,6.2vw,43px)}.cover .series{font-size:13px}.issue{padding:14px 12px}.issue-caption{line-height:1.5}.mast{align-items:baseline;gap:8px}.mast nav{gap:10px}.pubbar{font-size:13px}.issue-jump{font-size:13px}}
+</style></head><body><div class="pubbar"><a href="../ai-news/index.html">AI 前沿周刊</a><details><summary>全站目录</summary><nav aria-label="全站文档"><a href="https://charles-yueyue831.github.io/agentruntime/">🏠 README 首页</a><a href="https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%A7%E8%A1%8C/envd%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html">envd 使用指南</a><a href="https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html">挂载路径覆盖</a><a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html">产品经理概念词典</a><a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html">用户旅程图</a><a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html">问题性质</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/gpu/">GPU 沙箱用户体验</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/preheat/README.md">镜像预热演示</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/snapshot/">模板快照原型</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/snapshot/src/cases/template-snapshot/image-center/preheat.html">镜像预热原型</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/k8s/">K8s 交互学习</a><a href="../ai-news/index.html">周刊总览</a><a href="../ai-news-1114-1120/dashboard.html">11 月 14 日至 20 日</a><a href="../ai-news-1109-1113/dashboard.html">11 月 9 日至 13 日</a><a href="../ai-news-1102-1106/dashboard.html">11 月 2 日至 6 日</a><a href="../ai-news-1026-1030/dashboard.html">10 月 26 日至 30 日</a><a href="../ai-news-1019-1023/dashboard.html" aria-current="page">10 月 19 日至 23 日 · 当前</a><a href="../ai-news-1012-1016/dashboard.html">10 月 12 日至 16 日</a></nav></details></div>
+<header class="mast"><span>腾讯研究院</span><nav aria-label="页内目录"><a href="#compare">类别对比</a><a href="#agent">Agent 条目</a><a href="#daily">日刊索引</a></nav></header>
+<main>
+<header class="cover">
+  <div class="cover-copy"><h1>AI 前沿<br>每周关键词</h1>
+    <p class="series">Top50</p><p class="issue-date">2026 年 10 月 19 日至 23 日</p>
+  </div>
+  <figure class="issue"><figcaption><h2>五期《AI 速递》</h2><span>每格一次报道</span></figcaption>
+    <div class="issue-rows" style="--slots:10"><a class="issue-row" href="#day-1019" aria-label="10月19日，共9条。模型2条，应用5条，观点2条。查看当日条目"><span>10.19</span><span class="cells"><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i></span><b>9</b></a><a class="issue-row" href="#day-1020" aria-label="10月20日，共9条。模型2条，应用4条，观点1条，科技1条，事件1条。查看当日条目"><span>10.20</span><span class="cells"><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i></span><b>9</b></a><a class="issue-row" href="#day-1021" aria-label="10月21日，共9条。模型1条，应用5条，观点1条，事件2条。查看当日条目"><span>10.21</span><span class="cells"><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i></span><b>9</b></a><a class="issue-row" href="#day-1022" aria-label="10月22日，共8条。应用2条，观点2条，科技1条，事件1条，算力2条。查看当日条目"><span>10.22</span><span class="cells"><i style="--swatch:#587c9b" aria-hidden="true"></i><i style="--swatch:#587c9b" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i><i style="--swatch:#ba7168" aria-hidden="true"></i></span><b>8</b></a><a class="issue-row" href="#day-1023" aria-label="10月23日，共10条。模型4条，应用1条，观点2条，科技2条，事件1条。查看当日条目"><span>10.23</span><span class="cells"><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i></span><b>10</b></a></div>
+    <div class="legend"><span><i style="--swatch:#6568ad"></i>模型</span><span><i style="--swatch:#398478"></i>应用</span><span><i style="--swatch:#c6994e"></i>观点</span><span><i style="--swatch:#9578a0"></i>科技</span><span><i style="--swatch:#ba7168"></i>事件</span><span><i style="--swatch:#587c9b"></i>算力</span></div>
+    <p class="issue-caption">周五收录 10 条，其中 4 条是模型新闻。</p>
+  </figure>
+</header>
+<section class="metrics" aria-label="本期统计"><div class="kpi"><div class="kpi-v">44</div><div class="kpi-l">本周关键词</div>
+    <div class="kpi-s">按不同关键词统计</div></div><div class="kpi"><div class="kpi-v">45</div><div class="kpi-l">日刊报道条次</div>
+    <div class="kpi-s">EdenLive 在两期出现</div></div><div class="kpi"><div class="kpi-v">6</div><div class="kpi-l">新闻类别</div>
+    <div class="kpi-s">沿用周刊分类</div></div><div class="kpi"><div class="kpi-v">16</div><div class="kpi-l">应用类关键词</div>
+    <div class="kpi-s">占本周关键词的 36%</div></div><div class="kpi"><div class="kpi-v">20</div><div class="kpi-l">Agent 高相关</div>
+    <div class="kpi-s">本看板评为 4 至 5 星</div></div></section>
+<section class="comparison block" id="compare">
+  <div class="compare-copy"><h2>本周新闻类别<br>与中美分布</h2><p>本期 44 个关键词中，应用占 16 个，模型占 9 个。周四的 DSX POD 和 TorchTPU 是本周两条算力新闻。</p>
+    <p>按报道主体归类，美国主体 18 项，中国主体 15 项。其余 11 项涉及个人或归属未核实的团队，只计入总量。</p></div>
+  <table class="compare-table" aria-label="各类别的总量、占比与中美条数">
+    <thead><tr><th>类别</th><th>全部条目</th><th>占比</th><th><span class="region-key US">美国</span><span class="region-key CN">中国</span></th></tr></thead>
+    <tbody><tr><th scope="row"><i style="--swatch:#398478"></i>应用</th><td><div class="total"><span style="--swatch:#398478;width:100.00%"></span><b>16</b></div></td><td class="share">36%</td><td><div class="regional US" aria-label="美国 5 条"><span style="width:71.43%"></span><b>5</b></div><div class="regional CN" aria-label="中国 7 条"><span style="width:100.00%"></span><b>7</b></div></td></tr><tr><th scope="row"><i style="--swatch:#6568ad"></i>模型</th><td><div class="total"><span style="--swatch:#6568ad;width:56.25%"></span><b>9</b></div></td><td class="share">20%</td><td><div class="regional US" aria-label="美国 3 条"><span style="width:42.86%"></span><b>3</b></div><div class="regional CN" aria-label="中国 5 条"><span style="width:71.43%"></span><b>5</b></div></td></tr><tr><th scope="row"><i style="--swatch:#c6994e"></i>观点</th><td><div class="total"><span style="--swatch:#c6994e;width:50.00%"></span><b>8</b></div></td><td class="share">18%</td><td><div class="regional US" aria-label="美国 2 条"><span style="width:28.57%"></span><b>2</b></div><div class="regional CN" aria-label="中国 1 条"><span style="width:14.29%"></span><b>1</b></div></td></tr><tr><th scope="row"><i style="--swatch:#ba7168"></i>事件</th><td><div class="total"><span style="--swatch:#ba7168;width:31.25%"></span><b>5</b></div></td><td class="share">11%</td><td><div class="regional US" aria-label="美国 4 条"><span style="width:57.14%"></span><b>4</b></div><div class="regional CN" aria-label="中国 0 条"><span style="width:0.00%"></span><b>0</b></div></td></tr><tr><th scope="row"><i style="--swatch:#9578a0"></i>科技</th><td><div class="total"><span style="--swatch:#9578a0;width:25.00%"></span><b>4</b></div></td><td class="share">9%</td><td><div class="regional US" aria-label="美国 2 条"><span style="width:28.57%"></span><b>2</b></div><div class="regional CN" aria-label="中国 2 条"><span style="width:28.57%"></span><b>2</b></div></td></tr><tr><th scope="row"><i style="--swatch:#587c9b"></i>算力</th><td><div class="total"><span style="--swatch:#587c9b;width:12.50%"></span><b>2</b></div></td><td class="share">5%</td><td><div class="regional US" aria-label="美国 2 条"><span style="width:28.57%"></span><b>2</b></div><div class="regional CN" aria-label="中国 0 条"><span style="width:0.00%"></span><b>0</b></div></td></tr></tbody>
+  </table>
+</section>
+<div class="analysis block">
+  <section><h2>报道时的状态</h2><p class="desc">Aurora 与 Anthropic 新模型仍待官方确认。Claude Duet 已开始接受候补申请。</p><svg viewBox="0 0 300 270" width="100%" height="270"><path d="M150.0,34.0 A84,84 0 1 1 138.0,201.1 L142.6,169.5 A52,52 0 1 0 150.0,66.0 Z" fill="#99adc3" stroke="#f0f3f5" stroke-width="2"/><text x="217.8" y="126.9" text-anchor="middle" fill="#08101f" font-size="11" font-weight="700">23</text><path d="M138.0,201.1 A84,84 0 0 1 115.1,194.4 L128.4,165.3 A52,52 0 0 0 142.6,169.5 Z" fill="#83aa9f" stroke="#f0f3f5" stroke-width="2"/><path d="M115.1,194.4 A84,84 0 0 1 79.3,163.4 L106.3,146.1 A52,52 0 0 0 128.4,165.3 Z" fill="#adb1cf" stroke="#f0f3f5" stroke-width="2"/><text x="105.5" y="173.4" text-anchor="middle" fill="#08101f" font-size="11" font-weight="700">4</text><path d="M79.3,163.4 A84,84 0 0 1 69.4,94.3 L100.1,103.3 A52,52 0 0 0 106.3,146.1 Z" fill="#c3a5b7" stroke="#f0f3f5" stroke-width="2"/><text x="82.7" y="131.7" text-anchor="middle" fill="#08101f" font-size="11" font-weight="700">6</text><path d="M69.4,94.3 A84,84 0 0 1 104.6,47.3 L121.9,74.3 A52,52 0 0 0 100.1,103.3 Z" fill="#aebfc2" stroke="#f0f3f5" stroke-width="2"/><text x="95.6" y="81.2" text-anchor="middle" fill="#08101f" font-size="11" font-weight="700">5</text><path d="M104.6,47.3 A84,84 0 0 1 126.3,37.4 L135.3,68.1 A52,52 0 0 0 121.9,74.3 Z" fill="#e0be79" stroke="#f0f3f5" stroke-width="2"/><path d="M126.3,37.4 A84,84 0 0 1 150.0,34.0 L150.0,66.0 A52,52 0 0 0 135.3,68.1 Z" fill="#c4c8cf" stroke="#f0f3f5" stroke-width="2"/><text x="150" y="114" text-anchor="middle" fill="#20253a" font-size="24" font-weight="700">44</text><text x="150" y="133" text-anchor="middle" fill="#51596a" font-size="10">个关键词</text><g transform="translate(0,214)"><rect x="8" y="0" width="9" height="9" rx="2" fill="#99adc3"/><text x="22" y="9" fill="#51596a" font-size="10">已公布 23</text><rect x="106" y="0" width="9" height="9" rx="2" fill="#83aa9f"/><text x="120" y="9" fill="#51596a" font-size="10">分批开放 2</text><rect x="204" y="0" width="9" height="9" rx="2" fill="#adb1cf"/><text x="218" y="9" fill="#51596a" font-size="10">研究报告 4</text><rect x="8" y="18" width="9" height="9" rx="2" fill="#c3a5b7"/><text x="22" y="27" fill="#51596a" font-size="10">观点 6</text><rect x="106" y="18" width="9" height="9" rx="2" fill="#aebfc2"/><text x="120" y="27" fill="#51596a" font-size="10">事件 5</text><rect x="204" y="18" width="9" height="9" rx="2" fill="#e0be79"/><text x="218" y="27" fill="#51596a" font-size="10">计划 2</text><rect x="8" y="36" width="9" height="9" rx="2" fill="#c4c8cf"/><text x="22" y="45" fill="#51596a" font-size="10">未证实 2</text></g></svg></section>
+  <section><h2>各类别的开放方式</h2><p class="desc">以报道的主要交付方式归类。公开权重单列；产品仅部分开源时，按整项信息是否明确判断。</p><svg viewBox="0 0 470 250" width="100%" height="250"><text x="104.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">模型</text><text x="165.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">应用</text><text x="226.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">观点</text><text x="287.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">科技</text><text x="348.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">事件</text><text x="409.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">算力</text><text x="64" y="45.0" text-anchor="end" fill="#51596a" font-size="11">开源</text><rect x="76.0" y="28.0" width="57.0" height="26.0" rx="4" fill="rgba(101,104,173,0.25)"/><text x="104.5" y="45.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">1</text><rect x="137.0" y="28.0" width="57.0" height="26.0" rx="4" fill="rgba(57,132,120,0.4)"/><text x="165.5" y="45.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">4</text><rect x="198.0" y="28.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="259.0" y="28.0" width="57.0" height="26.0" rx="4" fill="rgba(149,120,160,0.25)"/><text x="287.5" y="45.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">1</text><rect x="320.0" y="28.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="381.0" y="28.0" width="57.0" height="26.0" rx="4" fill="rgba(88,124,155,0.25)"/><text x="409.5" y="45.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">1</text><text x="64" y="75.0" text-anchor="end" fill="#51596a" font-size="11">开放权重</text><rect x="76.0" y="58.0" width="57.0" height="26.0" rx="4" fill="rgba(101,104,173,0.30000000000000004)"/><text x="104.5" y="75.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">2</text><rect x="137.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="198.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="259.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="320.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="381.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><text x="64" y="105.0" text-anchor="end" fill="#51596a" font-size="11">产品服务</text><rect x="76.0" y="88.0" width="57.0" height="26.0" rx="4" fill="rgba(101,104,173,0.30000000000000004)"/><text x="104.5" y="105.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">2</text><rect x="137.0" y="88.0" width="57.0" height="26.0" rx="4" fill="rgba(57,132,120,0.7)"/><text x="165.5" y="105.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">10</text><rect x="198.0" y="88.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="259.0" y="88.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="320.0" y="88.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="381.0" y="88.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><text x="64" y="135.0" text-anchor="end" fill="#51596a" font-size="11">未明确</text><rect x="76.0" y="118.0" width="57.0" height="26.0" rx="4" fill="rgba(101,104,173,0.4)"/><text x="104.5" y="135.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">4</text><rect x="137.0" y="118.0" width="57.0" height="26.0" rx="4" fill="rgba(57,132,120,0.30000000000000004)"/><text x="165.5" y="135.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">2</text><rect x="198.0" y="118.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="259.0" y="118.0" width="57.0" height="26.0" rx="4" fill="rgba(149,120,160,0.35)"/><text x="287.5" y="135.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">3</text><rect x="320.0" y="118.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="381.0" y="118.0" width="57.0" height="26.0" rx="4" fill="rgba(88,124,155,0.25)"/><text x="409.5" y="135.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">1</text><text x="64" y="165.0" text-anchor="end" fill="#51596a" font-size="11">不适用</text><rect x="76.0" y="148.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="137.0" y="148.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="198.0" y="148.0" width="57.0" height="26.0" rx="4" fill="rgba(198,153,78,0.6000000000000001)"/><text x="226.5" y="165.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">8</text><rect x="259.0" y="148.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="320.0" y="148.0" width="57.0" height="26.0" rx="4" fill="rgba(186,113,104,0.45)"/><text x="348.5" y="165.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">5</text><rect x="381.0" y="148.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/></svg></section>
+  <section><h2>出现次数最多的 9 个主体</h2><p class="desc">按主体署名单独计数，联合署名单列。腾讯有 4 项，Anthropic 有 5 项。</p><svg viewBox="0 0 470 268" width="100%" height="268"><text x="86" y="26" text-anchor="end" fill="#51596a" font-size="11.5">Anthropic</text><rect x="96" y="12" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="12" width="328.0" height="19" rx="3" fill="#4c4f9b" opacity="0.95"/><text x="432.0" y="26" fill="#20253a" font-size="11.5" font-weight="600">5</text><text x="86" y="54" text-anchor="end" fill="#51596a" font-size="11.5">OpenAI</text><rect x="96" y="40" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="40" width="262.4" height="19" rx="3" fill="#4c4f9b" opacity="0.89"/><text x="366.4" y="54" fill="#20253a" font-size="11.5" font-weight="600">4</text><text x="86" y="82" text-anchor="end" fill="#51596a" font-size="11.5">腾讯</text><rect x="96" y="68" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="68" width="262.4" height="19" rx="3" fill="#4c4f9b" opacity="0.83"/><text x="366.4" y="82" fill="#20253a" font-size="11.5" font-weight="600">4</text><text x="86" y="110" text-anchor="end" fill="#51596a" font-size="11.5">DeepSeek</text><rect x="96" y="96" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="96" width="131.2" height="19" rx="3" fill="#4c4f9b" opacity="0.77"/><text x="235.2" y="110" fill="#20253a" font-size="11.5" font-weight="600">2</text><text x="86" y="138" text-anchor="end" fill="#51596a" font-size="11.5">英伟达</text><rect x="96" y="124" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="124" width="131.2" height="19" rx="3" fill="#4c4f9b" opacity="0.71"/><text x="235.2" y="138" fill="#20253a" font-size="11.5" font-weight="600">2</text><text x="86" y="166" text-anchor="end" fill="#51596a" font-size="11.5">Meta</text><rect x="96" y="152" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="152" width="65.6" height="19" rx="3" fill="#4c4f9b" opacity="0.65"/><text x="169.6" y="166" fill="#20253a" font-size="11.5" font-weight="600">1</text><text x="86" y="194" text-anchor="end" fill="#51596a" font-size="11.5">VAST</text><rect x="96" y="180" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="180" width="65.6" height="19" rx="3" fill="#4c4f9b" opacity="0.59"/><text x="169.6" y="194" fill="#20253a" font-size="11.5" font-weight="600">1</text><text x="86" y="222" text-anchor="end" fill="#51596a" font-size="11.5">快手</text><rect x="96" y="208" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="208" width="65.6" height="19" rx="3" fill="#4c4f9b" opacity="0.53"/><text x="169.6" y="222" fill="#20253a" font-size="11.5" font-weight="600">1</text><text x="86" y="250" text-anchor="end" fill="#51596a" font-size="11.5">Tim Sween…</text><rect x="96" y="236" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="236" width="65.6" height="19" rx="3" fill="#4c4f9b" opacity="0.47"/><text x="169.6" y="250" fill="#20253a" font-size="11.5" font-weight="600">1</text></svg></section>
+</div>
+<section id="agent" class="agent block">
+  <div class="score"><h2>Agent 相关度评分</h2><p class="desc">20 个关键词评为 4 或 5 星。5 星表示可直接执行、训练或评估智能体任务，4 星表示支撑其工作流或提供直接研究证据。</p><svg viewBox="0 0 300 250" width="100%" height="250"><line x1="26" y1="206.0" x2="288" y2="206.0" stroke="#d3d8e1"/><text x="20" y="210.0" text-anchor="end" fill="#51596a" font-size="10">0</text><line x1="26" y1="143.3" x2="288" y2="143.3" stroke="#d3d8e1"/><text x="20" y="147.3" text-anchor="end" fill="#51596a" font-size="10">4</text><line x1="26" y1="80.7" x2="288" y2="80.7" stroke="#d3d8e1"/><text x="20" y="84.7" text-anchor="end" fill="#51596a" font-size="10">8</text><line x1="26" y1="18.0" x2="288" y2="18.0" stroke="#d3d8e1"/><text x="20" y="22.0" text-anchor="end" fill="#51596a" font-size="10">12</text><rect x="37.5" y="143.3" width="29.3" height="62.7" rx="3" fill="#a7abc4"/><text x="52.2" y="137.3" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">4</text><text x="52.2" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">1★</text><rect x="89.9" y="65.0" width="29.3" height="141.0" rx="3" fill="#a7abc4"/><text x="104.6" y="59.0" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">9</text><text x="104.6" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">2★</text><rect x="142.3" y="33.7" width="29.3" height="172.3" rx="3" fill="#a7abc4"/><text x="157.0" y="27.7" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">11</text><text x="157.0" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">3★</text><rect x="194.7" y="80.7" width="29.3" height="125.3" rx="3" fill="#4c4f9b"/><text x="209.4" y="74.7" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">8</text><text x="209.4" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">4★</text><rect x="247.1" y="18.0" width="29.3" height="188.0" rx="3" fill="#4c4f9b"/><text x="261.8" y="12.0" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">12</text><text x="261.8" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">5★</text><text x="150.0" y="244" text-anchor="middle" fill="#51596a" font-size="10">1 星关联弱，5 星直接用于智能体任务</text></svg></div>
+  <div class="ranking"><h2>与 Agent 最相关的 10 条新闻</h2><p class="desc">取 4 星及以上的前 10 项，同分按日刊首次出现的日期和篇内顺序排列。星级由本看板评定。</p>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Agent 新闻明细，可横向滚动"><table class="details">
+    <thead><tr><th>关键词</th><th>主体</th><th>类别</th><th>阶段</th><th>与 Agent 的关系</th><th>相关度</th></tr></thead><tbody><tr><td>ChatGPT Chrome</td><td>OpenAI</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>分批开放</td>
+    <td>用户授权后可操作网页</td>
+    <td>★★★★★</td></tr><tr><td>DeepSeek V4.1 Flash</td><td>DeepSeek</td>
+    <td><span class="cat-name" style="--swatch:#6568ad">模型</span></td>
+    <td>已公布</td>
+    <td>更新模型并提供搜索接口</td>
+    <td>★★★★★</td></tr><tr><td>Hy Memory 2.0</td><td>腾讯</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>跨工具保存和调用记忆</td>
+    <td>★★★★★</td></tr><tr><td>ASPIRE</td><td>英伟达</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>从机器人执行记录中积累技能</td>
+    <td>★★★★★</td></tr><tr><td>Marvis</td><td>腾讯</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>用自然语言执行桌面操作</td>
+    <td>★★★★★</td></tr><tr><td>Arti</td><td>Lovart</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>将设计偏好和流程保存为技能</td>
+    <td>★★★★★</td></tr><tr><td>元宝搜索</td><td>腾讯</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>检索接口供外部应用调用</td>
+    <td>★★★★★</td></tr><tr><td>Dream API</td><td>Dream Labs</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>用自然语言向机器人下达任务</td>
+    <td>★★★★★</td></tr><tr><td>Claude Duet</td><td>Anthropic</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>分批开放</td>
+    <td>个人智能体继承记忆和应用连接</td>
+    <td>★★★★★</td></tr><tr><td>Flint-40B-A2B</td><td>田渊栋团队</td>
+    <td><span class="cat-name" style="--swatch:#6568ad">模型</span></td>
+    <td>已公布</td>
+    <td>面向本地编程智能体的模型</td>
+    <td>★★★★★</td></tr></tbody></table></div>
+  </div>
+</section>
+<section class="archive block" id="daily"><h2>五期日刊条目</h2><p class="desc">五期依次收录 9、9、9、8、10 条。EdenLive 在周一和周三均有报道，周度图表只计一次。</p><div class="days"><section class="daycol" id="day-1019" tabindex="-1"><h3 class="dayh">10 月 19 日 <span>9 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>Muse Spark Open</b><em>Meta</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>ChatGPT Chrome</b><em>OpenAI</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>EdenLive</b><em>VAST</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>DeepSeek V4.1 Flash</b><em>DeepSeek</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>Hy Memory 2.0</b><em>腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>Kling 4.0</b><em>快手</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>ASPIRE</b><em>英伟达</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><b>AI 造模型报告</b><em>Anthropic</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><b>游戏新黄金时代</b><em>Tim Sweeney</em></div><a class="day-source" href="https://readance.app/articles/live-art_ccc03fe21f2646f88912db99db77ef4f/">阅读当期日刊</a></section><section class="daycol" id="day-1020" tabindex="-1"><h3 class="dayh">10 月 20 日 <span>9 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>Aurora</b><em>OpenAI</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>M3.1 Flash</b><em>MiniMax</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>WorkBuddy 教育公益版</b><em>腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>Marvis</b><em>腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>Arti</b><em>Lovart</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>官方资产库</b><em>Sky Production</em></div><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><b>公益基金</b><em>Anthropic</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><b>人形机器人</b><em>OpenAI</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><b>AI 创业</b><em>Vogels</em></div><a class="day-source" href="https://www.sohu.com/a/1089878331_455313">阅读当期日刊</a></section><section class="daycol" id="day-1021" tabindex="-1"><h3 class="dayh">10 月 21 日 <span>9 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>神秘新模型</b><em>Anthropic</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>DeepInfer</b><em>DeepSeek</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>元宝搜索</b><em>腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>Ming-3.0</b><em>蚂蚁百灵</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>EdenLive</b><em>VAST</em></div><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><b>DeepSeek 禁令</b><em>美国国土安全部</em></div><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><b>全民高收入</b><em>马斯克</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>Dream API</b><em>Dream Labs</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><b>办公智能体报告</b><em>易观</em></div><a class="day-source" href="https://www.sohu.com/a/1090360348_455313">阅读当期日刊</a></section><section class="daycol" id="day-1022" tabindex="-1"><h3 class="dayh">10 月 22 日 <span>8 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#587c9b"></span><b>DSX POD</b><em>英伟达</em></div><div class="dayrow"><span class="dot" style="--swatch:#587c9b"></span><b>TorchTPU</b><em>谷歌、Meta</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>12 小时 API 缓存</b><em>OpenAI</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>Claude 蛋白设计</b><em>Anthropic</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><b>H2-X</b><em>宇树科技</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><b>慢科研</b><em>陶哲轩等</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><b>Agent 传送带</b><em>菲利克斯·里泽贝格</em></div><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><b>SpaceX 财报</b><em>SpaceX</em></div><a class="day-source" href="https://www.sohu.com/a/1090863002_455313">阅读当期日刊</a></section><section class="daycol" id="day-1023" tabindex="-1"><h3 class="dayh">10 月 23 日 <span>10 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><b>Claude Duet</b><em>Anthropic</em></div><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><b>PHP2Shell</b><em>OpenAI 等</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>Flint-40B-A2B</b><em>田渊栋团队</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>WorkForge</b><em>腾讯混元、复旦</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>LingDT-Decision-1.0</b><em>蚂蚁数科</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><b>星火 X2.6</b><em>科大讯飞</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><b>物理 AI 击穿</b><em>王兴兴</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><b>AGIBOT WORLD 2026</b><em>智元</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><b>Optimus 投产</b><em>特斯拉</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><b>Labs 小团队</b><em>Google</em></div><a class="day-source" href="https://www.sohu.com/a/1091363921_455313">阅读当期日刊</a></section></div></section>
+<section class="notes block"><h2>本周观察</h2><div class="note-grid">
+  <div class="note"><h3>记忆随任务在应用之间流动</h3><p>周一的 Hy Memory 2.0 面向多种工具共享记忆。到周五，Claude Duet 把已有记忆和应用连接带到了新的个人智能体中。</p></div>
+  <div class="note"><h3>从执行操作到核对结果</h3><p>ChatGPT Chrome 和 Marvis 分别处理网页与桌面操作。WorkForge 把关注点放到执行之后，用职场任务检验交付结果。</p></div>
+  <div class="note"><h3>机器人报道关注了三个不同环节</h3><p>Dream API 提供控制接口，智元开放具身推理数据，特斯拉披露产线进展。三条新闻分别对应如何下达任务、如何评估决策和如何制造硬件。</p></div>
+  <div class="note"><h3>预览、传闻与发布</h3><p>周二出现的 Aurora 很快从模型列表消失。周三关于 Anthropic 新模型的消息来自媒体报道。两项都与周五已开放候补申请的 Duet 分开统计。</p></div>
+</div></section></main><footer class="foot">
+  <span>关键词与类别参照<a href="https://reportify.cn/social-media/862827928227058">本期周刊公开摘要</a>，并逐项核对上列五期腾讯研究院《AI 速递》。Top50 为刊名，本页统计两类材料可交叉确认的 44 项。</span>
+  <span>状态、开放方式、主体地域与 Agent 星级均为本看板整理。逐日日期为日刊收录日期；各项进展表述以当期报道为准。</span>
+</footer>
+<nav class="issue-jump" aria-label="切换刊期"><a href="../ai-news-1012-1016/dashboard.html"><span>上期</span>10 月 12 日至 16 日</a><a href="../ai-news/index.html">全部六期</a><a href="../ai-news-1026-1030/dashboard.html"><span>下期</span>10 月 26 日至 30 日</a></nav></body></html>

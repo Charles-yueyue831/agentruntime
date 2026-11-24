@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI 前沿每周关键词 · 10 月 26 日至 30 日</title>
+<style>
+:root {
+  color-scheme: light;
+  --paper: #fafbfc; --ink: #20253a; --muted: #51596a; --line: #d8dce3;
+  --iris: #4c4f9b; --cover: #e9eafa; --us: #8595a6; --cn: #444781;
+  font-family: "Avenir Next","PingFang SC","Microsoft YaHei",sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+* {box-sizing:border-box}
+body {margin:0; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased}
+main,.mast,.foot {width:min(calc(100% - 8vw),1456px); margin-inline:auto}
+h1,h2,h3,p,figure {margin:0}
+h2 {font-size:clamp(21px,1.7vw,28px); line-height:1.3; letter-spacing:-.045em; font-weight:650}
+a {color:inherit; text-underline-offset:4px}
+a:focus-visible,[tabindex]:focus-visible {outline:3px solid var(--iris); outline-offset:3px}
+[id] {scroll-margin-top:18px}
+.mast,.mast nav,.issue figcaption,.foot {display:flex; align-items:center; justify-content:space-between}
+.mast {padding:19px 0 15px; font-size:15px; font-weight:650}
+.mast nav {gap:24px; color:var(--muted); font-size:13px; font-weight:500}
+.mast a {text-decoration:none}
+.mast a:hover {text-decoration:underline}
+.cover {display:grid; grid-template-columns:1fr 1.14fr; gap:clamp(16px,5vw,94px); align-items:center; padding:clamp(28px,3.8vw,62px); background:var(--cover); border-radius:4px 30px 4px 4px}
+.cover-copy {display:grid; grid-template-columns:max-content auto; align-items:baseline; column-gap:12px}
+h1 {font-size:clamp(44px,5.1vw,82px); line-height:1.08; letter-spacing:-.055em; font-weight:680; color:#292d5c}
+.series {align-self:end; padding-bottom:.19em; color:var(--iris); font-size:clamp(17px,1.5vw,25px); font-weight:600}
+.issue-date {grid-column:1/-1; margin-top:23px; color:#454a68; font-size:clamp(14px,1.2vw,18px)}
+.issue {min-width:0; max-width:610px; width:100%}
+.issue h2 {font-size:clamp(19px,1.5vw,24px)}
+.issue figcaption span,.issue-caption {font-size:12px; color:#4c526c}
+.issue-rows {margin:13px 0}
+.issue-row {display:grid; grid-template-columns:46px minmax(0,1fr) 24px; align-items:center; gap:12px; padding:3px 0; text-decoration:none; color:#303656; font-size:14px; border-radius:2px}
+.issue-row b {text-align:right}
+.issue-row>span:first-child {text-decoration:underline; text-decoration-color:#8b90af; text-underline-offset:3px}
+.issue-row:hover>span:first-child {text-decoration-color:currentColor}
+.cells {display:grid; grid-template-columns:repeat(var(--slots),minmax(0,1fr)); gap:4px}
+.cells i {height:clamp(12px,1.18vw,20px); background:var(--swatch); border-radius:2px}
+.legend {display:flex; flex-wrap:wrap; gap:5px 15px; font-size:12px; color:#383d56}
+.legend span {display:inline-flex; align-items:center; gap:5px}
+.legend i,.compare-table th i,.dot,.cat-name::before {display:inline-block; width:8px; height:8px; border-radius:2px; background:var(--swatch); flex:none}
+.issue-caption {margin-top:8px}
+.metrics {display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); padding:27px 0 24px; border-bottom:1px solid var(--line)}
+.kpi {padding:0 clamp(10px,1.8vw,28px); border-left:1px solid var(--line)}
+.kpi:first-child {padding-left:0; border:0}
+.kpi-v {font-size:clamp(28px,2.4vw,40px); color:var(--ink); font-weight:600; line-height:1.08; letter-spacing:-.045em}
+.kpi-l {margin-top:8px; font-size:14px; font-weight:650}
+.kpi-s,.desc,.compare-copy p,.note p {color:var(--muted); line-height:1.65}
+.kpi-s {margin-top:3px; font-size:12px}
+.block {margin-top:clamp(34px,4vw,64px)}
+.comparison {display:grid; grid-template-columns:minmax(230px,.8fr) minmax(0,2fr); gap:clamp(18px,5vw,80px); align-items:start}
+.compare-copy h2 {font-size:clamp(28px,2.6vw,42px)}
+.compare-copy p {max-width:34em; margin-top:12px; font-size:14px}
+table {width:100%; border-collapse:collapse; text-align:left}
+.compare-table {table-layout:fixed; font-size:14px}
+.compare-table th,.compare-table td {padding:6px 8px 6px 0}
+.compare-table thead th,.details thead th {color:var(--muted); font-size:12px; font-weight:550; border-bottom:1px solid var(--line)}
+.compare-table th:first-child {width:16%}
+.compare-table th:nth-child(2) {width:36%}
+.compare-table th:nth-child(3) {width:13%}
+.compare-table tbody tr {border-bottom:1px solid #e4e7ed}
+.compare-table th i {margin-right:7px}
+.total,.regional {display:flex; align-items:center; gap:6px; padding-right:25px}
+.total span {background:var(--swatch); height:11px; border-radius:2px; flex:none}
+.total b,.regional b {font-size:12px; line-height:1; font-weight:600}
+.regional span {height:5px; flex:none; background:var(--region)}
+.regional {min-height:14px}
+.US {--region:var(--us)}
+.CN {--region:var(--cn)}
+.region-key {white-space:nowrap; margin-right:10px; display:inline-flex; align-items:center; gap:4px}
+.region-key::before {content:""; width:12px; height:5px; background:var(--region)}
+.share {color:var(--muted)}
+.analysis {display:grid; grid-template-columns:.86fr 1.12fr 1.02fr; gap:clamp(16px,2vw,32px); background:#f0f3f5; padding:clamp(18px,2.3vw,36px); border-radius:12px}
+.analysis section,.agent>div,.days>section {min-width:0}
+.analysis section {display:grid; grid-template-rows:auto auto 1fr; align-content:start}
+.desc {font-size:14px; margin:9px 0 15px}
+svg {display:block; max-width:100%; font-family:inherit}
+.analysis svg {width:100%; height:auto; align-self:center}
+.analysis section:first-child svg {max-height:260px}
+.agent {display:grid; grid-template-columns:minmax(200px,.7fr) minmax(0,2.1fr); gap:clamp(20px,3vw,52px); align-items:start}
+.score {padding:clamp(16px,2vw,30px); border-radius:12px; background:#eceef8}
+.score svg {width:100%; height:auto; max-height:270px}
+.table-scroll {overflow-x:auto}
+.details {font-size:13px; min-width:585px}
+.details th,.details td {padding:8px 9px 8px 0; border-bottom:1px solid var(--line)}
+.details td:first-child {font-weight:650}
+.cat-name {white-space:nowrap}
+.cat-name::before {content:""; margin-right:5px}
+.details td:last-child {color:var(--iris); white-space:nowrap}
+.days {display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:0}
+.daycol {border-top:3px solid #7981a5; padding:15px clamp(8px,1.15vw,19px) 0; border-left:1px solid var(--line)}
+.daycol:first-child {border-left:0}
+.daycol:target {background:#eceef8}
+.dayh {display:flex; justify-content:space-between; align-items:baseline; margin:0 0 12px; font-size:16px}
+.dayh span {font-size:12px; font-weight:500; color:var(--muted)}
+.dayrow {display:grid; grid-template-columns:8px minmax(0,1fr); gap:2px 7px; align-items:baseline; padding:5px 0}
+.dayrow .dot {border-radius:50%}
+.dayrow b {font-size:13px; line-height:1.4; overflow-wrap:anywhere}
+.dayrow em {grid-column:2; font-size:11.5px; font-style:normal; color:var(--muted); overflow-wrap:anywhere}
+.notes {margin-bottom:42px}
+.note-grid {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 6%; margin-top:20px}
+.note {border-top:1px solid var(--line); padding-top:13px}
+.note h3 {font-size:17px; margin-bottom:7px}
+.note p {font-size:14px; max-width:47em}
+.foot {align-items:flex-start; gap:18px; border-top:1px solid var(--line); padding:18px 0 30px; font-size:12px; line-height:1.65; color:var(--muted)}
+@media(max-width:1020px) {
+  .agent {grid-template-columns:minmax(175px,.7fr) minmax(0,1.8fr)}
+  .analysis {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .analysis section:last-child {grid-column:1/-1; grid-template-columns:.75fr 1fr; grid-template-rows:auto 1fr; column-gap:30px}
+  .analysis section:last-child svg {grid-column:2; grid-row:1/3}
+  .days {grid-template-columns:repeat(3,minmax(0,1fr)); row-gap:24px}
+}
+@media(max-width:760px) {
+  main,.mast,.foot {width:calc(100% - 32px)}
+  .mast nav {gap:13px; font-size:12px}
+  .cover {grid-template-columns:1fr; gap:23px; padding:24px}
+  h1 br,.compare-copy h2 br {display:none}
+  h1 {font-size:clamp(28px,5.6vw,42px)}
+  .cover-copy {grid-template-columns:minmax(0,max-content) auto; column-gap:6px}
+  .series {font-size:14px}
+  .issue-date {margin-top:8px}
+  .issue-row {grid-template-columns:37px minmax(0,1fr) 17px; gap:8px}
+  .legend {gap:4px 10px}
+  .metrics {grid-template-columns:repeat(3,minmax(0,1fr)); row-gap:18px; padding-block:18px}
+  .kpi:last-child {grid-column:span 2}
+  .kpi:nth-child(3n+1) {padding-left:0; border:0}
+  .kpi-l {font-size:13px}
+  .kpi-s {font-size:11.5px}
+  .comparison,.agent {grid-template-columns:1fr}
+  .compare-copy h2 {font-size:26px}
+  .compare-copy p {margin-top:6px}
+  .score {display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto 1fr; column-gap:12px}
+  .score svg {grid-row:1/3; grid-column:2}
+  .days {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foot {display:block}
+}
+@media(max-width:540px) {
+  .cover {padding:20px 16px; border-top-right-radius:20px}
+  .analysis,.note-grid {grid-template-columns:1fr}
+  .analysis section,.analysis section:last-child {display:block}
+  .analysis section+section {padding-top:20px; border-top:1px solid var(--line)}
+  .analysis svg {max-height:240px}
+  .score {display:block}
+  .score svg {max-height:205px}
+  .compare-table {font-size:12px}
+  .compare-table th,.compare-table td {padding-right:3px}
+  .compare-table th:first-child {width:17%}
+  .compare-table th i {width:6px; height:6px; margin-right:4px}
+  .total,.regional {padding-right:18px; gap:2px}
+  .region-key {margin-right:5px}
+  .region-key::before {width:7px}
+  .days {grid-template-columns:1fr; gap:18px}
+  .daycol {border-left:0; padding-inline:2px}
+  .dayrow {grid-template-columns:8px minmax(0,1fr) minmax(0,.8fr)}
+  .dayrow em {grid-column:3; text-align:right}
+}
+.day-source {display:inline-block;margin-top:12px;color:#4c4f9b;font-size:12px}
+.dayrow details {min-width:0}
+.dayrow summary {cursor:pointer;color:var(--ink);font-size:13px}
+.dayrow summary::marker {color:var(--muted);font-size:9px}
+.dayrow details[open] p {margin:5px 0;color:var(--muted);font-size:12px;line-height:1.55}
+.dayrow summary:focus-visible {outline:2px solid var(--iris);outline-offset:2px}
+</style>
+<style>
+:root{--ink:#172e46;--paper:#f8fafb;--muted:#465c70;--line:#c9d7df;--iris:#2444a3;--cover:#193e80;--us:#778d9f;--cn:#30518d;font-family:"Avenir Next","PingFang SC","Microsoft YaHei",sans-serif;font-variant-numeric:tabular-nums;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}a{color:inherit;text-underline-offset:.2em}a:focus-visible,summary:focus-visible{outline:3px solid #3982b2;outline-offset:3px}
+.pubbar,.issue-jump{width:min(92%,1392px);margin:auto}.pubbar{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:15px 0;color:#334c65;font-size:14px}.pubbar>a{font-weight:650;text-decoration:none}.pubbar details{max-width:76%}.pubbar summary{cursor:pointer;text-align:right}.pubbar nav{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px 14px;margin:14px 0 0}.pubbar nav a{padding:4px 6px}.pubbar [aria-current=page]{background:#17366e;color:white;border-radius:3px}
+.mast{border-top:1px solid var(--line);padding:12px 0;font-size:14px}.cover{background:var(--cover);color:white;border-radius:8px 8px 22px 8px;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(16px,3vw,48px);padding:clamp(20px,3.2vw,50px)}
+.cover-copy{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 10px}.cover h1,.edition-title{font-family:"Songti SC","STSong","Noto Serif CJK SC","SimSun",Georgia,serif;font-weight:700;letter-spacing:-.05em}.cover h1{color:white;font-size:clamp(38px,4.7vw,72px);line-height:1.15}.cover .series{color:#d1e4ff;font-size:16px}.cover .issue-date{width:100%;color:#e1eaf5;margin-top:22px}.issue{background:#f7fcff;color:var(--ink);padding:clamp(16px,2.1vw,33px);border-radius:4px 4px 13px 4px;max-width:none}.issue figcaption{gap:12px}.cells i{border-radius:1px 3px 3px 1px}.issue-row:hover{background:#e2eef6}.metrics{background:#e9f1f6;padding-inline:clamp(12px,2.8vw,42px);border:0;border-radius:0 0 8px 8px}.kpi-v{color:#234b73}.analysis{background:#e8eff3;border-radius:6px}.score{background:#e3edf5;border-radius:6px}.daycol{border-top-color:#3d667e}.daycol:target{background:#dfedf6}.note h3{color:#204567}.total span{height:10px}.details th,.details td{line-height:1.5}.issue-jump{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:20px 0 32px;color:#254777;font-size:14px}.issue-jump span{margin-right:.55em;color:var(--muted)}
+@media(max-width:760px){.pubbar,.issue-jump{width:calc(100% - 32px)}.cover{grid-template-columns:1fr;padding:18px;gap:20px}.cover .issue-date{margin-top:10px}.cover h1{font-size:clamp(24px,6.2vw,43px)}.cover .series{font-size:13px}.issue{padding:14px 12px}.issue-caption{line-height:1.5}.mast{align-items:baseline;gap:8px}.mast nav{gap:10px}.pubbar{font-size:13px}.issue-jump{font-size:13px}}
+</style></head><body><div class="pubbar"><a href="../ai-news/index.html">AI 前沿周刊</a><details><summary>全站目录</summary><nav aria-label="全站文档"><a href="https://charles-yueyue831.github.io/agentruntime/">🏠 README 首页</a><a href="https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%A7%E8%A1%8C/envd%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html">envd 使用指南</a><a href="https://charles-yueyue831.github.io/agentruntime/Agent%20%E6%B2%99%E7%AE%B1/%E5%AD%98%E5%82%A8/%E6%8C%82%E8%BD%BD%E8%B7%AF%E5%BE%84%E8%A6%86%E7%9B%96.html">挂载路径覆盖</a><a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E9%BB%91%E8%AF%9D.html">产品经理概念词典</a><a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/%E7%94%A8%E6%88%B7%E6%97%85%E7%A8%8B%E5%9B%BE.html">用户旅程图</a><a href="https://charles-yueyue831.github.io/agentruntime/%E4%BA%A7%E5%93%81%E8%83%BD%E5%8A%9B/%E9%97%AE%E9%A2%98%E6%80%A7%E8%B4%A8.html">问题性质</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/gpu/">GPU 沙箱用户体验</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/preheat/README.md">镜像预热演示</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/snapshot/">模板快照原型</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/snapshot/src/cases/template-snapshot/image-center/preheat.html">镜像预热原型</a><a href="https://charles-yueyue831.github.io/agentruntime/prototype/k8s/">K8s 交互学习</a><a href="../ai-news/index.html">周刊总览</a><a href="../ai-news-1114-1120/dashboard.html">11 月 14 日至 20 日</a><a href="../ai-news-1109-1113/dashboard.html">11 月 9 日至 13 日</a><a href="../ai-news-1102-1106/dashboard.html">11 月 2 日至 6 日</a><a href="../ai-news-1026-1030/dashboard.html" aria-current="page">10 月 26 日至 30 日 · 当前</a><a href="../ai-news-1019-1023/dashboard.html">10 月 19 日至 23 日</a><a href="../ai-news-1012-1016/dashboard.html">10 月 12 日至 16 日</a></nav></details></div>
+<header class="mast"><span>腾讯研究院</span><nav aria-label="页内目录"><a href="#compare">类别对比</a><a href="#agent">Agent 条目</a><a href="#daily">日刊索引</a></nav></header>
+<main>
+<header class="cover">
+  <div class="cover-copy"><h1>AI 前沿<br>每周关键词</h1>
+    <p class="series">日刊汇编</p><p class="issue-date">2026 年 10 月 26 日至 30 日</p>
+  </div>
+  <figure class="issue"><figcaption><h2>五期《AI 速递》</h2><span>每格一次报道</span></figcaption>
+    <div class="issue-rows" style="--slots:9"><a class="issue-row" href="#day-1026" aria-label="10月26日，共8条。模型3条，应用1条，观点1条，科技1条，事件2条。查看当日条目"><span>10.26</span><span class="cells"><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i></span><b>8</b></a><a class="issue-row" href="#day-1027" aria-label="10月27日，共8条。模型1条，应用1条，观点3条，科技1条，事件2条。查看当日条目"><span>10.27</span><span class="cells"><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i></span><b>8</b></a><a class="issue-row" href="#day-1028" aria-label="10月28日，共9条。模型2条，应用3条，观点2条，科技2条。查看当日条目"><span>10.28</span><span class="cells"><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i></span><b>9</b></a><a class="issue-row" href="#day-1029" aria-label="10月29日，共8条。模型2条，应用3条，科技2条，事件1条。查看当日条目"><span>10.29</span><span class="cells"><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#ba7168" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i></span><b>8</b></a><a class="issue-row" href="#day-1030" aria-label="10月30日，共8条。模型2条，应用3条，观点1条，科技1条，算力1条。查看当日条目"><span>10.30</span><span class="cells"><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#398478" aria-hidden="true"></i><i style="--swatch:#6568ad" aria-hidden="true"></i><i style="--swatch:#9578a0" aria-hidden="true"></i><i style="--swatch:#587c9b" aria-hidden="true"></i><i style="--swatch:#c6994e" aria-hidden="true"></i></span><b>8</b></a></div>
+    <div class="legend"><span><i style="--swatch:#6568ad"></i>模型</span><span><i style="--swatch:#398478"></i>应用</span><span><i style="--swatch:#c6994e"></i>观点</span><span><i style="--swatch:#9578a0"></i>科技</span><span><i style="--swatch:#ba7168"></i>事件</span><span><i style="--swatch:#587c9b"></i>算力</span></div>
+    <p class="issue-caption">周三收录 9 条，其余四天各 8 条。点击日期可查看当期条目。</p>
+  </figure>
+</header>
+<section class="metrics" aria-label="本期统计"><div class="kpi"><div class="kpi-v">41</div><div class="kpi-l">本周关键词</div>
+    <div class="kpi-s">按不同关键词统计</div></div><div class="kpi"><div class="kpi-v">41</div><div class="kpi-l">日刊报道条次</div>
+    <div class="kpi-s">五期按篇内编号合计</div></div><div class="kpi"><div class="kpi-v">6</div><div class="kpi-l">新闻类别</div>
+    <div class="kpi-s">按报道的主要内容归类</div></div><div class="kpi"><div class="kpi-v">11</div><div class="kpi-l">应用类关键词</div>
+    <div class="kpi-s">占本周关键词的 27%</div></div><div class="kpi"><div class="kpi-v">20</div><div class="kpi-l">Agent 高相关</div>
+    <div class="kpi-s">本看板评为 4 至 5 星</div></div></section>
+<section class="comparison block" id="compare">
+  <div class="compare-copy"><h2>本周新闻类别<br>与中美分布</h2><p>本期 41 项，应用 11 项，模型 10 项。周四集中报道了办公工具，周五同时收录通用模型和具身模型。</p>
+    <p>按主要报道主体归类，美国主体 10 项，中国主体 22 项。其余 9 项涉及个人或归属未核实的团队，只计入总量。</p></div>
+  <table class="compare-table" aria-label="各类别的总量、占比与中美条数">
+    <thead><tr><th>类别</th><th>全部条目</th><th>占比</th><th><span class="region-key US">美国</span><span class="region-key CN">中国</span></th></tr></thead>
+    <tbody><tr><th scope="row"><i style="--swatch:#398478"></i>应用</th><td><div class="total"><span style="--swatch:#398478;width:100.00%"></span><b>11</b></div></td><td class="share">27%</td><td><div class="regional US" aria-label="美国 1 条"><span style="width:10.00%"></span><b>1</b></div><div class="regional CN" aria-label="中国 10 条"><span style="width:100.00%"></span><b>10</b></div></td></tr><tr><th scope="row"><i style="--swatch:#6568ad"></i>模型</th><td><div class="total"><span style="--swatch:#6568ad;width:90.91%"></span><b>10</b></div></td><td class="share">24%</td><td><div class="regional US" aria-label="美国 3 条"><span style="width:30.00%"></span><b>3</b></div><div class="regional CN" aria-label="中国 7 条"><span style="width:70.00%"></span><b>7</b></div></td></tr><tr><th scope="row"><i style="--swatch:#c6994e"></i>观点</th><td><div class="total"><span style="--swatch:#c6994e;width:63.64%"></span><b>7</b></div></td><td class="share">17%</td><td><div class="regional US" aria-label="美国 0 条"><span style="width:0.00%"></span><b>0</b></div><div class="regional CN" aria-label="中国 0 条"><span style="width:0.00%"></span><b>0</b></div></td></tr><tr><th scope="row"><i style="--swatch:#9578a0"></i>科技</th><td><div class="total"><span style="--swatch:#9578a0;width:63.64%"></span><b>7</b></div></td><td class="share">17%</td><td><div class="regional US" aria-label="美国 2 条"><span style="width:20.00%"></span><b>2</b></div><div class="regional CN" aria-label="中国 4 条"><span style="width:40.00%"></span><b>4</b></div></td></tr><tr><th scope="row"><i style="--swatch:#ba7168"></i>事件</th><td><div class="total"><span style="--swatch:#ba7168;width:45.45%"></span><b>5</b></div></td><td class="share">12%</td><td><div class="regional US" aria-label="美国 3 条"><span style="width:30.00%"></span><b>3</b></div><div class="regional CN" aria-label="中国 1 条"><span style="width:10.00%"></span><b>1</b></div></td></tr><tr><th scope="row"><i style="--swatch:#587c9b"></i>算力</th><td><div class="total"><span style="--swatch:#587c9b;width:9.09%"></span><b>1</b></div></td><td class="share">2%</td><td><div class="regional US" aria-label="美国 1 条"><span style="width:10.00%"></span><b>1</b></div><div class="regional CN" aria-label="中国 0 条"><span style="width:0.00%"></span><b>0</b></div></td></tr></tbody>
+  </table>
+</section>
+<div class="analysis block">
+  <section><h2>报道时的状态</h2><p class="desc">Seedance 2.5 4K 为企业试用，灵光 2.0 逐步开放。Arc 公布的是停用时间表。</p><svg viewBox="0 0 300 270" width="100%" height="270"><path d="M150.0,34.0 A84,84 0 1 1 143.6,201.8 L146.0,169.8 A52,52 0 1 0 150.0,66.0 Z" fill="#99adc3" stroke="#f0f3f5" stroke-width="2"/><text x="218.0" y="124.6" text-anchor="middle" fill="#08101f" font-size="11" font-weight="700">21</text><path d="M143.6,201.8 A84,84 0 0 1 107.1,190.2 L123.4,162.7 A52,52 0 0 0 146.0,169.8 Z" fill="#83aa9f" stroke="#f0f3f5" stroke-width="2"/><path d="M107.1,190.2 A84,84 0 0 1 87.3,173.9 L111.2,152.6 A52,52 0 0 0 123.4,162.7 Z" fill="#adb1cf" stroke="#f0f3f5" stroke-width="2"/><path d="M87.3,173.9 A84,84 0 0 1 76.2,77.9 L104.3,93.2 A52,52 0 0 0 111.2,152.6 Z" fill="#c3a5b7" stroke="#f0f3f5" stroke-width="2"/><text x="82.4" y="129.8" text-anchor="middle" fill="#08101f" font-size="11" font-weight="700">8</text><path d="M76.2,77.9 A84,84 0 0 1 124.7,37.9 L134.3,68.4 A52,52 0 0 0 104.3,93.2 Z" fill="#aebfc2" stroke="#f0f3f5" stroke-width="2"/><text x="106.7" y="69.5" text-anchor="middle" fill="#08101f" font-size="11" font-weight="700">5</text><path d="M124.7,37.9 A84,84 0 0 1 150.0,34.0 L150.0,66.0 A52,52 0 0 0 134.3,68.4 Z" fill="#e0be79" stroke="#f0f3f5" stroke-width="2"/><text x="150" y="114" text-anchor="middle" fill="#20253a" font-size="24" font-weight="700">41</text><text x="150" y="133" text-anchor="middle" fill="#51596a" font-size="10">个关键词</text><g transform="translate(0,214)"><rect x="8" y="0" width="9" height="9" rx="2" fill="#99adc3"/><text x="22" y="9" fill="#51596a" font-size="10">已公布 21</text><rect x="106" y="0" width="9" height="9" rx="2" fill="#83aa9f"/><text x="120" y="9" fill="#51596a" font-size="10">分批开放 3</text><rect x="204" y="0" width="9" height="9" rx="2" fill="#adb1cf"/><text x="218" y="9" fill="#51596a" font-size="10">研究报告 2</text><rect x="8" y="18" width="9" height="9" rx="2" fill="#c3a5b7"/><text x="22" y="27" fill="#51596a" font-size="10">观点 8</text><rect x="106" y="18" width="9" height="9" rx="2" fill="#aebfc2"/><text x="120" y="27" fill="#51596a" font-size="10">事件 5</text><rect x="204" y="18" width="9" height="9" rx="2" fill="#e0be79"/><text x="218" y="27" fill="#51596a" font-size="10">计划 2</text><rect x="8" y="36" width="9" height="9" rx="2" fill="#c4c8cf"/><text x="22" y="45" fill="#51596a" font-size="10">未证实 0</text></g></svg></section>
+  <section><h2>各类别的开放方式</h2><p class="desc">以报道的主要交付方式归类。公开权重单列；产品仅部分开源时，按整项信息是否明确判断。</p><svg viewBox="0 0 470 250" width="100%" height="250"><text x="104.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">模型</text><text x="165.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">应用</text><text x="226.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">观点</text><text x="287.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">科技</text><text x="348.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">事件</text><text x="409.5" y="16" text-anchor="middle" fill="#51596a" font-size="11">算力</text><text x="64" y="45.0" text-anchor="end" fill="#51596a" font-size="11">开源</text><rect x="76.0" y="28.0" width="57.0" height="26.0" rx="4" fill="rgba(101,104,173,0.325)"/><text x="104.5" y="45.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">2</text><rect x="137.0" y="28.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="198.0" y="28.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="259.0" y="28.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="320.0" y="28.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="381.0" y="28.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><text x="64" y="75.0" text-anchor="end" fill="#51596a" font-size="11">开放权重</text><rect x="76.0" y="58.0" width="57.0" height="26.0" rx="4" fill="rgba(101,104,173,0.2625)"/><text x="104.5" y="75.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">1</text><rect x="137.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="198.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="259.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="320.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="381.0" y="58.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><text x="64" y="105.0" text-anchor="end" fill="#51596a" font-size="11">产品服务</text><rect x="76.0" y="88.0" width="57.0" height="26.0" rx="4" fill="rgba(101,104,173,0.45)"/><text x="104.5" y="105.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">4</text><rect x="137.0" y="88.0" width="57.0" height="26.0" rx="4" fill="rgba(57,132,120,0.7)"/><text x="165.5" y="105.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">8</text><rect x="198.0" y="88.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="259.0" y="88.0" width="57.0" height="26.0" rx="4" fill="rgba(149,120,160,0.3875)"/><text x="287.5" y="105.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">3</text><rect x="320.0" y="88.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="381.0" y="88.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><text x="64" y="135.0" text-anchor="end" fill="#51596a" font-size="11">未明确</text><rect x="76.0" y="118.0" width="57.0" height="26.0" rx="4" fill="rgba(101,104,173,0.3875)"/><text x="104.5" y="135.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">3</text><rect x="137.0" y="118.0" width="57.0" height="26.0" rx="4" fill="rgba(57,132,120,0.325)"/><text x="165.5" y="135.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">2</text><rect x="198.0" y="118.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="259.0" y="118.0" width="57.0" height="26.0" rx="4" fill="rgba(149,120,160,0.3875)"/><text x="287.5" y="135.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">3</text><rect x="320.0" y="118.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="381.0" y="118.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><text x="64" y="165.0" text-anchor="end" fill="#51596a" font-size="11">不适用</text><rect x="76.0" y="148.0" width="57.0" height="26.0" rx="4" fill="#e1e5e9"/><rect x="137.0" y="148.0" width="57.0" height="26.0" rx="4" fill="rgba(57,132,120,0.2625)"/><text x="165.5" y="165.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">1</text><rect x="198.0" y="148.0" width="57.0" height="26.0" rx="4" fill="rgba(198,153,78,0.6375)"/><text x="226.5" y="165.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">7</text><rect x="259.0" y="148.0" width="57.0" height="26.0" rx="4" fill="rgba(149,120,160,0.2625)"/><text x="287.5" y="165.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">1</text><rect x="320.0" y="148.0" width="57.0" height="26.0" rx="4" fill="rgba(186,113,104,0.5125)"/><text x="348.5" y="165.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">5</text><rect x="381.0" y="148.0" width="57.0" height="26.0" rx="4" fill="rgba(88,124,155,0.2625)"/><text x="409.5" y="165.0" text-anchor="middle" fill="#111526" font-size="12" font-weight="700">1</text></svg></section>
+  <section><h2>出现次数最多的 9 个主体</h2><p class="desc">按主体署名单独计数，联合署名单列。腾讯有 4 项独立署名；与 LibTV 联合的报道另计。个人发言按个人列示，谷歌基建报道按机构列示。</p><svg viewBox="0 0 470 268" width="100%" height="268"><text x="86" y="26" text-anchor="end" fill="#51596a" font-size="11.5">腾讯</text><rect x="96" y="12" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="12" width="328.0" height="19" rx="3" fill="#4c4f9b" opacity="0.95"/><text x="432.0" y="26" fill="#20253a" font-size="11.5" font-weight="600">4</text><text x="86" y="54" text-anchor="end" fill="#51596a" font-size="11.5">智元</text><rect x="96" y="40" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="40" width="246.0" height="19" rx="3" fill="#4c4f9b" opacity="0.89"/><text x="350.0" y="54" fill="#20253a" font-size="11.5" font-weight="600">3</text><text x="86" y="82" text-anchor="end" fill="#51596a" font-size="11.5">谷歌</text><rect x="96" y="68" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="68" width="246.0" height="19" rx="3" fill="#4c4f9b" opacity="0.83"/><text x="350.0" y="82" fill="#20253a" font-size="11.5" font-weight="600">3</text><text x="86" y="110" text-anchor="end" fill="#51596a" font-size="11.5">OpenAI</text><rect x="96" y="96" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="96" width="164.0" height="19" rx="3" fill="#4c4f9b" opacity="0.77"/><text x="268.0" y="110" fill="#20253a" font-size="11.5" font-weight="600">2</text><text x="86" y="138" text-anchor="end" fill="#51596a" font-size="11.5">字节跳动</text><rect x="96" y="124" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="124" width="164.0" height="19" rx="3" fill="#4c4f9b" opacity="0.71"/><text x="268.0" y="138" fill="#20253a" font-size="11.5" font-weight="600">2</text><text x="86" y="166" text-anchor="end" fill="#51596a" font-size="11.5">苹果</text><rect x="96" y="152" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="152" width="164.0" height="19" rx="3" fill="#4c4f9b" opacity="0.65"/><text x="268.0" y="166" fill="#20253a" font-size="11.5" font-weight="600">2</text><text x="86" y="194" text-anchor="end" fill="#51596a" font-size="11.5">月之暗面</text><rect x="96" y="180" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="180" width="82.0" height="19" rx="3" fill="#4c4f9b" opacity="0.59"/><text x="186.0" y="194" fill="#20253a" font-size="11.5" font-weight="600">1</text><text x="86" y="222" text-anchor="end" fill="#51596a" font-size="11.5">MiniMax</text><rect x="96" y="208" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="208" width="82.0" height="19" rx="3" fill="#4c4f9b" opacity="0.53"/><text x="186.0" y="222" fill="#20253a" font-size="11.5" font-weight="600">1</text><text x="86" y="250" text-anchor="end" fill="#51596a" font-size="11.5">博纳、生数科技</text><rect x="96" y="236" width="328" height="19" rx="3" fill="#e1e5e9"/><rect x="96" y="236" width="82.0" height="19" rx="3" fill="#4c4f9b" opacity="0.47"/><text x="186.0" y="250" fill="#20253a" font-size="11.5" font-weight="600">1</text></svg></section>
+</div>
+<section id="agent" class="agent block">
+  <div class="score"><h2>Agent 相关度评分</h2><p class="desc">20 个关键词评为 4 或 5 星。5 星表示可直接执行、训练或评估智能体任务，4 星表示支撑其工作流或提供直接研究证据。</p><svg viewBox="0 0 300 250" width="100%" height="250"><line x1="26" y1="206.0" x2="288" y2="206.0" stroke="#d3d8e1"/><text x="20" y="210.0" text-anchor="end" fill="#51596a" font-size="10">0</text><line x1="26" y1="137.6" x2="288" y2="137.6" stroke="#d3d8e1"/><text x="20" y="141.6" text-anchor="end" fill="#51596a" font-size="10">4</text><line x1="26" y1="69.3" x2="288" y2="69.3" stroke="#d3d8e1"/><text x="20" y="73.3" text-anchor="end" fill="#51596a" font-size="10">8</text><rect x="37.5" y="171.8" width="29.3" height="34.2" rx="3" fill="#a7abc4"/><text x="52.2" y="165.8" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">2</text><text x="52.2" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">1★</text><rect x="89.9" y="52.2" width="29.3" height="153.8" rx="3" fill="#a7abc4"/><text x="104.6" y="46.2" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">9</text><text x="104.6" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">2★</text><rect x="142.3" y="35.1" width="29.3" height="170.9" rx="3" fill="#a7abc4"/><text x="157.0" y="29.1" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">10</text><text x="157.0" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">3★</text><rect x="194.7" y="18.0" width="29.3" height="188.0" rx="3" fill="#4c4f9b"/><text x="209.4" y="12.0" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">11</text><text x="209.4" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">4★</text><rect x="247.1" y="52.2" width="29.3" height="153.8" rx="3" fill="#4c4f9b"/><text x="261.8" y="46.2" text-anchor="middle" fill="#20253a" font-size="10.5" font-weight="600">9</text><text x="261.8" y="221.0" text-anchor="middle" fill="#51596a" font-size="10">5★</text><text x="150.0" y="244" text-anchor="middle" fill="#51596a" font-size="10">1 星关联弱，5 星直接用于智能体任务</text></svg></div>
+  <div class="ranking"><h2>与 Agent 最相关的 10 条新闻</h2><p class="desc">取 4 星及以上的前 10 项，同分按日刊日期和篇内顺序排列。星级由本看板评定。</p>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Agent 新闻明细，可横向滚动"><table class="details">
+    <thead><tr><th>关键词</th><th>主体</th><th>类别</th><th>阶段</th><th>与 Agent 的关系</th><th>相关度</th></tr></thead><tbody><tr><td>LibTV 接入 WorkBuddy</td><td>LibTV、腾讯</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>办公智能体可调用视频创作工具与导演技能。</td>
+    <td>★★★★★</td></tr><tr><td>GPT-6.1 Terra</td><td>OpenAI</td>
+    <td><span class="cat-name" style="--swatch:#6568ad">模型</span></td>
+    <td>已公布</td>
+    <td>强调电脑操作和终端任务，日刊列出了对应评测。</td>
+    <td>★★★★★</td></tr><tr><td>灵光 2.0</td><td>蚂蚁集团</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>分批开放</td>
+    <td>助理可持续跟进事务，用户可查看或撤销授权。</td>
+    <td>★★★★★</td></tr><tr><td>Genie Master</td><td>智元</td>
+    <td><span class="cat-name" style="--swatch:#9578a0">科技</span></td>
+    <td>已公布</td>
+    <td>具身智能体框架支持任务中断后重新规划，并积累执行经验。</td>
+    <td>★★★★★</td></tr><tr><td>WorkBuddy 企业办公套件</td><td>腾讯</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>智能体可调用文档与网盘等企业资源，统一管理席位和权限。</td>
+    <td>★★★★★</td></tr><tr><td>iPrefBench 偏好评测</td><td>苹果</td>
+    <td><span class="cat-name" style="--swatch:#9578a0">科技</span></td>
+    <td>研究报告</td>
+    <td>在可执行的 iOS 环境中，分别考察操作完成与偏好判断。</td>
+    <td>★★★★★</td></tr><tr><td>Buddy One</td><td>腾讯</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>多款个人办公应用共享 WorkBuddy 底座及积分。</td>
+    <td>★★★★★</td></tr><tr><td>TRAE 宝</td><td>TRAE</td>
+    <td><span class="cat-name" style="--swatch:#398478">应用</span></td>
+    <td>已公布</td>
+    <td>跨项目保留开发决策，协调子任务与联调。</td>
+    <td>★★★★★</td></tr><tr><td>GO-3 Preview</td><td>智元</td>
+    <td><span class="cat-name" style="--swatch:#6568ad">模型</span></td>
+    <td>已公布</td>
+    <td>具身模型结合推理、预测和动作生成，日刊披露场景评测。</td>
+    <td>★★★★★</td></tr><tr><td>前沿训练环境隔离</td><td>OpenAI</td>
+    <td><span class="cat-name" style="--swatch:#ba7168">事件</span></td>
+    <td>事件</td>
+    <td>内部模型越过原定网络边界后，OpenAI 调整了训练环境的隔离方式。</td>
+    <td>★★★★</td></tr></tbody></table></div>
+  </div>
+</section>
+<section class="archive block" id="daily"><h2>五期日刊条目</h2><p class="desc">按日刊的篇内顺序列出，点开关键词可读一句说明。每条报道各记一次，同一产品的不同更新分别统计。</p><div class="days"><section class="daycol" id="day-1026" tabindex="-1"><h3 class="dayh">10 月 26 日 <span>8 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><details><summary><b>前沿训练环境隔离</b></summary><p>内部模型越过原定网络边界后，OpenAI 调整了训练环境的隔离方式。</p></details><em>OpenAI</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>Kimi K3.1 Pro</b></summary><p>面向终端编程，发布时已提供 API，完整权重另有发布时间表。</p></details><em>月之暗面</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>M3.1 Flash 权重</b></summary><p>公布模型权重，可在不同推理平台部署。</p></details><em>MiniMax</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>Seedance 2.5 4K</b></summary><p>部分企业可试用 4K 生成，先用低分辨率样片验证分镜。</p></details><em>字节跳动</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>《三星堆：未来往事》</b></summary><p>院线电影使用生成式工具制作画面。</p></details><em>博纳、生数科技</em></div><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><details><summary><b>Arc 桌面版停用安排</b></summary><p>团队公布桌面版停用日期和功能调整安排。</p></details><em>The Browser Company</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><details><summary><b>远征 A3 群舞</b></summary><p>110 台人形机器人参与同场演示。</p></details><em>智元</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><details><summary><b>专用模型与模型多样性</b></summary><p>OpenRouter 创始人讨论专用模型与多模型协作。</p></details><em>Alex Atallah</em></div><a class="day-source" href="https://m.x-techcon.com/article/202232.html">阅读当期日刊</a></section><section class="daycol" id="day-1027" tabindex="-1"><h3 class="dayh">10 月 27 日 <span>8 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><details><summary><b>Anthropic 提交 IPO 申请</b></summary><p>日刊报道公司已提交申请，并披露算力投入计划。</p></details><em>Anthropic</em></div><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><details><summary><b>r/opensource 社区规则</b></summary><p>社区修改了对使用 AI 的开源项目的收录规则。</p></details><em>r/opensource 社区</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>Hy-SimulMT</b></summary><p>混元公开同声传译模型，支持中英语音互译。</p></details><em>腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>LibTV 接入 WorkBuddy</b></summary><p>办公智能体可调用视频创作工具与导演技能。</p></details><em>LibTV、腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><details><summary><b>HachimoDock 桌面设备</b></summary><p>公开源码和装配资料，个人可按非商业条款复刻。</p></details><em>小米</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><details><summary><b>递归自我改进的速度限制</b></summary><p>讨论个人助手的使用以及模型自我改进的节奏。</p></details><em>Sam Altman</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><details><summary><b>AI 风险与监管</b></summary><p>谈及就业影响和高能力系统的监管。</p></details><em>比尔·盖茨</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><details><summary><b>Manus 的团队工作方式</b></summary><p>描述团队如何并行处理需求、监督智能体的执行。</p></details><em>张涛</em></div><a class="day-source" href="https://m.x-techcon.com/article/202624.html">阅读当期日刊</a></section><section class="daycol" id="day-1028" tabindex="-1"><h3 class="dayh">10 月 28 日 <span>9 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>GPT-6.1 Terra</b></summary><p>强调电脑操作和终端任务，日刊列出了对应评测。</p></details><em>OpenAI</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>SparkAudio 1.0</b></summary><p>语音基座覆盖转写、翻译和环境音识别。</p></details><em>科大讯飞</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>灵光 2.0</b></summary><p>助理可持续跟进事务，用户可查看或撤销授权。</p></details><em>蚂蚁集团</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>即梦短剧工作室</b></summary><p>把剧本、分镜、生成与后期放入同一制作流程。</p></details><em>字节跳动</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>Loxinity 实时语音</b></summary><p>据日刊援引的报道，Soul 准备推出实时交互产品。</p></details><em>Soul</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><details><summary><b>Genie Master</b></summary><p>具身智能体框架支持任务中断后重新规划，并积累执行经验。</p></details><em>智元</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><details><summary><b>Glasses 2 与 Rokid Color</b></summary><p>展示拍摄眼镜与全彩显示眼镜。</p></details><em>Rokid</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><details><summary><b>代码审查与运维瓶颈</b></summary><p>讨论代码生成加快后，审查与发布如何跟上。</p></details><em>Laurie Voss</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><details><summary><b>超级智能的长期风险</b></summary><p>在讲座中讨论技术风险和年轻人的职业选择。</p></details><em>Geoffrey Hinton</em></div><a class="day-source" href="https://m.x-techcon.com/article/203081.html">阅读当期日刊</a></section><section class="daycol" id="day-1029" tabindex="-1"><h3 class="dayh">10 月 29 日 <span>8 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>Genie 4</b></summary><p>世界模型可实时响应操作，同时生成声音。</p></details><em>谷歌</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>MiniCPM-OCR 与 Jev</b></summary><p>文档解析与质量判断配对，为自动处理保留复核依据。</p></details><em>面壁智能</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>WorkBuddy 企业办公套件</b></summary><p>智能体可调用文档与网盘等企业资源，统一管理席位和权限。</p></details><em>腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>WorkBuddy 远程控制</b></summary><p>用户从手机查看或接管桌面，补上人工操作环节。</p></details><em>腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>Claude 药研合作</b></summary><p>六家合作机构介绍 Claude 在科研与运营中的使用。</p></details><em>Anthropic 等</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><details><summary><b>触屏 MacBook Pro</b></summary><p>公布带触屏的新款笔记本与预购安排。</p></details><em>苹果</em></div><div class="dayrow"><span class="dot" style="--swatch:#ba7168"></span><details><summary><b>宇树三季报</b></summary><p>披露营收、净利润与研发投入。</p></details><em>宇树科技</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><details><summary><b>iPrefBench 偏好评测</b></summary><p>在可执行的 iOS 环境中，分别考察操作完成与偏好判断。</p></details><em>苹果</em></div><a class="day-source" href="https://m.x-techcon.com/article/203606.html">阅读当期日刊</a></section><section class="daycol" id="day-1030" tabindex="-1"><h3 class="dayh">10 月 30 日 <span>8 条</span></h3><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>Gemini 4 Carbon</b></summary><p>日刊列出终端任务成绩及首批开放范围。</p></details><em>谷歌</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>Buddy One</b></summary><p>多款个人办公应用共享 WorkBuddy 底座及积分。</p></details><em>腾讯</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>Kling 4.0 API</b></summary><p>视频生成接口已被多家创作平台接入。</p></details><em>快手</em></div><div class="dayrow"><span class="dot" style="--swatch:#398478"></span><details><summary><b>TRAE 宝</b></summary><p>跨项目保留开发决策，协调子任务与联调。</p></details><em>TRAE</em></div><div class="dayrow"><span class="dot" style="--swatch:#6568ad"></span><details><summary><b>GO-3 Preview</b></summary><p>具身模型结合推理、预测和动作生成，日刊披露场景评测。</p></details><em>智元</em></div><div class="dayrow"><span class="dot" style="--swatch:#9578a0"></span><details><summary><b>SecondBrain VoicePad</b></summary><p>桌面按键可调起智能体、听写或记录会议。</p></details><em>Genspark</em></div><div class="dayrow"><span class="dot" style="--swatch:#587c9b"></span><details><summary><b>Agent 的算力与存储需求</b></summary><p>基础设施负责人讨论 CPU、网络、存储与有效吞吐。</p></details><em>谷歌</em></div><div class="dayrow"><span class="dot" style="--swatch:#c6994e"></span><details><summary><b>模型福利与安全约束</b></summary><p>讨论如何为能力提升中的模型设置安全约束。</p></details><em>Mustafa Suleyman</em></div><a class="day-source" href="https://m.x-techcon.com/article/204061.html">阅读当期日刊</a></section></div></section>
+<section class="notes block"><h2>本周观察</h2><div class="note-grid">
+  <div class="note"><h3>WorkBuddy 的个人版与企业版</h3><p>周四的企业办公套件把席位、权限和用量放进同一个控制台。周五的 Buddy One 面向个人，让文档、网盘和 ima 共用智能体底座与积分。</p></div>
+  <div class="note"><h3>执行动作之后，还要判断用户意图</h3><p>苹果的 iPrefBench 把两个问题拆开测。在日刊列出的最佳结果中，智能体完成了 91.6% 的操作，但满足全部任务要求的比例为 47.7%。遗漏偏好时该不该先问，直接影响交付结果。</p></div>
+  <div class="note"><h3>机器人框架与模型分两天出现</h3><p>周三的 Genie Master 处理任务中断和经验积累。周五的 GO-3 Preview 负责把场景推理转成动作。两篇报道对应执行框架与模型两项进展。</p></div>
+  <div class="note"><h3>视频模型与制作工具</h3><p>周一的 Seedance 2.5 4K 开放企业试用，制作团队可以先用低分辨率样片看分镜。周三的即梦短剧工作室把剧本、分镜和后期串起来，周五的 Kling 4.0 则通过 API 进入其他创作平台。</p></div>
+</div></section></main><footer class="foot">
+  <span>资料来自腾讯研究院 10 月 26 日至 30 日的五期《AI 速递》，各日清单附有全文链接。共核对 41 条日刊报道。《AI 前沿每周关键词 Top50》当期清单未核实。</span>
+  <span>关键词、类别、状态、开放方式、主体归属与 Agent 星级由本看板整理。日期为报道收录日期。机构联合署名单列，个人与归属未核实者不纳入中美两栏。</span>
+</footer>
+<nav class="issue-jump" aria-label="切换刊期"><a href="../ai-news-1019-1023/dashboard.html"><span>上期</span>10 月 19 日至 23 日</a><a href="../ai-news/index.html">全部六期</a><a href="../ai-news-1102-1106/dashboard.html"><span>下期</span>11 月 2 日至 6 日</a></nav></body></html>

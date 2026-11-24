@@ -160,6 +160,13 @@
 | 124 | `prototype/snapshot/demo.srt` | 模板快照产品能力视频演示中文字幕 | https://charles-yueyue831.github.io/agentruntime/prototype/snapshot/demo.srt |
 
 | 125 | `prototype/k8s/index.html` | K8s Atlas 交互学习原型：37 个知识节点、第一性原理与矛盾分析、控制器对照、6 个教学实验及自测；自包含 HTML 源码 | https://charles-yueyue831.github.io/agentruntime/prototype/k8s/ |
+| 126 | `ai-news/index.html` | AI 前沿周刊 · 周刊总览 | https://charles-yueyue831.github.io/agentruntime/ai-news/index.html |
+| 127 | `ai-news-1114-1120/dashboard.html` | AI 前沿周刊 · 11 月 14 日至 20 日 | https://charles-yueyue831.github.io/agentruntime/ai-news-1114-1120/dashboard.html |
+| 128 | `ai-news-1109-1113/dashboard.html` | AI 前沿周刊 · 11 月 9 日至 13 日 | https://charles-yueyue831.github.io/agentruntime/ai-news-1109-1113/dashboard.html |
+| 129 | `ai-news-1102-1106/dashboard.html` | AI 前沿周刊 · 11 月 2 日至 6 日 | https://charles-yueyue831.github.io/agentruntime/ai-news-1102-1106/dashboard.html |
+| 130 | `ai-news-1026-1030/dashboard.html` | AI 前沿周刊 · 10 月 26 日至 30 日 | https://charles-yueyue831.github.io/agentruntime/ai-news-1026-1030/dashboard.html |
+| 131 | `ai-news-1019-1023/dashboard.html` | AI 前沿周刊 · 10 月 19 日至 23 日 | https://charles-yueyue831.github.io/agentruntime/ai-news-1019-1023/dashboard.html |
+| 132 | `ai-news-1012-1016/dashboard.html` | AI 前沿周刊 · 10 月 12 日至 16 日 | https://charles-yueyue831.github.io/agentruntime/ai-news-1012-1016/dashboard.html |
 
 **访问路径生成规则**：任意新增文件，其在线访问路径 = `https://charles-yueyue831.github.io/agentruntime/` + 仓库内相对路径（空格 → `%20`，中文 → UTF-8 百分号编码）。
 

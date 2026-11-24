@@ -7,6 +7,10 @@
 
 收集、整理**腾讯云 Agent Runtime（Agent 沙箱）**相关学习资料，以手绘草图（Excalidraw 风）HTML 页面讲解核心概念，帮助开发者直观理解存储挂载（`StorageMount` / `MountOption`）、沙箱内管理守护进程（envd）、实例如何覆盖 Tool 的挂载配置、存储管控边界，以及产品视角下的元概念（需求、价值、增长、组织等）、问题性质判断与用户旅程观察方法。
 
+## AI 前沿每周关键词
+
+[浏览全部六期看板](ai-news/index.html)，或直接阅读[最新一期（11 月 14 日至 20 日）](ai-news-1114-1120/dashboard.html)。各期可按日期跳转到《AI 速递》条目，查看类别对比、Agent 相关度及来源。
+
 ## GPU 沙箱用户体验
 
 [观看体验录像与时间点导航](prototype/gpu/) · [阅读体验报告及 14 张操作截图](prototype/gpu/体验报告.md)
